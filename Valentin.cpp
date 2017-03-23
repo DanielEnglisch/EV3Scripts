@@ -20,11 +20,8 @@ void drive_direction(double direction);
 motor_speeds get_speed(light_sensor &s,light_intens &light,int roi_light=45, int roi_dark0=28,  int stop_level=45 ,int speed=1); //reflection_val == roi of light stuff (white floor) -> ~40
 void follow_line_new_pid();
 
-Valentin::Valentin(){
-	
-	 cout << "asdasd";
-	//follow_line_original();
-	//follow_line_new_pid();
+void test(){
+	std::cout << "ANAL" << std::endl;
 }
 
 	

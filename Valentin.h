@@ -7,14 +7,9 @@
 #include "math.h"
 //Test Comment
 using namespace ev3dev;
-using namespace ev3dev;
 using std::cout; using std::endl;
-
-class Valentin
-{
-public:
-	Valentin();
-
-};
+	
+void test();
+	
 
 #endif
