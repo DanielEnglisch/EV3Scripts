@@ -11,5 +11,6 @@ using std::cout; using std::endl;
 	
 void test();
 	
+void follow_line_new_pid();
 
 #endif

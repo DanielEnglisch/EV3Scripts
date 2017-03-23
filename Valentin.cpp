@@ -4,6 +4,10 @@
 #include <unistd.h>
 #include "math.h"
 
+#define SEED_MULTIPLICATOR 1
+#define SPEED 200
+
+
 struct motor_speeds{
 	int motora = 0;
 	int motorb = 0;
@@ -16,7 +20,7 @@ struct light_intens{
 };
 
 bool follow_line_original();
-void drive_direction(double direction);
+void drive_direction(motor * a, motor * d, double direction);
 motor_speeds get_speed(light_sensor &s,light_intens &light,int roi_light=45, int roi_dark0=28,  int stop_level=45 ,int speed=1); //reflection_val == roi of light stuff (white floor) -> ~40
 void follow_line_new_pid();
 
@@ -26,6 +30,7 @@ void test(){
 
 	
 bool follow_line_original(){
+
 	bool escape (false);
 		light_sensor s(INPUT_2);
 		s.set_mode(light_sensor::mode_reflect);
@@ -79,12 +84,13 @@ motor_speeds get_speed(light_sensor &s,light_intens &light,int roi_light, int ro
 
 
 void follow_line_new_pid(){
+		motor d(OUTPUT_D);
+    motor a(OUTPUT_A);
+	
 	light_sensor s(INPUT_2);
 	s.set_mode(light_sensor::mode_reflect);
-	motor d(OUTPUT_D);
-    motor a(OUTPUT_A);
-
-	int target_light_value = 35; //measure between dark an light
+	
+	int target_light_value = 45; //measure between dark an light
 	
 	
 	/*	ki, kd == 0 -> derivative & integral == off
@@ -93,15 +99,18 @@ void follow_line_new_pid(){
 	 * 	do not touch integral
 	 * */
 	
-	double kp = 1; //how sharp or smooth corretctions are
-	double ki = 1; //test
-	double kd = 1; //test
+	double kp = 5; //how sharp or smooth corretctions are
+	double ki = 0.001; //test
+	double kd = 0.001; //test
 	double integra = 1;
 	bool escape = false;
 	double last_error(0);
-	std::cout << "asdasdads";
+	int base_speed(SPEED);
+	double speed_a =0;
+	double speed_b = 0;
 	while ( !escape ){
-			
+		
+
 	//correction =(error*KP)+(integral*Ki)+ derivative*kd;
 	
 		double sensor_value = s.reflected_light_intensity();
@@ -112,8 +121,31 @@ void follow_line_new_pid(){
 		double derivative = error - last_error;
 		double output_c = derivative*kd;
 		double direction = output_a+output_b+output_c;
-		std::cout << direction << std::endl;
-			escape = button::back.pressed();
+		std::cout << output_a <<  ';' << output_b << ';' << output_c << '#' << direction << std::endl;
+		//std::cout << sensor_value << std::endl;
+		
+		if(direction == 0){
+			speed_a = SPEED;
+			speed_b = SPEED;
+		}else if(direction > 0){
+			speed_a = SPEED + direction;
+			speed_b = SPEED  - direction;
+		}else if(direction < 0){
+			speed_a = SPEED + direction;
+			speed_b = SPEED - direction;			
+		
+		}
+			
+			
+			d.set_speed_sp(speed_b);
+			a.set_speed_sp(speed_a);
+		
+		
+		
+		a.run_forever();
+		d.run_forever();
+		
+		escape = button::back.pressed();
 		last_error=error;
 		}	
 
@@ -122,6 +154,6 @@ void follow_line_new_pid(){
      
 }
 
-void drive_direction(double direction){
- cout << "TEST";	
+void drive_direction(motor * a, motor * d, double direction){
+	
 }

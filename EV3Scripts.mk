@@ -50,7 +50,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := /usr/bin/arm-linux-gnueabi-ar rcu
 CXX      := /usr/bin/arm-linux-gnueabi-g++
 CC       := /usr/bin/arm-linux-gnueabi-gcc
-CXXFLAGS :=  -std=c++11 $(Preprocessors)
+CXXFLAGS :=  -std=c++14 $(Preprocessors)
 CFLAGS   :=   $(Preprocessors)
 ASFLAGS  := 
 AS       := /usr/bin/arm-linux-gnueabi-as
@@ -60,7 +60,7 @@ AS       := /usr/bin/arm-linux-gnueabi-as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix) $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) 
 
 
 
@@ -111,6 +111,14 @@ $(IntermediateDirectory)/Valentin.cpp$(DependSuffix): Valentin.cpp
 
 $(IntermediateDirectory)/Valentin.cpp$(PreprocessSuffix): Valentin.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Valentin.cpp$(PreprocessSuffix) Valentin.cpp
+
+$(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix): LineFollow.cpp $(IntermediateDirectory)/LineFollow.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/root/Documents/Workspace/EV3Scripts/LineFollow.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/LineFollow.cpp$(DependSuffix): LineFollow.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/LineFollow.cpp$(DependSuffix) -MM LineFollow.cpp
+
+$(IntermediateDirectory)/LineFollow.cpp$(PreprocessSuffix): LineFollow.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/LineFollow.cpp$(PreprocessSuffix) LineFollow.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
