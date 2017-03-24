@@ -6,9 +6,9 @@ int main(){
 	LineFollow f;
 	//f.debugLightValues();
 	//f.vorprojekttag();
-	//f.follow_line_s();
+	f.follow_line_s();
 	//f.debugColorValue();
-	f.debugGyroValues();
+	//f.debugGyroValues();
 	//f.debugInfraredValues();
 	return 0;
 
