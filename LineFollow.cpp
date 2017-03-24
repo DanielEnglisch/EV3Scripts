@@ -22,8 +22,43 @@ void LineFollow::debugColorValue(){
 		std::cout << cs.reflected_light_intensity() << std::endl;
 		escape = button::back.pressed();
 	}
+}
+
+
+void LineFollow::debugGyroValues(){
+	bool escape = false;
+	gyro_sensor s(INPUT_4);
+	while(!escape){
+		std::cout << s.value() << std::endl;
+		escape = button::back.pressed();
+	}
 
 }
+
+
+void LineFollow::debugLightValues(){
+	bool escape = false;
+	light_sensor s(INPUT_2);
+	s.set_mode(light_sensor::mode_reflect);
+	while(!escape){
+		std::cout << s.value() << std::endl;
+		escape = button::back.pressed();
+	}
+
+}
+
+void LineFollow::debugInfraredValues(){
+	bool escape = false;
+	infrared_sensor s(INPUT_1);
+	while(!escape){
+		std::cout << s.proximity() << std::endl;
+		escape = button::back.pressed();
+	}
+
+}
+
+
+//
 
 
 void LineFollow::follow_line_new_pid(){
@@ -108,17 +143,6 @@ void LineFollow::follow_line_new_pid(){
      
 }
 
-
-void LineFollow::debugLightValues(){
-	bool escape = false;
-	light_sensor s(INPUT_2);
-	s.set_mode(light_sensor::mode_reflect);
-	while(!escape){
-		std::cout << s.value() << std::endl;
-		escape = button::back.pressed();
-	}
-
-}
 
 void LineFollow::follow_line_s()
 {

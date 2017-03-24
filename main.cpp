@@ -7,7 +7,9 @@ int main(){
 	//f.debugLightValues();
 	//f.vorprojekttag();
 	//f.follow_line_s();
-	f.debugColorValue();
+	//f.debugColorValue();
+	f.debugGyroValues();
+	//f.debugInfraredValues();
 	return 0;
 
 }
