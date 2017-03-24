@@ -17,9 +17,9 @@ using namespace std;
 void LineFollow::debugColorValue(){
 	bool escape = false;
 	 color_sensor cs(INPUT_3);
-	cs.set_mode(color_sensor::mode_col_color);
+	cs.set_mode(color_sensor::mode_col_reflect);
 	while(!escape){
-		std::cout << cs.color() << std::endl;
+		std::cout << cs.reflected_light_intensity() << std::endl;
 		escape = button::back.pressed();
 	}
 
