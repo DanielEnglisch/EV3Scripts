@@ -207,6 +207,9 @@ void LineFollow::drive(float steering, float throttle,int mode, motor a, motor b
 
     motA=constrain(motATS+motAS, -1, 1);
     motB=constrain(motBTS+motBS, -1, 1);
+	
+	std::cout << "motA: " << motA << std::endl;
+	std::cout << "motB: " << motB << std::endl;
 
     if(motA>0){
         a.set_speed_sp(floatMap(motA,0,1,minSpeed,maxSpeed));
