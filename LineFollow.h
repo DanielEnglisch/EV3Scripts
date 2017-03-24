@@ -8,13 +8,9 @@ using ev3dev::motor;
 class LineFollow
 {
 public:
-
-	//Debug Methods
-	void debugLightValues();
-	void debugInfraRed();
-	void debugGyro();
-
+	void debugColorValue();
 	void vorprojekttag();
+	void debugLightValues();
 	void follow_line_new_pid();
 	void forward_motors(float correction);
 	void calibrate();

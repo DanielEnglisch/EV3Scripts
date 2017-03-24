@@ -12,45 +12,18 @@ using namespace std;
 #define KD 0.001
 #define SPEED 100
 
-<<<<<<< Updated upstream
 #define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
-=======
-void LineFollow::debugInfraRed(){
-	infrared_sensor ir(INPUT_1);
+void LineFollow::debugColorValue(){
 	bool escape = false;
-	light_sensor s(INPUT_2);
-	ir.set_mode(infrared_sensor::mode_ir_prox);
+	 color_sensor cs(INPUT_3);
+	cs.set_mode(color_sensor::mode_col_color);
 	while(!escape){
-		std::cout << ir.proximity() << std::endl;
-		escape = button::back.pressed();
-	}
-}
-
-
-void LineFollow::debugGyro(){
-	gyro_sensor gg(INPUT_4);
-	bool escape = false;
-	//gg.set_mode(gyro_sensor::mode_gyro_ang);
-	while(!escape){
-		std::cout << gg.value() << std::endl;
-		escape = button::back.pressed();
-	}
-}
-
-void LineFollow::debugLightValues(){
-	bool escape = false;
-	light_sensor s(INPUT_2);
-	
-	s.set_mode(light_sensor::mode_reflect);
-	int offset = s.value();
-	while(!escape){
-		std::cout << s.value() << std::endl;
+		std::cout << cs.color() << std::endl;
 		escape = button::back.pressed();
 	}
 
 }
->>>>>>> Stashed changes
 
 
 void LineFollow::follow_line_new_pid(){
@@ -60,7 +33,7 @@ void LineFollow::follow_line_new_pid(){
 	light_sensor s(INPUT_2);
 	s.set_mode(light_sensor::mode_reflect);
 	
-	int target_light_value = 491; //measure between dark an light
+	int target_light_value = 45; //measure between dark an light
 	
 	
 	/*	ki, kd == 0 -> derivative & integral == off
@@ -80,7 +53,7 @@ void LineFollow::follow_line_new_pid(){
 	bool escape = false;
 	double last_error(0);
 	int base_speed(SPEED);
-	double speed_a = 0;
+	double speed_a =0;
 	double speed_b = 0;
 
 	
@@ -108,13 +81,13 @@ void LineFollow::follow_line_new_pid(){
 		}else if(direction > 0){
 			//go right
 			//get actual speed
-			speed_a = SPEED - (std::abs(direction));
+			speed_a = SPEED - (direction+55);
 			speed_b = SPEED ;
 		}else if(direction < 0){
 			//go left
 			//get actual speed
 			speed_a = SPEED ;
-			speed_b = SPEED -(std::abs(direction));			
+			speed_b = SPEED -((-direction)+45);			
 		
 		}
 			
@@ -136,6 +109,16 @@ void LineFollow::follow_line_new_pid(){
 }
 
 
+void LineFollow::debugLightValues(){
+	bool escape = false;
+	light_sensor s(INPUT_2);
+	s.set_mode(light_sensor::mode_reflect);
+	while(!escape){
+		std::cout << s.value() << std::endl;
+		escape = button::back.pressed();
+	}
+
+}
 
 void LineFollow::follow_line_s()
 {
@@ -242,7 +225,7 @@ float LineFollow::floatMap(float vx, float v1, float v2, float n1, float n2){
 void LineFollow::vorprojekttag()
 {
 	double band = 350;
-	double edge = 536;
+	double edge = 500;
 	double leadingSpeed;
 	double baseSpeed = 100;
 	double leadingPercentage;
@@ -292,18 +275,19 @@ void  LineFollow::follow_line_p(){
 	
 	//LineFollow::calibrate();	
 	float midpoint = ( white - black ) / 2 + black;
-	float kp=0; // 5 kind of working
+	float kp=5; // 5 kind of working
 	
 	light_sensor s(INPUT_2);
 	s.set_mode(light_sensor::mode_reflect);
-	
 	bool escape(false);
 	while(!escape ){
 		float value = s.value();
 		float correction = kp * ( midpoint - value );
 		//std::cout << correction << std::endl; // /10-> -12
-		//float a_speed =(correction);
+		float a_speed =(correction+17)/23;
 		float contingent =100 ;
+		
+	
 		
 		if (correction < 0){
 				//cout << endl << a_speed << value <<  "R" << correction << "  ;   " << -(((correction+12)/22) * SPEED );
@@ -311,8 +295,8 @@ void  LineFollow::follow_line_p(){
 				//float motor_speed_b = (contingent/4) -motor_speed_a +(contingent/4)*3;
 				//cout << motor_speed_a << "  #  " << motor_speed_b << endl;
 				cout << "R" << value << "  ; "<< correction << " ; "<<(100+(correction*3)) << endl;
-				a.set_speed_sp(-(1000 - correction));
-				d.set_speed_sp(-1000);
+				a.set_speed_sp(-(100+correction));
+				d.set_speed_sp(-100);
 				d.run_forever();
 				a.run_forever();
 		}
@@ -323,8 +307,8 @@ void  LineFollow::follow_line_p(){
 				
 				cout << "L" << value << "  ; "<< correction << " ; "<< (100-(correction)) << endl;
 				//cout << motor_speed_a << "  #  " << motor_speed_b << endl;
-				a.set_speed_sp(-1000);
-				d.set_speed_sp(-(1000+(correction)));
+				a.set_speed_sp(-100);
+				d.set_speed_sp(-(100-(correction)));
 				d.run_forever();
 				a.run_forever();
 		}
