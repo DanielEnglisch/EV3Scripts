@@ -42,7 +42,9 @@
         <PostConnectCommands/>
         <StartupCommands/>
       </Debugger>
-      <PreBuild/>
+      <PreBuild>
+        <Command Enabled="yes">git config credential.helper cache</Command>
+      </PreBuild>
       <PostBuild>
         <Command Enabled="yes">uploadev3</Command>
       </PostBuild>

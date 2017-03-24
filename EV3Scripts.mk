@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=root
-Date                   :=23/03/17
+Date                   :=24/03/17
 CodeLitePath           :=/root/.codelite
 LinkerName             :=/usr/bin/arm-linux-gnueabi-g++
 SharedObjectLinkerName :=/usr/bin/arm-linux-gnueabi-g++ -shared -fPIC
@@ -91,6 +91,9 @@ $(IntermediateDirectory)/.d:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
 
 PreBuild:
+	@echo Executing Pre Build commands ...
+	git config credential.helper cache
+	@echo Done
 
 
 ##
