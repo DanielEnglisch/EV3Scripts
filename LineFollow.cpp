@@ -36,7 +36,7 @@ void LineFollow::vorprojekttag()
 		
 		if(val <= band){
 			a.set_speed_sp(baseSpeed);
-			b.set_speed_sp(baseSpeed-(baseSpeed/1.2));
+			b.set_speed_sp(baseSpeed);
 			
 		
 		}else{
