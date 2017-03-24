@@ -11,8 +11,6 @@
     <File Name="main.cpp"/>
     <File Name="ev3dev.h"/>
     <File Name="libev3dev.a"/>
-    <File Name="Valentin.h"/>
-    <File Name="Valentin.cpp"/>
     <File Name="LineFollow.h"/>
     <File Name="LineFollow.cpp"/>
   </VirtualDirectory>
@@ -46,7 +44,7 @@
         <Command Enabled="yes">git config credential.helper cache</Command>
       </PreBuild>
       <PostBuild>
-        <Command Enabled="yes">uploadev3 192.168.1.103</Command>
+        <Command Enabled="yes">uploadev3 192.168.1.102</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

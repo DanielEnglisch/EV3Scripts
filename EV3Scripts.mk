@@ -60,7 +60,7 @@ AS       := /usr/bin/arm-linux-gnueabi-as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix) $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) 
 
 
 
@@ -80,7 +80,7 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	uploadev3 192.168.1.103
+	uploadev3 192.168.1.102
 	@echo Done
 
 MakeIntermediateDirs:
@@ -106,14 +106,6 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) main.cpp
-
-$(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix): Valentin.cpp $(IntermediateDirectory)/Valentin.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/root/Documents/Workspace/EV3Scripts/Valentin.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Valentin.cpp$(DependSuffix): Valentin.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Valentin.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/Valentin.cpp$(DependSuffix) -MM Valentin.cpp
-
-$(IntermediateDirectory)/Valentin.cpp$(PreprocessSuffix): Valentin.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Valentin.cpp$(PreprocessSuffix) Valentin.cpp
 
 $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix): LineFollow.cpp $(IntermediateDirectory)/LineFollow.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/root/Documents/Workspace/EV3Scripts/LineFollow.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) $(IncludePath)
