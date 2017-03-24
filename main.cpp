@@ -5,10 +5,8 @@
 int main(){
 	
 	LineFollow f;
-	f.test();
-	
-	
-	//follow_line_new_pid();
+	//f.debugLightValues();
+	f.vorprojekttag();
 	return 0;
 
 }

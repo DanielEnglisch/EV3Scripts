@@ -46,7 +46,7 @@
         <Command Enabled="yes">git config credential.helper cache</Command>
       </PreBuild>
       <PostBuild>
-        <Command Enabled="yes">uploadev3</Command>
+        <Command Enabled="yes">uploadev3 192.168.1.103</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>

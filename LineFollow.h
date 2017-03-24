@@ -4,7 +4,8 @@
 class LineFollow
 {
 public:
-	void test();
+	void vorprojekttag();
+	void debugLightValues();
 };
 
 #endif // LINEFOLLOW_H

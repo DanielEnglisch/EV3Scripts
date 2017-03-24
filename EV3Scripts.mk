@@ -80,7 +80,7 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	uploadev3
+	uploadev3 192.168.1.103
 	@echo Done
 
 MakeIntermediateDirs:
