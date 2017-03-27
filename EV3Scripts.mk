@@ -5,7 +5,7 @@
 ## Debug
 ProjectName            :=EV3Scripts
 ConfigurationName      :=Debug
-WorkspacePath          :=/root/Documents/Workspace
+WorkspacePath          :=/root/Documents/EV3Scripts
 ProjectPath            :=/root/Documents/Workspace/EV3Scripts
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=root
-Date                   :=24/03/17
+Date                   :=27/03/17
 CodeLitePath           :=/root/.codelite
 LinkerName             :=/usr/bin/arm-linux-gnueabi-g++
 SharedObjectLinkerName :=/usr/bin/arm-linux-gnueabi-g++ -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/arm-linux-gnueabi-as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/LineFollow.cpp$(ObjectSuffix) $(IntermediateDirectory)/debug.cpp$(ObjectSuffix) $(IntermediateDirectory)/testing.cpp$(ObjectSuffix) 
 
 
 
@@ -114,6 +114,22 @@ $(IntermediateDirectory)/LineFollow.cpp$(DependSuffix): LineFollow.cpp
 
 $(IntermediateDirectory)/LineFollow.cpp$(PreprocessSuffix): LineFollow.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/LineFollow.cpp$(PreprocessSuffix) LineFollow.cpp
+
+$(IntermediateDirectory)/debug.cpp$(ObjectSuffix): debug.cpp $(IntermediateDirectory)/debug.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/root/Documents/Workspace/EV3Scripts/debug.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/debug.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/debug.cpp$(DependSuffix): debug.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/debug.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/debug.cpp$(DependSuffix) -MM debug.cpp
+
+$(IntermediateDirectory)/debug.cpp$(PreprocessSuffix): debug.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/debug.cpp$(PreprocessSuffix) debug.cpp
+
+$(IntermediateDirectory)/testing.cpp$(ObjectSuffix): testing.cpp $(IntermediateDirectory)/testing.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/root/Documents/Workspace/EV3Scripts/testing.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/testing.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/testing.cpp$(DependSuffix): testing.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/testing.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/testing.cpp$(DependSuffix) -MM testing.cpp
+
+$(IntermediateDirectory)/testing.cpp$(PreprocessSuffix): testing.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/testing.cpp$(PreprocessSuffix) testing.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

@@ -13,6 +13,12 @@
     <File Name="libev3dev.a"/>
     <File Name="LineFollow.h"/>
     <File Name="LineFollow.cpp"/>
+    <VirtualDirectory Name="testing">
+      <File Name="debug.cpp"/>
+      <File Name="debug.h"/>
+      <File Name="testing.cpp"/>
+      <File Name="testing.h"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

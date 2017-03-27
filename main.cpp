@@ -1,12 +1,12 @@
 #include "LineFollow.h"
-//gg
+#include "testing.h"
 
 int main(){
 	
 	LineFollow f;
 	//f.debugLightValues();
 	//f.vorprojekttag();
-	f.follow_line_s();
+	f.follow_line_d();
 	//f.debugColorValue();
 	//f.debugGyroValues();
 	//f.debugInfraredValues();
