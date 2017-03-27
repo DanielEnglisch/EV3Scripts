@@ -8,9 +8,10 @@
 	using std::cout; using std::endl;
 
 	class LineFollow_testing{
-		void vorprojekttag();
-		void follow_line_new_pid();
-		void follow_line_p();
+		public:
+			void vorprojekttag();
+			void follow_line_new_pid();
+			void follow_line_p();
 	};
 
 #endif

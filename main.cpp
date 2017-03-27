@@ -1,15 +1,16 @@
 #include "LineFollow.h"
 #include "testing.h"
+#include "debug.h"
 
 int main(){
 	
-	LineFollow f;
-	//f.debugLightValues();
-	//f.vorprojekttag();
-	f.follow_line_d();
-	//f.debugColorValue();
-	//f.debugGyroValues();
-	//f.debugInfraredValues();
+	debug sensors;
+	LineFollow_testing testing;
+	LineFollow asd;
+	
+	asd.follow_line_d();
+	sensors.ColorValue();
+	
 	return 0;
 
 }

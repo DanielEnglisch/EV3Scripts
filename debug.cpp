@@ -1,7 +1,7 @@
 #include "debug.h"
 
 
-void DEBUG::debugColorValue(){
+void debug::ColorValue(){
 	bool escape = false;
 	 color_sensor cs(INPUT_3);
 	cs.set_mode(color_sensor::mode_col_reflect);
@@ -12,7 +12,7 @@ void DEBUG::debugColorValue(){
 }
 
 
-void DEBUG::debugGyroValues(){
+void debug::GyroValues(){
 	bool escape = false;
 	gyro_sensor s(INPUT_4);
 	while(!escape){
@@ -23,7 +23,7 @@ void DEBUG::debugGyroValues(){
 }
 
 
-void DEBUG::debugLightValues(){
+void debug::LightValues(){
 	bool escape = false;
 	light_sensor s(INPUT_2);
 	s.set_mode(light_sensor::mode_reflect);
@@ -34,7 +34,7 @@ void DEBUG::debugLightValues(){
 
 }
 
-void DEBUG::debugInfraredValues(){
+void debug::InfraredValues(){
 	bool escape = false;
 	infrared_sensor s(INPUT_1);
 	while(!escape){

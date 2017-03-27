@@ -1,5 +1,5 @@
-#if !defined TESTING_H
-#define TESTING_H
+#if !defined DEBUG_H
+#define DEBUG_H
 	
 	#include <iostream>
 	#include "ev3dev.h"
@@ -7,11 +7,13 @@
 	using std::cout; using std::endl;
 	using namespace ev3dev;
 	
-	class DEBUG{
-		void debugColorValue();
-		void debugInfraredValues();
-		void debugGyroValues();
-		void debugLightValues();
+	class debug
+	{
+		public:
+			void ColorValue();
+			void InfraredValues();
+			void GyroValues();
+			void LightValues();
 		
 	};
 
