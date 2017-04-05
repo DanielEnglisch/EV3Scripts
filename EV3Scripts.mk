@@ -5,7 +5,7 @@
 ## Debug
 ProjectName            :=EV3Scripts
 ConfigurationName      :=Debug
-WorkspacePath          :=/root/Documents/EV3Scripts
+WorkspacePath          :=/root/Documents/Workspace
 ProjectPath            :=/root/Documents/Workspace/EV3Scripts
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=root
-Date                   :=27/03/17
+Date                   :=03/04/17
 CodeLitePath           :=/root/.codelite
 LinkerName             :=/usr/bin/arm-linux-gnueabi-g++
 SharedObjectLinkerName :=/usr/bin/arm-linux-gnueabi-g++ -shared -fPIC

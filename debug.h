@@ -10,10 +10,10 @@
 	class debug
 	{
 		public:
-			void ColorValue();
-			void InfraredValues();
-			void GyroValues();
-			void LightValues();
+			void ColorValue(); 		//BrickColorDetection
+			void InfraredValues();	//ProximitySensor
+			void GyroValues();		//GyroSensor
+			void LightValues();		//LineFollowSensor
 		
 	};
 
