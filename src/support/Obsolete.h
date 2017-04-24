@@ -7,7 +7,7 @@
 	using namespace ev3dev;
 	using std::cout; using std::endl;
 
-	class LineFollow_testing{
+	class Obs_LineFollow{
 		public:
 			void vorprojekttag();
 			void follow_line_new_pid();

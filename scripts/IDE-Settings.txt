@@ -1,0 +1,6 @@
+Post-Build Command:
+	uploadev3 192.168.1.102
+Linker Options:
+	L./ -lev3dev -static
+Compiler Options:
+	-std=c++14

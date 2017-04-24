@@ -1,4 +1,4 @@
-#include "testing.h"
+#include "Obsolete.h"
 
 
 #define KP 1	
@@ -6,7 +6,7 @@
 #define KD 0.001
 #define SPEED 100
 
-void LineFollow_testing::follow_line_new_pid(){
+void Obs_LineFollow::follow_line_new_pid(){
 	motor d(OUTPUT_D);
     motor a(OUTPUT_A);
 	
@@ -87,7 +87,7 @@ void LineFollow_testing::follow_line_new_pid(){
 		d.reset();
      
 }
-void LineFollow_testing::vorprojekttag(){
+void Obs_LineFollow::vorprojekttag(){
 	double band = 350;
 	double edge = 500;
 	double leadingSpeed;
@@ -126,7 +126,7 @@ void LineFollow_testing::vorprojekttag(){
 	
 	
 }
-void LineFollow_testing::follow_line_p(){
+void Obs_LineFollow::follow_line_p(){
 	
 	motor a(OUTPUT_A);
 	motor d(OUTPUT_D);
