@@ -8,6 +8,4 @@ int main(){
 	debug.PrintLightValues();
 
 	return 0;
-
 }
-
