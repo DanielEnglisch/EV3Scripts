@@ -2,7 +2,7 @@
 #define DEBUG_H
 	
 	#include <iostream>
-	#include "ev3dev.h"
+	#include "../ev3dev.h"
 
 	using std::cout; using std::endl;
 	using namespace ev3dev;

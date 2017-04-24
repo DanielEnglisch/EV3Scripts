@@ -2,7 +2,7 @@
 #define TESTING_H
 
 	#include <iostream>
-	#include "ev3dev.h"
+	#include "../ev3dev.h"
 	//using ev3dev::motor;
 	using namespace ev3dev;
 	using std::cout; using std::endl;
