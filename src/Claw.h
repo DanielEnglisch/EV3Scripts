@@ -12,7 +12,7 @@
 			void  open();
 			void  close();
 			void  lift();
-			void  drop();
+			void  lower();
 		
 	};
 #endif
