@@ -22,7 +22,7 @@ color robot::convert_color(float value, float deviation, recepie &input2) {
 }
 
 bool robot::is_color_right(color_sensor &input) {
-	return	(input.value() > 0 && input.value < 100);	//true if color value is between 0 and 100
+	return	(input.value() > 0 && input.value() < 100);	//true if color value is between 0 and 100
 }
 
 
@@ -150,8 +150,8 @@ void robot::turn_left(tank_functions &input);
 void robot::back_sec(motor &a, motor &b, float throttle, float time) {						
 	while (!button::back.pressed()){
 		robot::drive(1, -throttle, 1, a, b);
-			a.time_sp = time;
-			b.time_sp = time;
+			a.set_time_sp(time);
+			b.set_time_sp(time);
 			a.run_timed();
 			b.run_timed();
 		}

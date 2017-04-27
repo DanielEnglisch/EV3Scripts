@@ -3,7 +3,7 @@ echo "=== EV3 Build Script v.1.0 by Xer0 and peerfunk ==="
 #BUILDING CURRENT DIRECTORY
 FILES=`find . -type f -name "*.cpp" | tr -d ' '`
 echo "Compiling files: $FILES"
-arm-linux-gnueabi-g++ -o EV3Scripts $FILES -lev3dev -L./ -std=c++14 -static
+arm-linux-gnueabi-g++ -o EV3Scripts $FILES -lev3dev -L./ -std=c++14 -static -fpermissive
 echo "Done compiling and linking!"
 if [ $# -eq 1 ]
 then
