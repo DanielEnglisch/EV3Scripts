@@ -1,5 +1,13 @@
 #include "LineFollow.h"
 
+
+bool robot::stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
+void robot::turn_180(tank_functions &input){};												//TODO: turns the robot around
+void robot::turn_right(tank_functions &input){};												//TODO: turns the robot right by 90deg
+void robot::turn_left(tank_functions &input){};
+bool robot::get_stone(){return false;}
+bool robot::drop_stone(){return false;}
+
 color robot::read_color_right(color_sensor &input, float deviation, recepie &input2) {
 	float	temp_input = input.value();
 	return robot::convert_color(temp_input, deviation,input2);
@@ -142,10 +150,8 @@ void robot::go_until(tank_functions &input,infrared_sensor &input2) {						 //, 
 		input.b.run_forever();
 	}
 }
-bool robot::stone_front(infrared_sensor &input);											//TODO: is stone in front of arms
-void robot::turn_180(tank_functions &input);												//TODO: turns the robot around
-void robot::turn_right(tank_functions &input);												//TODO: turns the robot right by 90deg
-void robot::turn_left(tank_functions &input);
+
+
 
 void robot::back_sec(motor &a, motor &b, float throttle, float time) {						
 	while (!button::back.pressed()){

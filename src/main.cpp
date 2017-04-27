@@ -4,6 +4,7 @@
 
 int main(){
 	
+	//ClawControl
 	Claw c;
 	c.open();
 	c.lift();
