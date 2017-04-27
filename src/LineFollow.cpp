@@ -1,5 +1,10 @@
 #include "LineFollow.h"
 
+void turn_left(motor &a, motor &b, float curve,float speed);
+void turn_right(motor &a, motor &b, float curve,float speed);
+bool stone_front(infrared_sensor &input);
+void turn_180(motor &a, motor &b, float speed);
+
 color robot::read_color_right(color_sensor &input, float deviation, recepie &input2) {
 	float	temp_input = input.value();
 	return robot::convert_color(temp_input, deviation,input2);
@@ -22,7 +27,7 @@ color robot::convert_color(float value, float deviation, recepie &input2) {
 }
 
 bool robot::is_color_right(color_sensor &input) {
-	return	(input.value() > 0 && input.value < 100);	//true if color value is between 0 and 100
+	return	(input.value() > 0 && input.value() < 100);	//true if color value is between 0 and 100
 }
 
 
@@ -149,18 +154,15 @@ bool robot::collect_stones(recepie &stones, float deviation){
 void robot::back_sec(motor &a, motor &b, float throttle, float time) {
 	while (!button::back.pressed()){
 		robot::drive(1, -throttle, 1, a, b);
-			a.time_sp = time;
-			b.time_sp = time;
+			a.set_time_sp(time);
+			b.set_time_sp(time);
 			a.run_timed();
 			b.run_timed();
 		}
 	a.stop();
 	b.stop();
 }
-void turn_left(motor &a, motor &b, float curve,float speed);
-void turn_right(motor &a, motor &b, float curve,float speed);
-bool stone_front(infrared_sensor &input);
-void turn_180(motor &a, motor &b, float speed);
+
 
 
 

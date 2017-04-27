@@ -9,7 +9,7 @@
 	using namespace ev3dev; //using ev3dev::motor;
 	using std::cout; using std::endl; using std::abs; using std::vector;
 	
-	#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt));
+	#define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)));
 
 	enum color {
 		error,
