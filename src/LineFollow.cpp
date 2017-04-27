@@ -1,10 +1,5 @@
 #include "LineFollow.h"
 
-void turn_left(motor &a, motor &b, float curve,float speed);
-void turn_right(motor &a, motor &b, float curve,float speed);
-bool stone_front(infrared_sensor &input);
-void turn_180(motor &a, motor &b, float speed);
-
 color robot::read_color_right(color_sensor &input, float deviation, recepie &input2) {
 	float	temp_input = input.value();
 	return robot::convert_color(temp_input, deviation,input2);
@@ -18,16 +13,16 @@ color robot::read_color_down(light_sensor &input, float deviation) {
 
 
 color robot::convert_color(float value, float deviation, recepie &input2) {
-	if		((red_cl - deviation) > value &&	(red_cl + deviation) < value) { ++input2.red; return red; }
-	else if ((green_cl - deviation) > value &&	(green_cl + deviation) < value) { ++input2.green; return green; }
-	else if ((blue_cl - deviation) > value &&	(blue_cl + deviation) < value) { ++input2.blue; return blue; }
-	else if ((yellow_cl - deviation) > value && (yellow_cl + deviation) < value) { ++input2.yellow; return yellow; }
-	else if ((black_cl - deviation) > value && (black_cl + deviation) < value) { ++input2.black; return black; }
+	if		((red_cl - deviation) > value &&	(red_cl + deviation) < value) {		++input2.red; return red; }
+	else if ((green_cl - deviation) > value &&	(green_cl + deviation) < value) {	++input2.green; return green; }
+	else if ((blue_cl - deviation) > value &&	(blue_cl + deviation) < value) {	++input2.blue; return blue; }
+	else if ((yellow_cl - deviation) > value && (yellow_cl + deviation) < value) {	++input2.yellow; return yellow; }
+	else if ((black_cl - deviation) > value &&	(black_cl + deviation) < value) {	++input2.black; return black; }
 	else { ++input2.error; return error; }
 }
 
 bool robot::is_color_right(color_sensor &input) {
-	return	(input.value() > 0 && input.value() < 100);	//true if color value is between 0 and 100
+	return	(input.value() > 0 && input.value < 100);	//true if color value is between 0 and 100
 }
 
 
@@ -89,73 +84,74 @@ bool robot::is_in(recepie &input, color input2) {
 }
 
 bool robot::collect_stones(recepie &stones, float deviation){
-	color_sensor c(INPUT_3);							//initialize color sensor -> side
-	light_sensor s(INPUT_2);							//initialize color sensor -> down
-	motor a(OUTPUT_D);									//left motor
-	motor b(OUTPUT_A);									//right motor
-
+	color_sensor c(INPUT_3);																//initialize color sensor -> side
+	light_sensor s(INPUT_2);																//initialize color sensor -> down
+	motor a(OUTPUT_D);																		//left motor
+	motor b(OUTPUT_A);																		//right motor
+		
 	c.set_mode(color_sensor::mode_col_reflect);
-	s.set_mode(light_sensor::mode_reflect);				//init color sensor right
+	s.set_mode(light_sensor::mode_reflect);													//init color sensor right
 	double val(0);
 	float throttle(0.05);
-
-	while (!button::back.pressed())
+	tank_functions input_tank = {a,b,s,0.5,throttle};
+	while (!button::back.pressed())															//STOP IF ESCAPE IS PRESSEND
 	{
-		if (!is_color_right(c)) {
-			val = s.value();
+		if (!is_color_right(c)) {															//FOLLOW LINE AS LONG AS NO STONE IS ON RIGHT
+			val = s.value();																
 			drive(val, throttle, 1, a, b);
 			a.run_forever();
 			b.run_forever();
 		}
 		else {
-			color temp_col = read_color_right(c, deviation,stones);		//read the brickcolor
-			if (is_in(stones, temp_col)) {								//is the brick has to be collected
-				back_sec(a,b,1,5000);									//go back for 5 sec.
-				turn_left(a,b,0.5, throttle);							//go left
-				infrared_sensor input;									//create infrared input
-				input.set_mode("mode_us_si_cm");						//set mode to single reading in cm
-				while (!stone_front(input)) {							//as long as no stone is found go straigt
-					val = s.value();										
-					drive(val, throttle, 1, a, b);
-					a.run_forever();
-					b.run_forever();
-				}
-				get_stone();											//grab the stone
-				turn_180(a,b,throttle);									//turn back around
-				while (!stone_front(input)) {							//as long as no stone is found go straigt
-					val = s.value();
-					drive(val, throttle, 1, a, b);
-					a.run_forever();
-					b.run_forever();
-				}
-				turn_left(a,b,0.5,throttle);
-				while (!stone_front(input)) {							//as long as no stone is found go straigt
-					val = s.value();
-					drive(val, throttle, 1, a, b);
-					a.run_forever();
-					b.run_forever();
-				}
-				drop_stone();
-				turn_180(a, b, throttle);
-				//while (!is_back) {										//as long as robot is not at starting position
-				//	val = s.value();
-				//	drive(val, throttle, 1, a, b);
-				//	a.run_forever();
-				//	b.run_forever();
-				//}
-				turn_180(a, b, throttle);
+			color temp_col = read_color_right(c, deviation,stones);							//READ BRICK COLOR
+			if (is_in(stones, temp_col)) {													//IS BRICK COLOR STILL IN RECEPIE
+					
+				back_sec(a,b,1,2000);														//GO BACK STRAIGT NO LINE FOLLOW 2000ms
+				turn_left(input_tank);														//GO LEFT
+																			
+				infrared_sensor input;														//INIT IR-SENSOR FRONT create infrared input
+				input.set_mode("mode_us_si_cm");											//INIT IR-SENSOR FRONT set mode to single reading in cm
+				robot::go_until(input_tank, input);											//GO ON STORAGE LINE UNTIL STONE IS FOUND
+				get_stone();																//GRAB STONE
+				turn_180(input_tank);														//TURN AROUND
+				robot::go_until(input_tank, input);											//GO TO END OF STORAGE LINE
+				turn_left(input_tank);														//GO LEFT
+				robot::go_until(input_tank, input);											//GO TO END											as long as no stone is found go straigt TODO: test if a ( go until line ends) algorithm is better to detect 'Mixing' area (if go_until works with functions just make a new 'trigger')
+				drop_stone();																//DROP STONE
+				turn_180(input_tank);														//TURN AROUND
+				robot::go_until(input_tank, input);											//GO TO BEGINNING									TODO: find better algorithm to detect robot is at the end (if go_until works with functions just make a new 'trigger')
+				turn_180(input_tank);														//TURN AROUND
+			}
+			else {	
+				back_sec(a, b, -1, 1000);													//if stone is not in recepie go straigt forward 1 second TODO: Check: maybe line following better?
 			}
 		}
 	}
 	a.stop();
 	b.stop();
-	
+
+	return stones.error == 0;
 }
-void robot::back_sec(motor &a, motor &b, float throttle, float time) {
+
+void robot::go_until(tank_functions &input,infrared_sensor &input2) {						 //, depends f
+	float val(0);
+	while (!stone_front(input2)) {															//as long as no stone is found go straigt
+		val = input.s.value();
+		drive(val, input.speed, 1, input.a, input.b);
+		input.a.run_forever();
+		input.b.run_forever();
+	}
+}
+bool robot::stone_front(infrared_sensor &input);											//TODO: is stone in front of arms
+void robot::turn_180(tank_functions &input);												//TODO: turns the robot around
+void robot::turn_right(tank_functions &input);												//TODO: turns the robot right by 90deg
+void robot::turn_left(tank_functions &input);
+
+void robot::back_sec(motor &a, motor &b, float throttle, float time) {						
 	while (!button::back.pressed()){
 		robot::drive(1, -throttle, 1, a, b);
-			a.set_time_sp(time);
-			b.set_time_sp(time);
+			a.time_sp = time;
+			b.time_sp = time;
 			a.run_timed();
 			b.run_timed();
 		}
@@ -164,12 +160,10 @@ void robot::back_sec(motor &a, motor &b, float throttle, float time) {
 }
 
 
-
-
 void robot::follow_line_d(){
-	motor a (OUTPUT_D);
-	motor b (OUTPUT_A);
-	light_sensor s (INPUT_2);
+	motor a (OUTPUT_D);																		//Init motor a 
+	motor b (OUTPUT_A);																		//Init motor b 
+	light_sensor s (INPUT_2);																//Init lightsensor s 
 	s.set_mode(light_sensor::mode_reflect);
 	bool escape = false;
 	double val;
@@ -256,8 +250,7 @@ void robot::drive(float steering, float throttle,int mode, motor a, motor b){
     }
 }
 
-float robot::floatMap(float vx, float v1, float v2, float n1, float n2){
-	//this function maps vx in the range v1 to v2 to the new range n1 and n2
+float robot::floatMap(float vx, float v1, float v2, float n1, float n2){//this function maps vx in the range v1 to v2 to the new range n1 and n2
 	
     // v1 start of range, v2 end of range, vx the starting number between the range
     float percentage = (vx-v1)/(v2-v1);
