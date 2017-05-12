@@ -3,6 +3,7 @@
 	
 	#include <iostream>
 	#include "../ev3dev.h"
+	#include <tuple>
 
 	using std::cout; using std::endl;
 	using namespace ev3dev;

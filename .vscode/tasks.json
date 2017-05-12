@@ -1,0 +1,6 @@
+{
+    "version": "0.1.0",
+    "command": "../scripts/ev3build.sh",
+    "isShellCommand": true,
+    "showOutput": "always"
+}
