@@ -19,7 +19,7 @@
 	};
 
 	//typedef					void(*action)		(recepie &, float, float);									
-	typedef						bool(*depends)		(infrared_sensor &);												//TODO:  'depends'(trigger) function to work, to be able to use different triggers on a drive straigt function
+	//typedef						bool(*depends)		(infrared_sensor &);												//TODO:  'depends'(trigger) function to work, to be able to use different triggers on a drive straigt function
 	typedef						std::vector<color>  recepie;
 	struct tank_functions {																								//vital tank functions for functions
 		motor &a;
@@ -36,7 +36,7 @@
 		public:
 			void 			test				(int light_val, float throttle, motor right, motor left);
 			void 			read_recepie		();
-			color 			read_color_right	(color_sensor &input);													//read the color from right sensor	
+			color 			read_color_right	(color_sensor &input, color const &cal);													//read the color from right sensor	
 			bool 			is_color_equal		(color const &in1, color const &in2,int deviation);
 			void			go_until			(tank_functions & input,infrared_sensor &input2);						//go until (currently until stone is infront) TODO: go until 'depends' (trigger) function is true 
 			bool			drop_stone			();																		//TODO: drop a stone currently placeholder
@@ -52,7 +52,7 @@
 			bool			collect_stones		(recepie &stones,float deviation);										//main algorithm collect all stones
 		
 			color			read_color_down		(light_sensor &input,float deviation);									//read the color from line-tracking refl sensor
-			bool			is_color_right		(color_sensor &input);													//checks if stone is in front of the right color sensor
+			bool			is_color_right		(color_sensor &input, color const &cal);													//checks if stone is in front of the right color sensor
 			//recepie			read_recepie		(float deviation);														//main pre-function goes along a line and returns a recepie
 			void			follow_line_d		();																		//follows a line
 			void			forward_motors		(float correction);														//go forward with both motors

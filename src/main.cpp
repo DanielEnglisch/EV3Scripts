@@ -1,5 +1,5 @@
-#include "LineFollow.h"
-//#include "Claw.h"
+//#include "LineFollow.h"
+#include "Claw.h"
 #include "support/SensorDebug.h"
 
 int main(){
@@ -13,8 +13,16 @@ int main(){
 	// 	 debug_sn.PrintLightValues();
 	// // 	// debug_sn.
 
-	robot he;
-	// //he.read_recepie();
-	he.follow_line_d();
+	// robot he;
+	// // //he.read_recepie();
+	// he.read_recepie();
+
+	Claw xx;
+	xx.lift();
+	int timer = time(0);
+				while(time(0) <= timer+10);
+	
+	
+	
 	return 0;
 }	

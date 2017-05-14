@@ -38,22 +38,20 @@ bool robot::drop_stone(){return false;}
 // 	else { ++input2.error; return error; }
 // }
 
-bool robot::is_color_right(color_sensor &input) {
-	return !((abs(std::get<0>(input.raw())-red_cl) < 5 ) &&
-	(abs(std::get<1>(input.raw())-green_cl) < 5 ) &&
-	(abs(std::get<2>(input.raw())-blue_cl) < 5 ));
+bool robot::is_color_right(color_sensor &input, color const &cal) {
+	return (((std::get<0>(input.raw())-cal.red)> 9 ) ||
+	((std::get<1>(input.raw())-cal.green)>9 )||
+	((std::get<2>(input.raw())-cal.blue)>9 ));
 	//true if color value is between 0 and 100
 }
 
-color robot::read_color_right(color_sensor &input){
+color robot::read_color_right(color_sensor &input,color const & cal){
 	color temp;
 	temp.red   = std::get<0>(input.raw());
 	temp.green = std::get<1>(input.raw());
-	temp.blue  = std::get<2>(input.raw());	
-	int max = temp.red + temp.green + temp.blue;
-	temp.red  /= max;
-	temp.green /= max;
-	temp.blue /= max;
+	temp.blue  = std::get<2>(input.raw());
+	return temp;
+
 }
 
 bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
@@ -64,8 +62,11 @@ bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 
 void robot::read_recepie(){
 	color_sensor c(INPUT_3);
+	color temp;
+	temp.red = 0; temp.green = 0; temp.blue =0;
+	recepie rezept;
 	c.set_mode(color_sensor::mode_col_color);
-	
+	color cal = read_color_right(c,temp);
 	motor a (OUTPUT_D);																		//Init motor a 
 	motor b (OUTPUT_A);	
 																	//Init motor b 
@@ -75,9 +76,30 @@ void robot::read_recepie(){
 	double val;
 	float throttle;
 	
-	while(!is_color_right(c)){
-		val = s.value();
-		drive(val,1,1, a, b);
+	while(button::back.pressed()){
+		color brick;
+		
+		if(is_color_right(c,cal)){
+
+			
+			// go a few milisecnds on, at the middle of the block stop and then read the block color
+			// then go on until is_color_right(c) == false // then exit the if case.
+			
+			temp = read_color_right(c,cal);
+			rezept.push_back(temp);
+			
+			int time_start(time(0));
+			
+			while(time_start+1 >= time(0)) {
+			test(s.value(),1,a,b);
+			a.run_forever();
+			b.run_forever();
+			}
+			//std::cout << temp.red << ';' << temp.green << ';'<< temp.blue << std::endl;
+
+		} // stop and wait 500 ms
+		
+		test(s.value(),1,a,b);
 		a.run_forever();
 		b.run_forever();
 		
@@ -85,7 +107,8 @@ void robot::read_recepie(){
 	}
 	a.stop();
 	b.stop();
-	//std::cout << read_color_right(s).red << read_color_right(s).green << read_color_right(s).blue;
+	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
+	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
 }
 
 
@@ -198,29 +221,29 @@ void robot::read_recepie(){
 // 	return stones.error == 0;
 // }
 
-void robot::go_until(tank_functions &input,infrared_sensor &input2) {						 //, depends f
-	float val(0);
-	while (!stone_front(input2)) {															//as long as no stone is found go straigt
-		val = input.s.value();
-		drive(val, input.speed, 1, input.a, input.b);
-		input.a.run_forever();
-		input.b.run_forever();
-	}
-}
+// void robot::go_until(tank_functions &input,infrared_sensor &input2) {						 //, depends f
+// 	float val(0);
+// 	while (!stone_front(input2)) {															//as long as no stone is found go straigt
+// 		val = input.s.value();
+// 		drive(val, input.speed, 1, input.a, input.b);
+// 		input.a.run_forever();
+// 		input.b.run_forever();
+// 	}
+// }
 
 
 
-void robot::back_sec(motor &a, motor &b, float throttle, float time) {						
-	while (!button::back.pressed()){
-		robot::drive(1, -throttle, 1, a, b);
-			a.set_time_sp(time);
-			b.set_time_sp(time);
-			a.run_timed();
-			b.run_timed();
-		}
-	a.stop();
-	b.stop();
-}
+// void robot::back_sec(motor &a, motor &b, float throttle, float time) {						
+// 	while (!button::back.pressed()){
+// 		robot::drive(1, -throttle, 1, a, b);
+// 			a.set_time_sp(time);
+// 			b.set_time_sp(time);
+// 			a.run_timed();
+// 			b.run_timed();
+// 		}
+// 	a.stop();
+// 	b.stop();
+// }
 
 
 void robot::follow_line_d(){
@@ -267,7 +290,7 @@ void robot::test(int light_val, float throttle, motor right, motor left) {
 	
 	speed_right = 300 * (speed_right/100); // abbild von den 
 	speed_left = 300 * (speed_left/100);
-	std::cout<< speed_left << ';' << speed_right << std::endl;
+//	std::cout<< speed_left << ';' << speed_right << std::endl;
 	right.set_speed_sp(-speed_right);
 	left.set_speed_sp(-speed_left);
 }
@@ -275,72 +298,6 @@ void robot::test(int light_val, float throttle, motor right, motor left) {
 
 
 
-
-
-void robot::drive(float steering, float throttle,int mode, motor a, motor b){
-    float motA, motAS, motATS, motB, motBS, motBTS;
-	int minSpeed = 000;
-	int maxSpeed = 100;
-
-    // if(throttle>0){ //funciona
-    //     motATS=constrain(throttle*(1+steering), -1, 1);
-    //     motBTS=constrain(throttle*(1-steering), -1, 1);
-    // }else{
-    //     motATS=constrain(throttle*(1-steering), -1, 1);
-    //     motBTS=constrain(throttle*(1+steering), -1, 1);
-    // }
-
-    // if(throttle<0){
-    //     motATS=constrain(throttle*(1-steering), -1, 1);
-    //     motBTS=constrain(throttle*(1+steering ), -1, 1);
-    // }else{
-    //     motATS=constrain(throttle*(1+steering), -1, 1);
-    //     motBTS=constrain(throttle*(1-steering), -1, 1);
-    // }
-
-	// black 338
-	// white 536
-	
-	steering = floatMap(steering,350,600,0,1);
-
-    if(mode==1 && throttle<0){
-        motATS=constrain(throttle*(1-steering), -1, 1);
-        motBTS=constrain(throttle*(1+steering), -1, 1);
-    }else{
-        motATS=constrain(throttle*(1+steering), -1, 1);
-        motBTS=constrain(throttle*(1-steering), -1, 1);
-    }
-    if(mode==1){
-        motAS=+steering*(1-abs(throttle));
-        motBS=-steering*(1-abs(throttle));
-    }else if(mode==0){
-        motAS=0;
-        motBS=0;
-    }
-
-    motA=constrain(motATS+motAS, -1, 1);
-    motB=constrain(motBTS+motBS, -1, 1);
-	
-	if(motA>0){
-        a.set_speed_sp(-floatMap(motA,0,1,minSpeed,maxSpeed));
-    }else if(motA<0){
-        a.set_speed_sp(-floatMap(abs(motA),0,1,minSpeed,maxSpeed));
-    }else{
-        a.set_speed_sp(0);
-    }
-
-    if(motB>0){
-        b.set_speed_sp(-floatMap(motB,0,1,minSpeed,maxSpeed));
-    }else if(motB<0){
-        b.set_speed_sp(-floatMap(abs(motB),0,1,minSpeed,maxSpeed));
-    }else{
-        b.set_speed_sp(0);
-    }
-	
-
-	cout << a.speed();
-	cout << ';' << b.speed() << endl;
-}
 
 float robot::floatMap(float vx, float v1, float v2, float n1, float n2){//this function maps vx in the range v1 to v2 to the new range n1 and n2
     // v1 start of range, v2 end of range, vx the starting number between the range

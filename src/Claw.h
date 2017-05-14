@@ -2,17 +2,17 @@
 #define CLAW_H
 	
 	#include "ev3dev.h"
-	
+	#include <iostream>
 	using namespace ev3dev;	
 	
 	class Claw
 	{
 		public:
-			
-			void  open();
-			void  close();
-			void  lift();
-			void  lower();
+		
+			bool  open();
+			bool  close();
+			bool  lift();
+			bool  lower();
 		
 	};
 #endif
