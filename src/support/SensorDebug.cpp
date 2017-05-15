@@ -29,7 +29,7 @@ void SensorDebug::PrintLightValues(){
 	s.set_mode(light_sensor::mode_reflect);
 	while(!escape){
 		std::cout << "TrackingSensor: " << s.value() << std::endl;
-		escape = button::back.pressed();
+		escape = button::button::back.pressed();
 	}
 
 }
@@ -39,7 +39,10 @@ void SensorDebug::PrintInfraredValues(){
 	infrared_sensor s(INPUT_1);
 	while(!escape){
 		std::cout << "Proximity: "<< s.proximity() << std::endl;
-		escape = button::back.pressed();
+		escape = button::button::back.pressed();
 	}
+
+	//Black 366
+	//Silver 767
 
 }

@@ -76,12 +76,11 @@ void robot::read_recepie(){
 	double val;
 	float throttle;
 	
-	while(button::back.pressed()){
+	while(button::button::back.pressed()){
 		color brick;
 		
 		if(is_color_right(c,cal)){
 
-			
 			// go a few milisecnds on, at the middle of the block stop and then read the block color
 			// then go on until is_color_right(c) == false // then exit the if case.
 			
@@ -89,7 +88,7 @@ void robot::read_recepie(){
 			rezept.push_back(temp);
 			
 			int time_start(time(0));
-			
+			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			while(time_start+1 >= time(0)) {
 			test(s.value(),1,a,b);
 			a.run_forever();
@@ -312,12 +311,12 @@ void robot::forward_motors(float correction){
 	correction *= 10;
 	
 	if(correction > 0) {
-		d.set_speed_sp(-100);
-		a.set_speed_sp(-100-correction*10);
+		d.set_speed_sp(100);
+		a.set_speed_sp(-100);
 	}
 	else if(correction < 0){
-		d.set_speed_sp(-100-correction*10);
-		a.set_speed_sp(-100);			
+		d.set_speed_sp(-100);
+		a.set_speed_sp(100);			
 	}
 	else if(correction == 0) {
 		d.set_speed_sp(-100);
@@ -326,5 +325,13 @@ void robot::forward_motors(float correction){
 	}
 		a.run_forever();
 		d.run_forever();
+
+
+	int counter(0);
+		 	int time_start(time(0));
+		 	while(time_start+6.25 >= time(0))counter++;
+			
+		a.stop();
+		d.stop();
 		
 }
