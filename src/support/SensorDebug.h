@@ -11,6 +11,7 @@
 	class SensorDebug
 	{
 		public:
+		
 			void PrintColorValue();			//BrickColorDetection
 			void PrintInfraredValues();		//ProximitySensor
 			void PrintGyroValues();			//GyroSensor

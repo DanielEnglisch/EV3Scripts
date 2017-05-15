@@ -8,7 +8,14 @@
 	class Claw
 	{
 		public:
-		
+			 ~Claw(){
+				wait();
+				wait();
+				open();
+				lower();
+				wait();
+			 }
+			int wait();
 			bool  open();
 			bool  close();
 			bool  lift();
