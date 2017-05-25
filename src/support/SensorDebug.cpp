@@ -6,7 +6,7 @@ void SensorDebug::PrintColorValue(){
 	cs.set_mode(color_sensor::mode_col_color);
 	
 	while(end){
-	std::cout << "R:"<< std::get<0>(cs.raw())<< std::endl << "G:"<< std::get<1>(cs.raw())<< std::endl << "B:"<< std::get<2>(cs.raw())<< std::endl;
+	std::cout << std::get<0>(cs.raw())<<  ";"<< std::get<1>(cs.raw()) << ";"<< std::get<2>(cs.raw())<< std::endl;
 	end = button::button::back.pressed();
 	}
 }
