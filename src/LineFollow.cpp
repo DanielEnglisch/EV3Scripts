@@ -59,8 +59,8 @@ void robot::read_recepie(){
 	while(button::back.pressed()){
 		color brick;
 		
-		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 10)){
-		//if(is_color_right(right_color, cal)){
+		//if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 10)){
+		if(is_color_right(right_color, cal) && ){ // temp = white || temp =={0,0,0}
 			temp = read_color_right(right_color, cal);
 			rezept.push_back(temp);
 
