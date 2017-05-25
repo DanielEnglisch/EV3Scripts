@@ -55,7 +55,7 @@ void robot::read_recepie(){
 	color cal = read_color_right(right_color, temp);
 	//std::cout << "CAL" << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
-		cal = {0,};
+		cal = {-35,0,0};
 	while(button::back.pressed()){
 		color brick;
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
