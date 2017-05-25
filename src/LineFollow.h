@@ -6,7 +6,7 @@
 	#include <vector>
 	#include <cmath>				 //only std::abs used
 	#include <tuple> 
-
+	#include <string>
 	using namespace ev3dev;			//using ev3dev::motor;
 
 	using std::cout; using std::endl; using std::abs; using std::vector;
