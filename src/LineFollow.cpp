@@ -73,7 +73,7 @@ void robot::read_recepie(){
 			fix(temp);
 			rezept.push_back(temp);
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\n█████\n\x1b[0m" << std::endl;
+			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 		 }
 			
 		steer(line_sensor.value(),m_left,m_right,200);
