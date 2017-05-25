@@ -76,9 +76,9 @@ void robot::read_recepie(){
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\n█████\n\x1b[0m" << std::endl;
 		 }
 			
-		// steer(line_sensor.value(),m_left,m_right,200);
-		// m_right.run_forever();
-		// m_left.run_forever();
+		steer(line_sensor.value(),m_left,m_right,200);
+		m_right.run_forever();
+		m_left.run_forever();
 		escape = button::back.pressed();
 	}
 
