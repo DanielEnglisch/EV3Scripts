@@ -1,5 +1,5 @@
-#include "support/SensorDebug.h"
-//#include "LineFollow.h"
+//#include "support/SensorDebug.h"
+#include "LineFollow.h"
 #include "UserInterface.h"
 
 int main(){
