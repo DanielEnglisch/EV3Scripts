@@ -55,17 +55,17 @@ void robot::read_recepie(){
 	color cal = read_color_right(right_color, temp);
 	//std::cout << "CAL" << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
-
+		cal = {0,};
 	while(button::back.pressed()){
 		color brick;
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
-		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 30) && (temp.red + temp.green + temp.blue) < 250){
+		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 20) ){ // && (temp.red + temp.green + temp.blue) < 300
 		//if(is_color_right(right_color, cal) && color){ // temp = white || temp =={0,0,0}
 			temp = read_color_right(right_color, cal);
 			rezept.push_back(temp);
 
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "printf '\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m########\x1b[0m\n'" << std::endl;
+			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m########\x1b[0m" << std::endl;
 		 	//steer(line_sensor.value(),m_right, m_left, speed);
 	 			// m_right.set_position_sp(-200);
 				// m_left.set_position_sp(-200);
