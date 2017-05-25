@@ -59,31 +59,31 @@ void robot::read_recepie(){
 	while(button::back.pressed()){
 		color brick;
 		
-		//if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 10)){
-		if(is_color_right(right_color, cal)){
+		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 10)){
+		//if(is_color_right(right_color, cal)){
 			temp = read_color_right(right_color, cal);
 			rezept.push_back(temp);
 
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 
 		 	//steer(line_sensor.value(),m_right, m_left, speed);
-	 			m_right.set_position_sp(-200);
-				m_left.set_position_sp(-200);
+	 			// m_right.set_position_sp(-200);
+				// m_left.set_position_sp(-200);
 
-				int count(0);
-				int actual_l = m_left.position_sp()-200;	
-				int actual_r = m_right.position_sp()-200;	
-				m_right.run_to_rel_pos();
-				m_left.run_to_rel_pos();
+				// int count(0);
+				// int actual_l = m_left.position_sp()-200;	
+				// int actual_r = m_right.position_sp()-200;	
+				// m_right.run_to_rel_pos();
+				// m_left.run_to_rel_pos();
 
-				while (m_right.position_sp() > actual_r ||m_left.position_sp()> actual_l  )count++;
+			//	while (m_right.position_sp()-50 > actual_r ||m_left.position_sp()-50> actual_l)count++;
 			//std::cout << temp.red << ';' << temp.green << ';'<< temp.blue << std::endl;
 
 		} // stop and wait 500 ms
 		
-		//steer(line_sensor.value(),m_right,m_left, speed);
-		//m_right.run_forever();
-		//m_left.run_forever();
+		steer(line_sensor.value(),m_right,m_left, speed);
+		m_right.run_forever();
+		m_left.run_forever();
 		
 		escape = button::back.pressed();
 	}
