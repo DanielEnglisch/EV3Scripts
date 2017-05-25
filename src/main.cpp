@@ -6,7 +6,7 @@ int main(){
 	robot r;
 	//r.follow_line_d();
 	r.read_recepie();
-	// SensorDebug ss;
+	 //SensorDebug ss;
 	// ss.PrintColorValue();
 //	UserInterface::buttonTest();
 

@@ -33,17 +33,13 @@ bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
 }
-
-robot::color robot::fix(color const & in2){
-	color in = in2;
+void robot::fix(color &in){
 	if (in.red > 255) in.red = 255;
 	else if (in.red <0) in.red = 0;
 	if (in.green > 255) in.green = 255;
 	else if (in.green <0) in.green = 0;
 	if (in.blue > 255) in.blue = 255;
 	else if (in.blue <0) in.blue = 0;
-
-	return in;
 }
 
 void robot::read_recepie(){
@@ -67,37 +63,25 @@ void robot::read_recepie(){
 	color cal = read_color_right(right_color, temp);
 	//std::cout << "CAL" << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
-		cal = {-35,0,0};
+	
 	while(button::back.pressed()){
 		color brick;
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
-		if(is_color_right(fix(right_color.value()), cal) && !is_color_equal(read_color_right(right_color, cal),temp, 50) ){ // && (temp.red + temp.green + temp.blue) < 300
-		//if(is_color_right(right_color, cal) && color){ // temp = white || temp =={0,0,0}
-			temp = fix(read_color_right(right_color, cal));
+		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, {-30,80,0}),temp, 50)  && !is_color_equal(read_color_right(right_color,{-30,80,0}),{255,255,255},60)){ // && (temp.red + temp.green + temp.blue) < 300
+		//if(is_color_right(right_color,cal)){ // temp = white || temp =={0,0,0}
+			temp = read_color_right(right_color, {-30,80,0});
+			fix(temp);
 			rezept.push_back(temp);
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m########\x1b[0m" << std::endl;
-		 	//steer(line_sensor.value(),m_right, m_left, speed);
-	 			// m_right.set_position_sp(-200);
-				// m_left.set_position_sp(-200);
-
-				// int count(0);
-				// int actual_l = m_left.position_sp()-200;	
-				// int actual_r = m_right.position_sp()-200;	
-				// m_right.run_to_rel_pos();
-				// m_left.run_to_rel_pos();
-
-			//	while (m_right.position_sp()-50 > actual_r ||m_left.position_sp()-50> actual_l)count++;
-			//std::cout << temp.red << ';' << temp.green << ';'<< temp.blue << std::endl;
-
-		} // stop and wait 500 ms
-		
-		steer(line_sensor.value(),m_right,m_left, speed);
-		m_right.run_forever();
-		m_left.run_forever();
-		
+			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\n█████\n\x1b[0m" << std::endl;
+		 }
+			
+		// steer(line_sensor.value(),m_left,m_right,200);
+		// m_right.run_forever();
+		// m_left.run_forever();
 		escape = button::back.pressed();
 	}
+
 	m_right.stop();
 	m_left.stop();
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
