@@ -33,13 +33,17 @@ bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
 }
-void robot::fix(color &in){
+
+robot::color robot::fix(color const & in2){
+	color in = in2;
 	if (in.red > 255) in.red = 255;
 	else if (in.red <0) in.red = 0;
 	if (in.green > 255) in.green = 255;
 	else if (in.green <0) in.green = 0;
 	if (in.blue > 255) in.blue = 255;
 	else if (in.blue <0) in.blue = 0;
+
+	return in;
 }
 
 void robot::read_recepie(){
@@ -67,12 +71,10 @@ void robot::read_recepie(){
 	while(button::back.pressed()){
 		color brick;
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
-		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, cal),temp, 20) ){ // && (temp.red + temp.green + temp.blue) < 300
+		if(is_color_right(fix(right_color.value()), cal) && !is_color_equal(read_color_right(right_color, cal),temp, 50) ){ // && (temp.red + temp.green + temp.blue) < 300
 		//if(is_color_right(right_color, cal) && color){ // temp = white || temp =={0,0,0}
-			temp = read_color_right(right_color, cal);
-			fix(temp);
+			temp = fix(read_color_right(right_color, cal));
 			rezept.push_back(temp);
-
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m########\x1b[0m" << std::endl;
 		 	//steer(line_sensor.value(),m_right, m_left, speed);

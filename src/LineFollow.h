@@ -31,7 +31,7 @@
 			float			red_cl = 10;																					//red color level of right sensor
 			float			black_cl = 0;																				//black color level of right sensor
 			float			blue_cl = 2;	
-			void 			fix(color &in);																				//blue color level of right sensor
+			color 			fix(color in);																				//blue color level of right sensor
 		public:
 			//robot	();
 
