@@ -7,6 +7,6 @@
 	class Tank
 	{
 		public:
-		
+			
 	};
 #endif
