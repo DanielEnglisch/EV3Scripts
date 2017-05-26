@@ -102,19 +102,22 @@ void robot::fix(color &in){
 
 bool robot::is_in(color const & in){
 	for(color x: recipe){
-		if(is_color_equal(x,in,deviation))
+		if(is_color_equal(x,in,deviation)){
+			x = {-1,-1,-1};
+			return true;
+		}
 	}
-
+	return false;
 }
 
-
-
 void robot::get_stones(){
-int speed(200);
+	
+	int speed(200);
 	color temp = {0,0,0};
 	short escape = 1;
 	double val;
 	float throttle;
+	
 	
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
@@ -133,6 +136,23 @@ int speed(200);
 
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);	
+			if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
+			else{ 	
+					// turn left 90
+					// go until stone
+					// grab stone
+					// turn 180
+					// go until stone
+					// turn left 90
+					// go until stone(box)
+				turn(90, m_right,m_left);
+				go_straight(200,speed,m_right,m_left);
+				grab_stone();
+				turn(180,m_right, m_left);
+				go_straight(200,speed,m_right,m_left);
+				turne(90,m_right, m_left);
+				go_straight(200,speed,m_right,m_left);
+			}
 		}		
 	 }
 		steer(line_sensor.value(),m_left,m_right,speed);
