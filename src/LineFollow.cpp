@@ -21,11 +21,11 @@ bool robot::is_color_right(color_sensor & right_color, color const &cal) {
 }
 
 color robot::read_color_right(color_sensor & right_color, color const & cal){
-	color temp={0,0,0};
-	for (int i = 1; i <= 10; ++i){
-	temp.red   = std::get<0>(right_color.raw());
-	temp.green = std::get<1>(right_color.raw());
-	temp.blue  = std::get<2>(right_color.raw());
+	color temp;
+	for (int i = 0; i < 11; ++i){
+	temp.red   += std::get<0>(right_color.raw());
+	temp.green += std::get<1>(right_color.raw());
+	temp.blue  += std::get<2>(right_color.raw());
 	}
 	temp.red /=10;
 	temp.green /=10;
@@ -33,10 +33,6 @@ color robot::read_color_right(color_sensor & right_color, color const & cal){
 	return temp;
 }
 
-robot::color robot::boost(color in) {
-
-
-}
 bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	return abs(in1.red-in2.red)<deviation &&
 	abs(in1.green-in2.green)<deviation && 
@@ -55,7 +51,7 @@ void robot::fix(color &in){
 void robot::read_recepie(){
 	int speed(200);
 	color temp;
-	bool escape = false;
+	short escape = 1;
 	double val;
 	float throttle;
 	
@@ -68,13 +64,14 @@ void robot::read_recepie(){
 	color_sensor right_color (INPUT_3);
 	right_color.set_mode(color_sensor::mode_col_color);
 
-	temp.red = 0; temp.green = 0; temp.blue = 0;
+	temp.red = 0; temp.green = 0; temp.blue =0;
 	recepie rezept;
-	color cal = read_color_right(right_color, temp);
-	//std::cout << "CAL" << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
+	color cal = temp;//read_color_right(right_color, temp);
+
+	std::cout << "CALIBRATION: " << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
 	
-	while(button::back.pressed()){
+	while(button::back.pressed() || (escape != 0) ){
 		color brick = {255,255,255};
 		
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
@@ -82,13 +79,13 @@ void robot::read_recepie(){
 			is_color_right(right_color, cal) && 
 			!is_color_equal(read_color_right(right_color, {-30,80,0}),temp, 90)  //&& 
 			){ // && (temp.red + temp.green + temp.blue) < 300
-		
+		escape = 2;
 		//if(is_color_right(right_color,cal)){ // temp = white || temp =={0,0,0}
 			brick = temp;
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);
 			
-			if(is_color_equal(brick,{255,255,255},80) && !is_color_equal(temp,{255,255,255},80)){
+			if(is_color_equal(brick,{255,255,255},60) && !is_color_equal(temp,{255,255,255},60)){
 
 			std::cout << "NOT WIHITE!" << std::endl;
 			rezept.push_back(temp);
@@ -96,7 +93,10 @@ void robot::read_recepie(){
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 
-			}
+			}else if(!is_color_right(right_color, cal) && escape == 2){
+				std::cout << "NOSTONE" << std::endl;
+  				 escape = 0;
+		}
 
 			
 		 }
