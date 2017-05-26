@@ -49,77 +49,30 @@ void robot::fix(color &in){
 }
 
 	void robot::turn(int degrees, motor & m_right, motor & m_left){
-		m_left.set_position_sp(200);
+		//go forward 200
+		m_left.set_position_sp(-200);
 		m_right.set_position_sp(-200);
+		m_left.set_speed_sp(-500);
+		m_right.set_speed_sp(-500);
+		m_left.run_to_rel_pos();
+		m_right.run_to_rel_pos();
+
+		//turn left 90
+		m_left.set_position_sp(350);
+		m_right.set_position_sp(-350);
+	
+		m_left.set_speed_sp(500);
+		m_right.set_speed_sp(-500);
 		
-		m_left.set_speed_sp(200);
-		m_right.set_speed_sp(-200);
-		m_left.run_to_rel_pos(200);
-		m_right.run_to_rel_pos(-200);
+		m_left.run_to_rel_pos();
+		m_right.run_to_rel_pos();
 	}
 
 
 void robot::get_stones(){
-	
-int speed(200);
-	color temp;
-	short escape = 1;
-	double val;
-	float throttle;
-	
-	motor m_right(OUTPUT_A);
-	motor m_left(OUTPUT_D);
+std::cout << "asdasd";
 
-	light_sensor line_sensor (INPUT_2);
-	line_sensor.set_mode(light_sensor::mode_reflect);
-
-	color_sensor right_color (INPUT_3);
-	right_color.set_mode(color_sensor::mode_col_color);
-
-	temp.red = 0; temp.green = 0; temp.blue =0;
-	
-	recepie rezept = recipie;
-	
-	color cal = temp;
-
-	while(button::back.pressed()  && !rezept.empty() ){
-
-		if(is_color_right(right_color, cal)){ 
-			
-			turn(180);				
-			
-
-
-
-			// turn left
-			// go as long as no stone is in front
-			// if stone is in front
-			// pick up stone,
-			// turn 180°
-			// go until stone is in front
-			// go left as long as nothing is in fornt
-			// drop stone
-			 
-			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-
-			}
-
-		}
-
-		steer(line_sensor.value(),m_left,m_right,200);
-		m_right.run_forever();
-		m_left.run_forever();
-		escape = button::back.pressed();
-	}
-
-	m_right.stop();
-	m_left.stop();
-	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
-	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
-	recipie = rezept;
 }
-
 
 
 void robot::read_recepie(){
@@ -186,6 +139,7 @@ void robot::read_recepie(){
 	m_left.stop();
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
 	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
+	recipie = rezept;
 }
 
 

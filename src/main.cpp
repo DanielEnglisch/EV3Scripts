@@ -7,7 +7,6 @@ int main(){
 
 	motor m_left(OUTPUT_A);
 	motor m_right(OUTPUT_D);
-	
 	r.turn(0,m_left, m_right);
 	
 	//r.follow_line_d();
