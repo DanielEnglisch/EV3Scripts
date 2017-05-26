@@ -48,6 +48,13 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
+void robot::turn(int degrees){
+
+
+}
+
+
+
 void robot::get_stones(){
 	
 int speed(200);
@@ -106,11 +113,7 @@ int speed(200);
 	m_left.stop();
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
 	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
-
-
-
-
-
+	recipie = rezept;
 }
 
 

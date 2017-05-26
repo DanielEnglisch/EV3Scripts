@@ -33,7 +33,8 @@
 			float			blue_cl = 2;	
 			void 			fix(color &in);
 			color		 	boost(color in); 
-			recepie 		recipie;																					//blue color level of right sensor
+			recepie 		recipie;
+			void 			turn(int degrees);																					//blue color level of right sensor
 		public:
 			//robot	();
 
