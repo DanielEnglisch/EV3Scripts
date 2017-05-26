@@ -47,7 +47,7 @@
 				// void turn_left(tank_functions &input){};
 				// bool get_stone(){return false;}
 				// bool drop_stone(){return false;}
-
+				void go_straight(int pos, int speed, motor & m_right, motor &m_left);
 				void turn(int degrees, motor & m_right, motor & m_left);
 				void get_stones();
 				bool is_color_right(color_sensor & right_color, color const &cal);
