@@ -118,21 +118,13 @@ int speed(200);
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 
 			temp = read_color_right(right_color, {-30,80,0});
-			fix(temp);
-			
-		}
-
-			
+			fix(temp);	
+		}		
 	 }
-		
 		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
 		escape = button::back.pressed();
-
-
-
-
 }
 
 
@@ -165,7 +157,7 @@ void robot::read_recepie(){
 	right_color.set_mode(color_sensor::mode_col_color);
 
 	temp.red = 0; temp.green = 0; temp.blue =0;
-	recepie rezept;
+	recipe_t rezept;
 	color cal = temp;//read_color_right(right_color, temp);
 
 	std::cout << "CALIBRATION: " << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;

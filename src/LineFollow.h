@@ -21,14 +21,15 @@
 		int blue;
 	};
 
-	typedef						std::vector<color>  recepie;
+	typedef						std::vector<color>  recipe_t;
 
 	class robot
 	{
 		private:
+			recipe_t 		recipe;
+			
 			void 			fix(color &in);
 			color		 	boost(color in); 
-			recepie 		recipe;
 			void 			turn(int degrees);
 			void			save_recepie();		
 			bool			is_in(color const & in);	
