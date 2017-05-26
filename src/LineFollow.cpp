@@ -48,11 +48,9 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
-void robot::turn(int degrees){
-
-
-}
-
+	void robot::turn(int degrees, motor & right, motor & left){
+	
+	}
 
 
 void robot::get_stones(){
