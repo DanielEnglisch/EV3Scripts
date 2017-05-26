@@ -8,7 +8,7 @@
 	#include <tuple> 
 	#include <string>
 	#incldue <fstream>
-	
+
 	using namespace ev3dev;			//using ev3dev::motor;
 
 	using std::cout; using std::endl; using std::abs; using std::vector;
@@ -37,7 +37,16 @@
 			color		 	boost(color in); 
 			recepie 		recipie;
 			void 			turn(int degrees);
-			void			save_recepie();																					//blue color level of right sensor
+			void			save_recepie();		
+			bool			is_in(color const & in);	
+			void			go_straight(int pos, int speed, motor & m_right, motor &m_left);
+			void			turn(int degrees, motor & m_right, motor & m_left);	
+			void			steer(int light_val, motor & m_left, motor & m_right, int throttle);
+			float			floatMap(float vx, float v1, float v2, float n1, float n2);
+			void			forward_motors(float correction);							
+			bool			is_color_right(color_sensor & right_color, color const &cal);
+			color			read_color_right(color_sensor & right_color, color const & cal);										//blue color level of right sensor
+			bool			is_color_equal(color const &in1, color const &in2,int deviation);
 		public:
 			//robot	();
 
@@ -50,17 +59,11 @@
 				// void turn_left(tank_functions &input){};
 				// bool get_stone(){return false;}
 				// bool drop_stone(){return false;}
-				void go_straight(int pos, int speed, motor & m_right, motor &m_left);
-				void turn(int degrees, motor & m_right, motor & m_left);
+				
 				void get_stones();
-				bool is_color_right(color_sensor & right_color, color const &cal);
-				color read_color_right(color_sensor & right_color, color const & cal);
-				bool is_color_equal(color const &in1, color const &in2,int deviation);
 				void read_recepie();
 				void follow_line_d();
-				void steer(int light_val, motor & m_left, motor & m_right, int throttle);
-				float floatMap(float vx, float v1, float v2, float n1, float n2);
-				void forward_motors(float correction);
+	
 
 
 		

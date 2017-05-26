@@ -86,11 +86,18 @@ void robot::fix(color &in){
 
 
 
+bool robot::is_in(color const & in){
+
+
+
+
+}
+
 
 
 void robot::get_stones(){
 int speed(200);
-	color temp;
+	color temp = {0,0,0};
 	short escape = 1;
 	double val;
 	float throttle;
@@ -104,23 +111,21 @@ int speed(200);
 	color_sensor right_color (INPUT_3);
 	right_color.set_mode(color_sensor::mode_col_color);
 
-	temp.red = 0; temp.green = 0; temp.blue =0;
-	recepie rezept;
 	color cal = temp;//read_color_right(right_color, temp);
 
 	while(button::back.pressed()){
-		color brick = {255,255,255};
+	
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);
-						
+			
 		}
 
 			
 	 }
 		
-		steer(line_sensor.value(),m_left,m_right,200);
+		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
 		escape = button::back.pressed();
