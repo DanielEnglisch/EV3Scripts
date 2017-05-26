@@ -114,24 +114,12 @@ int speed(200);
 
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);
-			
-			if(is_color_equal(brick,{255,255,255},60) && !is_color_equal(temp,{255,255,255},60)){
-
-			std::cout << "NOT WIHITE!" << std::endl;
-			rezept.push_back(temp);
-
-			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-
-		
+						
 		}
 
 			
-		 }
-		 else if(!is_color_right(right_color, cal) && escape == 2){
-				std::cout << "NOSTONE" << std::endl;
-  				 escape = 0;
-		 }
+	 }
+		
 		steer(line_sensor.value(),m_left,m_right,200);
 		m_right.run_forever();
 		m_left.run_forever();
