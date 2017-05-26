@@ -48,20 +48,24 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
-	void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left);
+	void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 
+std::cout << "asdasd";
+	}
 
 	void robot::turn(int degrees, motor & m_right, motor & m_left){
 		//go forward 200
 		int pos_l = m_left.position_sp();
-		int pos_r = m_r.position_sp();
+		int pos_r = m_right.position_sp();
 		m_left.set_position_sp(-200);
 		m_right.set_position_sp(-200);
 		m_left.set_speed_sp(-500);
 		m_right.set_speed_sp(-500);
 		m_left.run_to_rel_pos();
 		m_right.run_to_rel_pos();
-		while(m_left.position_sp() >= pos_l && m_left.position_sp() >= pos_l)
+		int counter(0);
+		while(m_left.position_sp() >= pos_l && m_left.position_sp() >= pos_l) counter++;
+
 		//turn left 90
 		m_left.set_position_sp(350);
 		m_right.set_position_sp(-350);
