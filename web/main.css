@@ -66,8 +66,8 @@ p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
 button{ 
      background-image: url("https://cdn.suwalls.com/wallpapers/digital-art/blue-lego-board-44279-400x250.jpg");
     background-color: #555555; /* Green */
-    position:absolute;
-    border: none;
+    position:relative;
+    margin: 20px;
     color: white;
     padding: 15px 32px;
     text-align: center;
