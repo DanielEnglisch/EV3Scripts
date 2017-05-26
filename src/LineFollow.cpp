@@ -21,18 +21,28 @@ bool robot::is_color_right(color_sensor & right_color, color const &cal) {
 }
 
 color robot::read_color_right(color_sensor & right_color, color const & cal){
-	color temp;
+	color temp={0,0,0};
+	for (int i = 1; i <= 10; ++i){
 	temp.red   = std::get<0>(right_color.raw());
 	temp.green = std::get<1>(right_color.raw());
 	temp.blue  = std::get<2>(right_color.raw());
+	}
+	temp.red /=10;
+	temp.green /=10;
+	temp.blue /=10;
 	return temp;
 }
 
+robot::color robot::boost(color in) {
+
+
+}
 bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	return abs(in1.red-in2.red)<deviation &&
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
 }
+
 void robot::fix(color &in){
 	if (in.red > 255) in.red = 255;
 	else if (in.red <0) in.red = 0;
@@ -58,22 +68,37 @@ void robot::read_recepie(){
 	color_sensor right_color (INPUT_3);
 	right_color.set_mode(color_sensor::mode_col_color);
 
-	temp.red = 0; temp.green = 0; temp.blue =0;
+	temp.red = 0; temp.green = 0; temp.blue = 0;
 	recepie rezept;
 	color cal = read_color_right(right_color, temp);
 	//std::cout << "CAL" << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
 	
 	while(button::back.pressed()){
-		color brick;
+		color brick = {255,255,255};
+		
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
-		if(is_color_right(right_color, cal) && !is_color_equal(read_color_right(right_color, {-30,80,0}),temp, 50)  && !is_color_equal(read_color_right(right_color,{-30,80,0}),{255,255,255},60)){ // && (temp.red + temp.green + temp.blue) < 300
+		if(
+			is_color_right(right_color, cal) && 
+			!is_color_equal(read_color_right(right_color, {-30,80,0}),temp, 90)  //&& 
+			){ // && (temp.red + temp.green + temp.blue) < 300
+		
 		//if(is_color_right(right_color,cal)){ // temp = white || temp =={0,0,0}
+			brick = temp;
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);
+			
+			if(is_color_equal(brick,{255,255,255},80) && !is_color_equal(temp,{255,255,255},80)){
+
+			std::cout << "NOT WIHITE!" << std::endl;
 			rezept.push_back(temp);
+
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+
+			}
+
+			
 		 }
 			
 		steer(line_sensor.value(),m_left,m_right,200);
