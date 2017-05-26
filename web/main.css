@@ -5,7 +5,7 @@ html, body {
 	height: 100%;
 	width: 100%;
 	/*background-color:#054f61;*/
-        background-image: url("https://thelegocarblog.files.wordpress.com/2013/07/lego-grey_00351245.jpg");
+        background-image: url("2.jpg");
 }
 /* =============== DEFAULT HTML - TEXT STYLES =============== */
 p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
@@ -64,7 +64,7 @@ p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
 }
 
 button{ 
-     background-image: url("https://cdn.suwalls.com/wallpapers/digital-art/blue-lego-board-44279-400x250.jpg");
+     background-image: url("1.jpg");
     background-color: #555555; /* Green */
     position:relative;
     margin: 20px;
