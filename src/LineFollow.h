@@ -47,7 +47,7 @@
 				// bool drop_stone(){return false;}
 
 
-
+				void get_stones();
 				bool is_color_right(color_sensor & right_color, color const &cal);
 				color read_color_right(color_sensor & right_color, color const & cal);
 				bool is_color_equal(color const &in1, color const &in2,int deviation);

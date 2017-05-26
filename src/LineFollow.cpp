@@ -48,6 +48,13 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
+void robot::get_stones(){
+std::cout << "asdasd";
+
+}
+
+
+
 void robot::read_recepie(){
 	int speed(200);
 	color temp;
@@ -93,14 +100,15 @@ void robot::read_recepie(){
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 
-			}else if(!is_color_right(right_color, cal) && escape == 2){
-				std::cout << "NOSTONE" << std::endl;
-  				 escape = 0;
+		
 		}
 
 			
 		 }
-			
+		 else if(!is_color_right(right_color, cal) && escape == 2){
+				std::cout << "NOSTONE" << std::endl;
+  				 escape = 0;
+		 }
 		steer(line_sensor.value(),m_left,m_right,200);
 		m_right.run_forever();
 		m_left.run_forever();

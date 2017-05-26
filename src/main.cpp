@@ -1,12 +1,13 @@
-//#include "support/SensorDebug.h"
-#include "LineFollow.h"
+#include "support/SensorDebug.h"
+//#include "LineFollow.h"
 //#include "UserInterface.h"
 
 int main(){
-	robot r;
+	//robot r;
 	//r.follow_line_d();
-	r.read_recepie();
-	 //SensorDebug ss;
+	//r.read_recepie();
+	 SensorDebug ss;
+	 ss.PrintInfraredValues();
 	// ss.PrintColorValue();
 //	UserInterface::buttonTest();
 
