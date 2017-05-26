@@ -20,6 +20,8 @@
       <?php
         $file = fopen("in.txt", "r");
         if ($file) {
+          $brick_count  = fgets($file);
+          echo  "<div class='numb'>$brick_count - Bricks gefunden!</div></br>";
           while (($line = fgets($file)) !== false) {
               $s = explode(";", $line);
               spawnBrick($s[0],$s[1],$s[2]);

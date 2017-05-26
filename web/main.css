@@ -12,7 +12,13 @@ p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
 	padding: 0;
 	margin: 5px 0 15px 0;
 }
-
+.numb{
+       font-family: "Arial", sans-serif;
+       text-align: left;
+       font-style: bold;
+       font-size: 20;
+       margin: 10px;
+    }
 #recipie-container{
     position: fixed;        
     left:10px;
