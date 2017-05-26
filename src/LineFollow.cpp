@@ -127,15 +127,12 @@ int speed(200);
 		escape = button::back.pressed();
 }
 
-
-
-
-
-void robot::save_recepie(){
-	std::ifstream  out("in.txt");
+void robot::save_recipe(){
+	std::ofstream  out("/var/www/html/in.txt");
 	if(out.good()){
 	out << recipe.size() << std::endl;
-	for(color x:rezept) out << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+	for(color x:recipe) out << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
 	}
 	out.close();
 }

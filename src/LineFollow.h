@@ -7,7 +7,7 @@
 	#include <cmath>				 //only std::abs used
 	#include <tuple> 
 	#include <string>
-	#incldue <fstream>
+	#include <fstream>
 
 	using namespace ev3dev;			//using ev3dev::motor;
 
@@ -31,7 +31,7 @@
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			void 			turn(int degrees);
-			void			save_recepie();		
+				
 			bool			is_in(color const & in);	
 			void			go_straight(int pos, int speed, motor & m_right, motor &m_left);
 			void			turn(int degrees, motor & m_right, motor & m_left);	
@@ -40,14 +40,14 @@
 			void			forward_motors(float correction);							
 			bool			is_color_right(color_sensor & right_color, color const &cal);
 			color			read_color_right(color_sensor & right_color, color const & cal);										//blue color level of right sensor
-			bool			is_color_equal(color const &in1, color const &in2,int deviation);
-	
+			bool			is_color_equal(color const &in1, color const &in2,int deviation);	
+			void			save_recipe();	
 		public:
 				
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 
-
+				
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();

@@ -9,9 +9,9 @@ int main(){
 	// motor m_right(OUTPUT_D);
 
 	//r.turn(0,m_left, m_right);
-	r.follow_line_d();	
+	//r.follow_line_d();	
 	//r.follow_line_d();
-	//r.read_recepie();
+	r.read_recepie();
 	//  SensorDebug ss;
 	//  ss.PrintInfraredValues();
 	// ss.PrintColorValue();
