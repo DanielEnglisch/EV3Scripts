@@ -142,7 +142,7 @@ int speed(200);
 void robot::save_recepie(){
 	std::ifstream  out("in.txt");
 	if(out.good()){
-	out << recipie.size() << std::endl;
+	out << recipe.size() << std::endl;
 	for(color x:rezept) out << x.red << ';' << x.green << ';' << x.blue << std::endl;	
 	}
 	out.close();
@@ -212,8 +212,8 @@ void robot::read_recepie(){
 	m_left.stop();
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
 	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
-	recipie = rezept;
-	save_recepie();
+	recipe = rezept;
+	save_recipe();
 }
 
 

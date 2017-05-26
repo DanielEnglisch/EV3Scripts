@@ -21,21 +21,14 @@
 		int blue;
 	};
 
-	//typedef					void(*action)		(recepie &, float, float);									
-	//typedef						bool(*depends)		(infrared_sensor &);												//TODO:  'depends'(trigger) function to work, to be able to use different triggers on a drive straigt function
 	typedef						std::vector<color>  recepie;
 
 	class robot
 	{
 		private:
-			float			yellow_cl = 0;																				//yellow color level of right sensor
-			float			green_cl = 5;																				//green color level of right sensor																			
-			float			red_cl = 10;																					//red color level of right sensor
-			float			black_cl = 0;																				//black color level of right sensor
-			float			blue_cl = 2;	
 			void 			fix(color &in);
 			color		 	boost(color in); 
-			recepie 		recipie;
+			recepie 		recipe;
 			void 			turn(int degrees);
 			void			save_recepie();		
 			bool			is_in(color const & in);	
@@ -47,19 +40,13 @@
 			bool			is_color_right(color_sensor & right_color, color const &cal);
 			color			read_color_right(color_sensor & right_color, color const & cal);										//blue color level of right sensor
 			bool			is_color_equal(color const &in1, color const &in2,int deviation);
+	
 		public:
-			//robot	();
-
-
-
-
-				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
-				// void turn_180(tank_functions &input){};												//TODO: turns the robot around
-				// void turn_right(tank_functions &input){};												//TODO: turns the robot right by 90deg
-				// void turn_left(tank_functions &input){};
-				// bool get_stone(){return false;}
-				// bool drop_stone(){return false;}
 				
+				//robot	();
+				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
+
+
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();
