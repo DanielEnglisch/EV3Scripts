@@ -49,32 +49,38 @@ void robot::fix(color &in){
 }
 
 	void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
-
-std::cout << "asdasd";
-	}
-
-	void robot::turn(int degrees, motor & m_right, motor & m_left){
-		//go forward 200
-		int pos_l = m_left.position_sp();
-		int pos_r = m_right.position_sp();
-		m_left.set_position_sp(-200);
-		m_right.set_position_sp(-200);
-		m_left.set_speed_sp(-500);
-		m_right.set_speed_sp(-500);
+		int pos_l = m_left.position();
+		int pos_r = m_right.position();
+		
+		m_left.set_position_sp(-pos);
+		m_right.set_position_sp(-pos);
+		m_left.set_speed_sp(-speed);
+		m_right.set_speed_sp(-speed);
 		m_left.run_to_rel_pos();
 		m_right.run_to_rel_pos();
 		int counter(0);
-		while(m_left.position_sp() >= pos_l && m_left.position_sp() >= pos_l) counter++;
+		while(m_left.position() >= pos_l-pos && m_right.position() >= pos_r-pos) counter++;//  std::cout <<"POS-NOW: " << m_left.position() << " pos_target:" <<pos_l-pos << std::endl;
+		//
+	}
+
+	void robot::turn(int degrees, motor & m_right, motor & m_left){
+		go_straight(400,500,m_right,m_left);
 
 		//turn left 90
-		m_left.set_position_sp(350);
-		m_right.set_position_sp(-350);
+		int pos_l = m_left.position();
+		int pos_r = m_right.position();
+		int pos  = 325;
+
+		m_left.set_position_sp(pos);
+		m_right.set_position_sp(-pos);
 	
 		m_left.set_speed_sp(500);
 		m_right.set_speed_sp(-500);
 		
 		m_left.run_to_rel_pos();
 		m_right.run_to_rel_pos();
+		int counter(0);
+		while(m_left.position() >= pos_l+pos || m_right.position() >= pos_r-pos) ++counter;
 	}
 
 
