@@ -48,8 +48,14 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
-	void robot::turn(int degrees, motor & right, motor & left){
-	
+	void robot::turn(int degrees, motor & m_right, motor & m_left){
+		m_left.set_position_sp(200);
+		m_right.set_position_sp(-200);
+		
+		m_left.set_speed_sp(200);
+		m_right.set_speed_sp(-200);
+		m_left.run_to_rel_pos(200);
+		m_right.run_to_rel_pos(-200);
 	}
 
 
