@@ -64,12 +64,12 @@ void robot::fix(color &in){
 	}
 
 	void robot::turn(int degrees, motor & m_right, motor & m_left){
-		go_straight(400,500,m_right,m_left);
+		go_straight(325,500,m_right,m_left);
 
 		//turn left 90
 		int pos_l = m_left.position();
 		int pos_r = m_right.position();
-		int pos  = 325;
+		int pos  = 400;
 
 		m_left.set_position_sp(pos);
 		m_right.set_position_sp(-pos);
@@ -80,7 +80,8 @@ void robot::fix(color &in){
 		m_left.run_to_rel_pos();
 		m_right.run_to_rel_pos();
 		int counter(0);
-		while(m_left.position() >= pos_l+pos || m_right.position() >= pos_r-pos) ++counter;
+		std::cout <<"POS-NOW: " << m_left.position() << " pos_target:" <<pos_l-pos << std::endl;
+		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) std::cout <<"POS-NOW: " << m_left.position() << " pos_target:" <<pos_l+pos << std::endl;
 	}
 
 
@@ -166,6 +167,8 @@ void robot::follow_line_d(){
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
 
+	turn(0,  m_right,m_left);
+	std::cout << "turn fhinished!"<< std::endl;
 	while(button::back.pressed()){
 		steer(line_sensor.value(),m_left, m_right,1000);
 		m_right.run_forever();

@@ -5,10 +5,11 @@
 int main(){
 	robot r;
 
-	motor m_left(OUTPUT_A);
-	motor m_right(OUTPUT_D);
-	r.turn(0,m_left, m_right);
-	
+	// motor m_left(OUTPUT_A);
+	// motor m_right(OUTPUT_D);
+
+	//r.turn(0,m_left, m_right);
+	r.follow_line_d();	
 	//r.follow_line_d();
 	//r.read_recepie();
 	//  SensorDebug ss;

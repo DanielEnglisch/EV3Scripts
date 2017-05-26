@@ -1,0 +1,113 @@
+ 
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	/*background-color:#054f61;*/
+        background-image: url("https://thelegocarblog.files.wordpress.com/2013/07/lego-grey_00351245.jpg");
+}
+/* =============== DEFAULT HTML - TEXT STYLES =============== */
+p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
+	padding: 0;
+	margin: 5px 0 15px 0;
+}
+
+#recipie-container{
+    position: fixed;        
+    left:10px;
+    right: 10px;
+    top: 10px;
+    width:auto;
+    height:300px;
+    background-color: red;
+    border: 4px solid black;
+    border-radius: 10px;
+}
+
+#recipie-container H1{
+    
+    font-family: "Arial", sans-serif;
+    position:relative;
+    text-align: center;
+    color:yellow;
+    text-shadow: 4px 0 0 #000, -4px 0 0 #000, 0 4px 0 #000, 0 -4px 0 #000, 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+}
+
+#control{
+     position: fixed;  
+     top: 330px;
+     left:25%;
+     right:25%;
+     width:auto;
+     bottom: 10px;
+     height:auto;
+     padding:20px;
+    background-color:rgba(70, 70, 70, 0.5);
+
+}   
+#control H1{
+
+    font-family: "Arial", sans-serif;
+    position:relative;
+    text-align: center;
+    color:yellow;
+    text-shadow: 4px 0 0 #000, -4px 0 0 #000, 0 4px 0 #000, 0 -4px 0 #000, 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    margin:30px;
+    
+}
+
+button{ 
+     background-image: url("https://cdn.suwalls.com/wallpapers/digital-art/blue-lego-board-44279-400x250.jpg");
+    background-color: #555555; /* Green */
+    position:absolute;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: 4px solid black;
+    border-radius: 10px;
+    
+}
+    .brick{
+        position: relative;
+        width: 100px;
+        height: 70px;
+        margin:30;
+      }
+
+      .brick_head {
+        width: 100px;
+        height: 60px;
+        position: absolute;
+        left: 0px;
+        top: 10px;
+        background-color: yellow /*rgb(0, 158, 255)*/;
+        border: 2px solid black;
+        z-index:1000;
+      }
+
+      .brick_side {
+        width: 30px;
+        height: 10px;
+        position: absolute;
+        left: 5px;
+        top: 0px;
+        background-color: yellow /*rgb(0, 158, 255)*/;
+        border: 2px solid black;
+      }
+
+      .brick_bottom {
+        position: absolute;
+        width:  30px;
+        height: 10px;
+        right: 5px;
+        top: 0px;
+        background-color: yellow /*rgb(0, 158, 255)*/;
+        border: 2px solid black;
+      }
+      
+      
