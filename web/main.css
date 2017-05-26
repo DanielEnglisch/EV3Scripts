@@ -73,18 +73,19 @@ button{
     
 }
     .brick{
-        position: relative;
+        float: left;
         width: 100px;
         height: 70px;
         margin:30;
+        margin-left: 10px;
+        margin-top: 10px;
+        padding: 5px;
       }
 
       .brick_head {
         width: 100px;
         height: 60px;
-        position: absolute;
-        left: 0px;
-        top: 10px;
+        position: relative;
         background-color: yellow /*rgb(0, 158, 255)*/;
         border: 2px solid black;
         z-index:1000;
@@ -93,19 +94,19 @@ button{
       .brick_side {
         width: 30px;
         height: 10px;
-        position: absolute;
+        position: relative;
         left: 5px;
-        top: 0px;
+        top: 1px;
         background-color: yellow /*rgb(0, 158, 255)*/;
         border: 2px solid black;
       }
 
       .brick_bottom {
-        position: absolute;
+        position: relative;
         width:  30px;
         height: 10px;
-        right: 5px;
-        top: 0px;
+        left: 60px;
+        top: 15px;
         background-color: yellow /*rgb(0, 158, 255)*/;
         border: 2px solid black;
       }

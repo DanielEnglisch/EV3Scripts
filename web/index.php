@@ -1,4 +1,14 @@
+<?php 
 
+  function spawnBrick($r,$g,$b){
+    echo ' <div class="brick">
+	        <div class ="brick_bottom" style="background-color:rgb('.$r.','.$g.','.$b.');"></div>
+	        <div class ="brick_side" style="background-color:rgb('.$r.','.$g.','.$b.');"></div>
+	        <div class ="brick_head" style="background-color:rgb('.$r.','.$g.','.$b.');"></div>
+	    </div>';
+  }
+
+?>
 <html>
 <head>
 	<link rel="stylesheet" href="main.css">
@@ -7,30 +17,16 @@
 	<div id="recipie-container">
 	    <h1>Momentanes Rezept</h1>
 
-	    <div class="brick">
-	    	<div class ="brick_bottom" style="background-color:blue;"></div>
-	    	<div class ="brick_side" style="background-color:blue;"></div>
-	    	<div class ="brick_head" style="background-color:blue;"></div>
-	    </div>
-
-	         
-	    <div class="brick">
-	    	<div class ="brick_bottom" style="background-color:yellow;"></div>
-	    	<div class ="brick_side" style="background-color:yellow;"></div>
-	    	<div class ="brick_head" style="background-color:yellow;"></div>
-	    </div>
-
-	    <div class="brick">
-	        <div class ="brick_bottom" style="background-color:red;"></div>
-	        <div class ="brick_side" style="background-color:red;"></div>
-	        <div class ="brick_head" style="background-color:red;"></div>
-	    </div>
-
-	    <div class="brick">
-	    	<div class ="brick_bottom" style="background-color:green;"></div>
-	    	<div class ="brick_side" style="background-color:green;"></div>
-	    	<div class ="brick_head" style="background-color:green;"></div>
-	    </div>
+      <?php
+        $file = fopen("in.txt", "r");
+        if ($file) {
+          while (($line = fgets($file)) !== false) {
+              $s = explode(";", $line);
+              spawnBrick($s[0],$s[1],$s[2]);
+            }
+          fclose($file);
+        }
+      ?>
 	</div>
 	 
 	<div id="control">
@@ -41,8 +37,4 @@
 </body>
 </html>
 
-<?php 
 
-
-
-?>
