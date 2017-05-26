@@ -20,6 +20,20 @@ bool robot::is_color_right(color_sensor & right_color, color const &cal) {
 	) > 9;
 }
 
+color robot::boost(color in){
+	int avg = (in.red + in.green + in.blue)/3;
+	int fact = 2;
+
+	if (in.red >= avg) in.red *=fact;
+		else in.red /=fact;
+	if (in.green>=avg) in.green *=fact;
+			else in.green /=fact;
+	if (in.blue>=avg) in.blue *=fact;
+			else in.blue /=fact;
+	fix(in);
+	return in;
+}
+
 color robot::read_color_right(color_sensor & right_color, color const & cal){
 	color temp;
 	for (int i = 0; i < 11; ++i){
@@ -87,9 +101,9 @@ void robot::fix(color &in){
 
 
 bool robot::is_in(color const & in){
-
-
-
+	for(color x: recipe){
+		if(is_color_equal(x,in,deviation))
+	}
 
 }
 
@@ -174,14 +188,13 @@ void robot::read_recepie(){
 			temp = read_color_right(right_color, {-30,80,0});
 			fix(temp);
 			
-			if(is_color_equal(brick,{255,255,255},60) && !is_color_equal(temp,{255,255,255},60)){
+			if(is_color_equal(brick,{255,255,255},deviation) && !is_color_equal(temp,{255,255,255},deviation)){
 
 			std::cout << "NOT WIHITE!" << std::endl;
-			rezept.push_back(temp);
+			rezept.push_back(boost(temp));
 
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-
+			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl
 		
 		}
 

@@ -27,11 +27,10 @@
 	{
 		private:
 			recipe_t 		recipe;
-			
+			int		const	deviation(60);
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			void 			turn(int degrees);
-				
 			bool			is_in(color const & in);	
 			void			go_straight(int pos, int speed, motor & m_right, motor &m_left);
 			void			turn(int degrees, motor & m_right, motor & m_left);	
@@ -42,6 +41,7 @@
 			color			read_color_right(color_sensor & right_color, color const & cal);										//blue color level of right sensor
 			bool			is_color_equal(color const &in1, color const &in2,int deviation);	
 			void			save_recipe();	
+
 		public:
 				
 				//robot	();
