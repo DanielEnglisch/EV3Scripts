@@ -36,9 +36,10 @@ void SensorDebug::PrintLightValues(){
 
 void SensorDebug::PrintInfraredValues(){
 	infrared_sensor s(INPUT_1);
+	
 	while(button::back.pressed()){
 
-		std::cout << "Proximity: "<< s.proximity() << std::endl;
+		std::cout << "Proximity: "<< s.proximity() << " ;"  <<  s.value()<< std::endl;
 	
 	}
 
