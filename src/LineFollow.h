@@ -7,6 +7,8 @@
 	#include <cmath>				 //only std::abs used
 	#include <tuple> 
 	#include <string>
+	#incldue <fstream>
+	
 	using namespace ev3dev;			//using ev3dev::motor;
 
 	using std::cout; using std::endl; using std::abs; using std::vector;
@@ -34,7 +36,8 @@
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			recepie 		recipie;
-			void 			turn(int degrees);																					//blue color level of right sensor
+			void 			turn(int degrees);
+			void			save_recepie();																					//blue color level of right sensor
 		public:
 			//robot	();
 

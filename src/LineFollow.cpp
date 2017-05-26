@@ -89,7 +89,14 @@ void robot::get_stones(){
 std::cout << "asdasd";
 
 }
-
+void robot::save_recepie(){
+	std::ifstream  out("in.txt");
+	if(out.good()){
+	out << recipie.size() << std::endl;
+	for(color x:rezept) out << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+	}
+	out.close();
+}
 
 void robot::read_recepie(){
 	int speed(200);
@@ -156,6 +163,7 @@ void robot::read_recepie(){
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
 	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
 	recipie = rezept;
+	save_recepie();
 }
 
 
