@@ -28,7 +28,9 @@
 	{
 		private:
 			recipe_t 		recipe;
-			int		const	deviation(60);
+			
+			int		const	deviation = 60;
+
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			void 			turn(int degrees);

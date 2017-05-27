@@ -150,7 +150,7 @@ void robot::get_stones(){
 				grab_stone();
 				turn(180,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
-				turne(90,m_right, m_left);
+				turn(90,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 			}
 		}		
@@ -214,7 +214,7 @@ void robot::read_recepie(){
 			rezept.push_back(boost(temp));
 
 			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl
+			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 		
 		}
 
