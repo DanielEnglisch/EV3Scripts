@@ -111,7 +111,29 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor){
+	int distance(0);
+	infrared_sensor ir(INPUT_1);
+	ir.set_mode(infrared_sensor::mode_ir_prox);
+	// int start(0);
+	// for(int i = 1; i < 30;++i) start +=ir.value();
+	// start /=30;
+	int start(ir.value());	
+	while	(
+				button::back.pressed() &&( 
+				distance == 0 || (
+				ir.value() >= (start*0.6) // jetziger wert 10% kleiner als vorgehender
+				)
+				)){
+				std::cout << ir.value()<< std::endl;
+				distance = ir.value();
+				steer(line_sensor.value(),m_left, m_right,500);
+				m_right.run_forever();
+				m_left.run_forever();
+			}
+	m_right.stop();
+	m_left.stop();
+}
 
 void robot::get_stones(){
 	int speed(200);
@@ -119,11 +141,10 @@ void robot::get_stones(){
 	short escape = 1;
 	double val;
 	float throttle;
-	
+	Claw arm;
 	
 	motor m_right(OUTPUT_A);
-	motor m_left(OUTPUT_D);	
-
+	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
@@ -148,8 +169,12 @@ void robot::get_stones(){
 					// turn left 90
 					// go until stone(box)
 				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor);
 				go_straight(200,speed,m_right,m_left);
+			
+			
 			//	grab_stone();
+			
 				turn(180,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 				turn(90,m_right, m_left);

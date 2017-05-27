@@ -9,7 +9,7 @@
 	#include <tuple> 
 	#include <string>
 	#include <fstream>
-
+	#include "Claw.h"
 	using namespace ev3dev;			//using ev3dev::motor;
 
 	using std::cout; using std::endl; using std::abs; using std::vector;
@@ -30,7 +30,7 @@
 			recipe_t 		recipe;
 			
 			int		const	deviation = 60;
-
+			int		const	deviation_ir = 10;
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			void 			turn(int degrees);
@@ -47,10 +47,10 @@
 
 		public:
 				
-				robot	();
+				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 
-				
+				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor);
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();

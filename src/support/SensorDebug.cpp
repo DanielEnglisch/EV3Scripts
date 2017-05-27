@@ -37,14 +37,25 @@ void SensorDebug::PrintLightValues(){
 void SensorDebug::PrintInfraredValues(){
 	infrared_sensor s(INPUT_1);
 	
-	s.set_mode(infrared_sensor::mode_ir_cal);
+//	s.set_mode(infrared_sensor::mode_ir_cal);
+	
 	s.set_mode(infrared_sensor::mode_ir_prox);
 	
 	while(button::back.pressed()){
-
-		std::cout << "Proximity: "<< s.proximity() << " ;"  <<  s.value()<< std::endl;
-
-	
+	int avg(0);
+		for(int i=0; i <=10;++i)  avg +=s.proximity();
+		std::cout << "Proximity: "<<  avg/11 << " ;" << std::endl;
+	}
+}
+void SensorDebug::detect_stone_ir(){
+	infrared_sensor s(INPUT_1);
+	s.set_mode(infrared_sensor::mode_ir_prox);
+	int ir_val(-1);
+	int deviation(10);
+	int counter(0);
+	while(button::back.pressed()|| !(ir_val != -1 && ( ir_val >= s.value()+deviation) || ( ir_val <= s.value()-deviation))){
+		std::cout << "DRIVE!!! : "<< s.value() <<';'<< counter++<< std::endl;
+		ir_val = s.value();
 	}
 
 	//Black 366

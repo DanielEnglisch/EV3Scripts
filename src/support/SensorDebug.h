@@ -16,6 +16,7 @@
 			void PrintInfraredValues();		//ProximitySensor
 			void PrintGyroValues();			//GyroSensor
 			void PrintLightValues();		//LineFollowSensor
+			void detect_stone_ir();
 	};
 
 #endif
