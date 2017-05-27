@@ -9,7 +9,8 @@
     //     using namespace ev3dev;	
     #include "Claw.h"
 int main(){
-
+    Claw x;
+    x.lower();
 	
 	// motor m_right(OUTPUT_A);
 	// motor m_left(OUTPUT_D);	

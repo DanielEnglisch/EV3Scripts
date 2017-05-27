@@ -119,6 +119,8 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	// for(int i = 1; i < 30;++i) start +=ir.value();
 	// start /=30;
 	int start(ir.value());	
+	Claw x;
+	
 	while	(
 				button::back.pressed() &&( 
 				distance == 0 || (
@@ -131,6 +133,9 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				m_right.run_forever();
 				m_left.run_forever();
 			}
+	x.lower();
+	x.close();
+	x.lift();
 	m_right.stop();
 	m_left.stop();
 }
