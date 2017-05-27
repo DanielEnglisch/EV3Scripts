@@ -1,34 +1,15 @@
- 
-html, body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100%;
-	/*background-color:#054f61;*/
-        background-image: url("2.jpg");
-}
-/* =============== DEFAULT HTML - TEXT STYLES =============== */
-p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
-	padding: 0;
-	margin: 5px 0 15px 0;
-}
-.numb{
-       font-family: "Arial", sans-serif;
-       text-align: left;
-       font-style: bold;
-       font-size: 20;
-       margin: 10px;
-    }
+
+
 #recipie-container{
-    position: fixed;        
+    position: absolute;        
     left:10px;
     right: 10px;
     top: 10px;
-    width:auto;
-    height:300px;
     background-color: red;
     border: 4px solid black;
     border-radius: 10px;
+    display: inline-block;
+    padding-bottom: 20px;
 }
 
 #recipie-container H1{
@@ -40,52 +21,14 @@ p, pre, blockquote, form, dl, ul, ol, fieldset, address, table {
     text-shadow: 4px 0 0 #000, -4px 0 0 #000, 0 4px 0 #000, 0 -4px 0 #000, 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
 }
 
-#control{
-     position: fixed;  
-     top: 330px;
-     left:25%;
-     right:25%;
-     width:auto;
-     bottom: 10px;
-     height:auto;
-     padding:20px;
-    background-color:rgba(70, 70, 70, 0.5);
 
-}   
-#control H1{
-
-    font-family: "Arial", sans-serif;
-    position:relative;
-    text-align: center;
-    color:yellow;
-    text-shadow: 4px 0 0 #000, -4px 0 0 #000, 0 4px 0 #000, 0 -4px 0 #000, 2px 2px #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-    margin:30px;
-    
-}
-
-button{ 
-     background-image: url("1.jpg");
-    background-color: #555555; /* Green */
-    position:relative;
-    margin: 20px;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border: 4px solid black;
-    border-radius: 10px;
-    
-}
     .brick{
         float: left;
+        position: relative;
         width: 100px;
         height: 70px;
-        margin:30;
-        margin-left: 10px;
-        margin-top: 10px;
-        padding: 5px;
+        margin-left: 20px;
+        margin-bottom: 20px;
       }
 
       .brick_head {
