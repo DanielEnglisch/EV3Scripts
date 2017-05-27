@@ -33,8 +33,14 @@
 	 
 	<div id="control">
 		<h1> Steuerung </h1>
-	    <button type="button" style="left:20%;" >STEINE EINLESEN!</button>
-	    <button type="button"  style="right:20%;">STEINE EINSAMMELN!</button> 
+      <form method="post">                                                                                                                                                                                                                                           
+                <?php                                                                                                                                                                                                                                                          
+                        if (isset($_POST['read_recipe'])){echo "asdasd"; exec('sudo -u robot read_recipe');} �                                                                                                                                                                 
+                ?>                                                                                                                                                                                                                                                             
+                 <button type="submit" name="read_recipe">STEINE EINLESEN!</button>                                                                                                                                                                                            
+            <button type="button">STEINE EINSAMMELN!</button> 
+        </form>
+
 	</div>
 </body>
 </html>
