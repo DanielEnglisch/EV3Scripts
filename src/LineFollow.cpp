@@ -120,7 +120,7 @@ void robot::get_stones(){
 	
 	
 	motor m_right(OUTPUT_A);
-	motor m_left(OUTPUT_D);
+	motor m_left(OUTPUT_D);	
 
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
