@@ -116,7 +116,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 	int start(0);
-	for(int i = 1; i < 30;++i) start +=ir.value();
+	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 //	int start(ir.value());	
 	Claw x;
