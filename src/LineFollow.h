@@ -1,6 +1,7 @@
 #if !defined LINEFOLLOW_H
 #define LINEFOLLOW_H
 	
+	#include "Claw.h"
 	#include <iostream>
 	#include "ev3dev.h"
 	#include <vector>
@@ -44,7 +45,7 @@
 
 		public:
 				
-				//robot	();
+				robot	();
 				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 
 				

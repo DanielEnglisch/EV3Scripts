@@ -246,9 +246,7 @@ void robot::follow_line_d(){
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
-
-	turn(0,  m_right,m_left);
-	std::cout << "turn fhinished!"<< std::endl;
+	
 	while(button::back.pressed()){
 		steer(line_sensor.value(),m_left, m_right,1000);
 		m_right.run_forever();

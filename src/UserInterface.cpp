@@ -5,3 +5,10 @@ void UserInterface::buttonTest(){
 		std::cout << button::back.pressed() << std::endl;
 	}
 }
+
+
+void UserInterface::buttonTest(){
+	while(true){
+		std::cout << button::back.pressed() << std::endl;
+	}
+}
