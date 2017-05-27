@@ -3,23 +3,23 @@
 // typedef SimpleWeb::SocketServer<SimpleWeb::WS> WsServer;
 
 // using namespace std;
-    //     #include "LineFollow.h"
-    // // #include "support/SensorDebug.h"
+        #include "LineFollow.h"
+    // #include "support/SensorDebug.h"
     //     #include "ev3dev.h"
     //     using namespace ev3dev;	
     #include "Claw.h"
 int main(){
-    Claw x;
-    x.lower();
+    // Claw x;
+    // x.lower();
 	
-	// motor m_right(OUTPUT_A);
-	// motor m_left(OUTPUT_D);	
+	motor m_right(OUTPUT_A);
+	motor m_left(OUTPUT_D);	
 
-	// light_sensor line_sensor (INPUT_2);
-	// line_sensor.set_mode(light_sensor::mode_reflect);
+	light_sensor line_sensor (INPUT_2);
+	line_sensor.set_mode(light_sensor::mode_reflect);
 
-    // robot r;
-    // r.follow_line_until_stone(200,m_right,m_left,line_sensor);
+    robot r;
+    r.follow_line_until_stone(200,m_right,m_left,line_sensor);
     // // SensorDebug s;
     // s.detect_stone_ir();
 

@@ -12,13 +12,11 @@
 						motor small (OUTPUT_B);
 						motor middle(OUTPUT_C);
 						middle.set_position(0);
-						small.set_position(0);
-						
+						small.set_position(0);		
 				}
 			 ~Claw(){
 				open();
 				lift();
-				wait();
 			 }
 			int wait();
 			bool  open();

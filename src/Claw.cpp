@@ -2,8 +2,8 @@
 
 int Claw::wait(){
 			int counter(0);
-		 	int time_start(time(0));
-		 	while(time_start+2 >= time(0))counter++;
+		 	double time_start(time(0));
+		 	while(time_start+0.2 >= time(0))counter++;
 			 return counter;
 }
 
@@ -13,7 +13,9 @@ bool Claw::open(){
 			//if(small.position_sp() == -1300) return 0;
 			small.set_speed_sp(1000);
 			small.set_position_sp(0);
-			small.run_to_abs_pos();	
+			small.run_to_abs_pos();
+				int counter(0);
+			while(small.position() < -1) counter++;
 }
 
 bool Claw::close(){
@@ -22,7 +24,8 @@ bool Claw::close(){
 			small.set_speed_sp(1000);
 			small.set_position_sp(-950);
 			small.run_to_abs_pos();
-			wait();
+				int counter(0);
+			while(small.position() > -948) counter++;
 }
 
 bool Claw::lift(){
@@ -31,7 +34,8 @@ bool Claw::lift(){
 		big.set_speed_sp(100);
 		big.set_position_sp(0);
 		big.run_to_abs_pos();
-		
+		int counter(0);
+		while(big.position() > 5) counter++;
 }
 
 bool Claw::lower(){
@@ -39,9 +43,10 @@ bool Claw::lower(){
 		std::cout << big.position()<< std::endl;
 	//	if(big.position_sp() == 0) return 0;
 		big.set_speed_sp(100);
-		big.set_position_sp(120);
+		big.set_position_sp(160);
 		big.run_to_abs_pos();
-		wait();
+			int counter(0);
+		while(big.position() < 118) counter++;
 		std::cout << big.position();
 	
 		}

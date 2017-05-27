@@ -115,29 +115,31 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	int distance(0);
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
-	// int start(0);
-	// for(int i = 1; i < 30;++i) start +=ir.value();
-	// start /=30;
-	int start(ir.value());	
+	int start(0);
+	for(int i = 1; i < 30;++i) start +=ir.value();
+	start /=30;
+//	int start(ir.value());	
 	Claw x;
-	
+	std::cout << "START: "<< start<<std::endl;
 	while	(
 				button::back.pressed() &&( 
 				distance == 0 || (
-				ir.value() >= (start*0.6) // jetziger wert 10% kleiner als vorgehender
+				ir.value(false) >= (start*0.6) // jetziger wert 10% kleiner als vorgehender
 				)
 				)){
 				std::cout << ir.value()<< std::endl;
-				distance = ir.value();
+				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
 				m_right.run_forever();
 				m_left.run_forever();
 			}
-	x.lower();
-	x.close();
-	x.lift();
 	m_right.stop();
 	m_left.stop();
+	x.lower();
+	x.close();
+	x.wait();
+	x.lift();
+
 }
 
 void robot::get_stones(){
