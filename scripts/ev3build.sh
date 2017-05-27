@@ -14,7 +14,7 @@ if [ $# -eq 1 ]
 then
 	#UPLOADING
 	echo "Copying binary..."
-	sshpass -p 'Cisco0' scp ./EV3Scripts robot@$1:/home/robot/EV3Scripts
+	sshpass -p 'Cisco0' scp ./EV3Scripts robot@192.168.10.138:/home/robot/EV3Scripts
 	if [ $? -eq 1 ]
 	then
 		echo "!!! -> Upload failed!"
@@ -22,6 +22,7 @@ then
 	fi
 	echo "=== Uploading Done ==="
 	echo "Executing binary..."
-	sshpass -p 'Cisco0' ssh robot@$1 ./EV3Scripts
+	# $1
+	sshpass -p 'Cisco0' ssh robot@192.168.10.138 ./EV3Scripts
 	echo "=== Script Done ==="
 fi

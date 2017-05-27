@@ -62,7 +62,7 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
-	void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
+void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 		int pos_l = m_left.position();
 		int pos_r = m_right.position();
 		
@@ -110,8 +110,9 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
+
+
 void robot::get_stones(){
-	
 	int speed(200);
 	color temp = {0,0,0};
 	short escape = 1;
@@ -147,7 +148,7 @@ void robot::get_stones(){
 					// go until stone(box)
 				turn(90, m_right,m_left);
 				go_straight(200,speed,m_right,m_left);
-				grab_stone();
+			//	grab_stone();
 				turn(180,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 				turn(90,m_right, m_left);
