@@ -123,24 +123,15 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	Claw x;
 	int distance(0);
 
-	while(ir.value(false) != 100){
-		x.wait();
-		std::cout << ir.value(false) << std::endl;
-		}
 	int start(0);
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
-
-
-//	int start(ir.value());	
-
+	start= ir.value();	
 	std::cout << "START: "<< start<<std::endl;
-
-	while	(	button::back.pressed() &&( 
+	while	(button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				)
-				)){
+				))){
 				std::cout << ir.value()<< std::endl;
 				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
@@ -149,6 +140,13 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 			}
 	m_right.stop();
 	m_left.stop();
+}
+
+void robot::drop_to_mixer(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
+
+
+
+
 }
 
 void robot::get_stones(){
@@ -222,7 +220,7 @@ std::ofstream  out("/var/www/html/in.txt");
 		for(color x:recipe){
 		//	boost(x);
 			
-			std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+			//std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
 			out << x.red << ';' << x.green << ';' << x.blue << std::endl;
 		}	
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
@@ -300,6 +298,7 @@ void robot::read_recepie(){
 	m_right.stop();
 	m_left.stop();
 save_recipe();
+rec_fin = true;
 }
 
 
@@ -388,16 +387,18 @@ void robot::forward_motors(float correction){
 
 
 void robot::test(){
+for(int i = 0; i < 10; ++i) std::cout << i << ';' << i << ';'<< i << ';'<< std::endl;
+rec_fin = true;
 
-	color_sensor s (INPUT_3);
-	s.set_mode(color_sensor::mode_col_color);
-	color cal = {0,0,0};
-	read_recepie_file();
-	while(button::back.pressed()){
-		if(is_color_right(s,cal)){
-			color x = (read_color_right(s,cal));
-			if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-		}
-	}
+	// color_sensor s (INPUT_3);
+	// s.set_mode(color_sensor::mode_col_color);
+	// color cal = {0,0,0};
+	// read_recepie_file();
+	// while(button::back.pressed()){
+	// 	if(is_color_right(s,cal)){
+	// 		color x = (read_color_right(s,cal));
+	// 		if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+	// 	}
+	// }
 
-}
+} 

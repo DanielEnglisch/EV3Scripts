@@ -55,7 +55,8 @@
 					 
 				// }
 				//robot	();
-				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
+				// bool stone_front(infrared_sensor &input){return false;}			
+				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
 				void read_recepie_file();
 				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir);
