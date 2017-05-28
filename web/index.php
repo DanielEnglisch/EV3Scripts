@@ -1,12 +1,6 @@
 <?php
-  function spawnBrick($r,$g,$b){
-    echo '
-      <div class="brick">
-        <div class="body" style="background-color: rgb('.$r.','.$g.','.$b.');">
-          <div class="left" style="background-color: rgb('.$r.','.$g.','.$b.');"></div>
-          <div class="right" style="background-color: rgb('.$r.','.$g.','.$b.');"></div>
-        </div>
-      </div>';
+  function spawnBrick($r,$g,$b,$num){
+    return '<div class="brick" id="brick'.$num.'"><div class="body" style="background-color: rgb('.$r.','.$g.','.$b.');"><div class="left" style="background-color: rgb('.$r.','.$g.','.$b.');"></div><div class="right" style="background-color: rgb('.$r.','.$g.','.$b.');"></div></div></div>';
   }
 ?>
 <!DOCTYPE html>
@@ -25,45 +19,51 @@
       <h1>Robo Webinterface</h1>
       <div class="container" id="recipe">
       <h2>Rezept</h2>
-        <div class="container" id="brick-container">
-          <?php
-          $file = fopen("in.txt", "r");
-          if ($file) {
-            while (($line = fgets($file)) !== false) {
-                $s = explode(";", $line);
-                spawnBrick($s[0],$s[1],$s[2]);
-              }
-            fclose($file);
-          }
-        ?>
+        <div class="container" id="block-container">
         </div>
       </div>
       <div class="container" id="actions">
         <h2>Aktionen</h2>
         <div class="btn-group" role="group" aria-label="...">
-         <button type="button" class="btn btn-default">ReadRecipe</button>
-         <button type="button" class="btn btn-default">Test2</button>
-         <button type="button" class="btn btn-default">Test3</button>
+          <a href="?act=readRecipe" class="btn btn-info" role="button">ReadRecipe</a>
         </div>
       </div>
+      <script src="js/jquery-3.2.1.min.js"></script>
+
       <div class="container" id="console">
-        <h2>Konsole</h2>
         <?php
-          while (@ ob_end_flush());
           
-          $proc = popen('./testScript', 'r');
-          echo '<pre>';
-          while (!feof($proc))
-          {
-              echo fread($proc, 4096);
-              @ flush();
+          if(isset($_GET['act'])){
+            echo "<h2>Konsole</h2>";
+            $num = 1;
+            while (@ ob_end_flush());
+
+            $proc = popen('./' . $_GET['act'], 'r');
+            $code = '';
+            echo '<pre>';
+            while (!feof($proc))
+            {
+                $log = fread($proc, 4096);
+                if($_GET['act'] == 'readRecipe'){
+                  $a = explode(';', $log);
+                  $code = spawnBrick($a[0],$a[1],$a[2],$num);
+                  $log = $log . $code . '<script>$("#brick'.$num.'").appendTo("#block-container")</script>';
+                }
+
+                echo $log;
+                @ flush();
+                $num++;
+            }
+            echo '</pre>';
+            if(isset($_GET['act'])){
+              echo '<script>$("#brick'.($num - 1) .'").remove();</script>';
+            }
           }
-          echo '</pre>';
+
         ?>
       </div>
   </div>
 
-    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
   
