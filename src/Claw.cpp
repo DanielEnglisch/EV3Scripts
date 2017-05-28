@@ -43,15 +43,3 @@ bool Claw::lower(){
 		std::cout << big.position_sp();
 		//wait();
 		}
-
-
-bool Claw::lower(){
-		motor big (OUTPUT_C);
-		std::cout << big.position_sp()<< std::endl;
-	//	if(big.position_sp() == 0) return 0;
-		big.set_speed_sp(100);
-		big.set_position_sp(0);
-		big.run_to_abs_pos();
-		std::cout << big.position_sp();
-		//wait();
-		}
