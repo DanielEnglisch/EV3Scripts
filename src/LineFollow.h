@@ -47,13 +47,13 @@
 
 		public:
 				recipe_t 		recipe;
-				~robot(){
-					 motor r(OUTPUT_A);
-					 motor l(OUTPUT_D);
-					 r.stop();
-					 l.stop();
+				// ~robot(){
+				// 	 motor r(OUTPUT_A);
+				// 	 motor l(OUTPUT_D);
+				// 	 r.stop();
+				// 	 l.stop();
 					 
-				}
+				// }
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 				void test();

@@ -13,8 +13,9 @@ int main(){
     //        }
        
     robot r;
-    r.read_recepie_file();
-    r.get_stones;
+    
+    r.read_recepie();
+    //r.get_stones;
 
    	cout << "0;0;0" << endl;
 

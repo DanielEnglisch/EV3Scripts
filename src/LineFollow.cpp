@@ -218,11 +218,11 @@ void robot::get_stones(){
 }
 
 void robot::save_recipe(){
-std::ofstream  out("/var/www/html/in.txt");
+std::ofstream  out("in.txt");
 	while(out.good()){
 		for(color x:recipe){
 		//	boost(x);
-			std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;
+			out << x.red << ';' << x.green << ';' << x.blue << std::endl;
 		}	
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
 	}
@@ -295,6 +295,7 @@ void robot::read_recepie(){
 		m_right.run_forever();
 		m_left.run_forever();
 	}
+	
 	m_right.stop();
 	m_left.stop();
 	save_recipe();
