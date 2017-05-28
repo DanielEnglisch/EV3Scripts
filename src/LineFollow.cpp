@@ -122,7 +122,6 @@ bool robot::is_in(color const & in){
 void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
 	Claw x;
 	int distance(0);
-
 	while(ir.value(false) != 100){
 		x.wait();
 		std::cout << ir.value(false) << std::endl;
@@ -131,7 +130,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 
-	int start(ir.value());	
+	start= ir.value();	
 
 	std::cout << "START: "<< start<<std::endl;
 
@@ -220,7 +219,7 @@ std::ofstream  out("/var/www/html/in.txt");
 		for(color x:recipe){
 		//	boost(x);
 			
-			std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+			//std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
 			out << x.red << ';' << x.green << ';' << x.blue << std::endl;
 		}	
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
@@ -298,6 +297,7 @@ void robot::read_recepie(){
 	m_right.stop();
 	m_left.stop();
 save_recipe();
+rec_fin = true;
 }
 
 
