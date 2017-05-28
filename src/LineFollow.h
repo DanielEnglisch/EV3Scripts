@@ -28,7 +28,7 @@
 	{
 		private:
 			
-			
+			bool 			grey(color const & in);
 			int		const	deviation = 60;
 			int		const	deviation_ir = 10;
 			void 			fix(color &in);
