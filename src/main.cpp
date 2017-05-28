@@ -1,6 +1,10 @@
 #include <iostream>
 #include "LineFollow.h"
+#include "ev3dev.h"
+
 using namespace std;
+using namespace ev3dev;	
+
 int main(){
    	
    	// cout << "0;0;0" << endl;
@@ -13,8 +17,13 @@ int main(){
     //        }
        
     robot r;
-    
+
+    motor r (OUTPUT_A);
+    motor l (OUTPUT_D);  
+    light_sensor s(INPUT_2);
+    r.follow_line_until_stone(200);
     r.read_recepie();
+    
     //r.get_stones;
 
    	cout << "0;0;0" << endl;
