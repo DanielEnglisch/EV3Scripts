@@ -218,7 +218,7 @@ void robot::get_stones(){
 }
 
 void robot::save_recipe(){
-std::ofstream  out("in.txt");
+std::ofstream  out("/var/www/html/in.txt");
 
 		for(color x:recipe){
 		//	boost(x);
@@ -277,11 +277,12 @@ void robot::read_recepie(){
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
 				(x.red > 15 || x.green >15 || x.blue > 15)
 				){
-				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation))
-				recipe.push_back(x);			//<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m"
+				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation)){
+				recipe.push_back(x);//<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m"
 				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
 				last_real = x;
 				}
+			}
 		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
 		// 		recipe.push_back(x);
 		// 	}
@@ -291,8 +292,6 @@ void robot::read_recepie(){
  			escape = 0;
 			m_left.stop();
 			m_right.stop();
-	
-		
 		}
 		steer(line_sensor.value(),m_left, m_right,200);
 		m_right.run_forever();
