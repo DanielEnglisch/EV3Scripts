@@ -1,4 +1,3 @@
-#include <iostream>
 #include "LineFollow.h"
 #include "ev3dev.h"
 
@@ -7,7 +6,6 @@ using namespace ev3dev;
 
 int main(){
    	
-   	std::cout << "0;0;0" << std::endl;
     //    for(int r = 0; r<255; ++r){
     //    for(int g = 0; g<255; ++g){
     //    for(int b = 0; b<255; ++b){
