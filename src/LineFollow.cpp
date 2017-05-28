@@ -54,7 +54,6 @@ color robot::read_color_right(color_sensor & right_color, color const & cal){
 
 bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	//std::cout <<abs(in1.red-in2.red) << ';'<<abs(in1.green-in2.green) << ';'<<abs(in1.blue-in2.blue) << std::endl;
-
 	return abs(in1.red-in2.red)<deviation &&
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
@@ -111,7 +110,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 bool robot::is_in(color const & in){
 	for(int i= 0; i < recipe.size(); ++i){
 		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if(is_color_equal(recipe[i],in,50)){
+		if(is_color_equal(recipe[i],in,40)){
 		//	std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			recipe[i] = {-1,-1,-1};
 			return true;
@@ -170,9 +169,13 @@ void robot::get_stones(){
 	while(button::back.pressed()  && (escape != 0) ){
 		
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
-			temp = read_color_right(right_color, {-30,80,0});
+			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-			if(is_in(temp)) std::cout << "TURN LEFT" <<std::endl;
+			if(!is_in(temp)){
+					std::cout  << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+					std::cout << "TURN LEFT" <<std::endl;
+					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+			} 
 		
 		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
 		// 	else{
@@ -200,10 +203,11 @@ void robot::get_stones(){
 		// 	}
 		// }		
 	
+		
+		}
 		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
-		}
  }
 		m_right.stop();
 		m_left.stop();
@@ -409,9 +413,9 @@ void robot::test(){
 	read_recepie_file();
 	while(button::back.pressed()){
 		if(is_color_right(s,cal)){
+			for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 			color x = (read_color_right(s,cal));
 			if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-				
 		}
 	}
 } 
