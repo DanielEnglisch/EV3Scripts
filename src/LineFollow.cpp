@@ -257,7 +257,6 @@ void robot::read_recepie_file(){
 void robot::read_recepie(){
 	recipe.clear();
 	short escape = 1;
-
 	color_sensor s (INPUT_3);
 	s.set_mode(color_sensor::mode_col_color);
 	color cal = {0,0,0};
@@ -278,8 +277,8 @@ void robot::read_recepie(){
 				(x.red > 15 || x.green >15 || x.blue > 15)
 				){
 				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation))
-				//<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" 
-				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+				
+				std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m"  << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
 				last_real = x;
 				}
 		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
