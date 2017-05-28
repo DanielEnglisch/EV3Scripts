@@ -26,8 +26,8 @@ int main(){
 	// line_sensor.set_mode(light_sensor::mode_reflect);
 
     //r.follow_line_until_stone(200,mr,l,line_sensor,ir);
-   // r.read_recepie();
-   r.test(); 
+    r.read_recepie();
+   //r.test(); 
 
    	// // cout << "0;0;0" << endl;
     //   int counter(0);

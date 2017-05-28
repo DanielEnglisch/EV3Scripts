@@ -152,7 +152,7 @@ void robot::get_stones(){
 	short escape = 1;
 	double val;
 	float throttle;
-	Claw arm;
+
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 	read_recepie_file();
@@ -167,6 +167,7 @@ void robot::get_stones(){
 
 	color cal = temp;//read_color_right(right_color, temp);
 	Claw x;
+
 	while(button::back.pressed()){
 	
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
@@ -203,7 +204,7 @@ void robot::get_stones(){
 }
 
 void robot::save_recipe(){
-std::ofstream  out("in.txt");
+std::ofstream  out("/var/www/html/in.txt");
 	if(out.good()){
 		for(color x:recipe){
 		//	boost(x);
@@ -216,7 +217,7 @@ std::ofstream  out("in.txt");
 }
 
 void robot::read_recepie_file(){
-	std::ifstream  in("in.txt");
+	std::ifstream  in("/var/www/html/in.txt");
 	recipe.clear();
 	 std::string s="";
         short count(0);
@@ -257,6 +258,7 @@ bool robot::grey(color const & in){
 	
 }
 void robot::read_recepie(){
+	std::cout << "BEGINNING"<< std::endl;
 	recipe.clear();
 	short escape = 1;
 	color_sensor s (INPUT_3);
@@ -269,12 +271,12 @@ void robot::read_recepie(){
 
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
-
+std::cout << "middle_half"<< std::endl;
 	while(button::back.pressed() && (escape != 0)){
 		if(is_color_right(s,cal)){
 			color x = (read_color_right(s,{19,6,0}));
 			escape = 2;
-
+			std::cout << "MIDLLE-WHILE"<< std::endl;
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
 				(x.red > 20 || x.green >20 || x.blue > 20) && !grey(x)
 				){
@@ -298,7 +300,7 @@ void robot::read_recepie(){
 		m_right.run_forever();
 		m_left.run_forever();
 	}
-	
+		std::cout << "END-WHILE"<< std::endl;
 	m_right.stop();
 	m_left.stop();
 save_recipe();
