@@ -111,7 +111,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 bool robot::is_in(color const & in){
 	for(color x: recipe){
 		std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if(is_color_equal(x,in,10)){
+		if(is_color_equal(x,in,30)){
 			std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			x = {-1,-1,-1};
 			return true;
@@ -155,6 +155,7 @@ void robot::get_stones(){
 	Claw arm;
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
+	read_recepie_file();
 
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
