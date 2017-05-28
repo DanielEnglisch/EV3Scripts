@@ -386,16 +386,18 @@ void robot::forward_motors(float correction){
 
 
 void robot::test(){
+for(int i = 0; i < 10; ++i) std::cout << i << ';' << std::endl;
 
-	color_sensor s (INPUT_3);
-	s.set_mode(color_sensor::mode_col_color);
-	color cal = {0,0,0};
-	read_recepie_file();
-	while(button::back.pressed()){
-		if(is_color_right(s,cal)){
-			color x = (read_color_right(s,cal));
-			if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-		}
-	}
+
+	// color_sensor s (INPUT_3);
+	// s.set_mode(color_sensor::mode_col_color);
+	// color cal = {0,0,0};
+	// read_recepie_file();
+	// while(button::back.pressed()){
+	// 	if(is_color_right(s,cal)){
+	// 		color x = (read_color_right(s,cal));
+	// 		if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+	// 	}
+	// }
 
 }
