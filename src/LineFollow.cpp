@@ -184,6 +184,7 @@ void robot::get_stones(){
 					x.lift();
 				turn(90, m_right,m_left);
 				turn(90, m_right,m_left);
+
 				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
 				turn(90, m_right,m_left);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
