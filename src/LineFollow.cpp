@@ -104,6 +104,7 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 bool robot::is_in(color const & in){
 	for(color x: recipe){
 		if(is_color_equal(x,in,deviation)){
+			std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			x = {-1,-1,-1};
 			return true;
 		}
@@ -111,20 +112,26 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor){
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
+	Claw x;
 	int distance(0);
-	infrared_sensor ir(INPUT_1);
-	ir.set_mode(infrared_sensor::mode_ir_prox);
+
+	while(ir.value(false) != 100){
+		x.wait();
+		std::cout << ir.value(false) << std::endl;
+		}
 	int start(0);
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
+
+
 //	int start(ir.value());	
-	Claw x;
+	
 	std::cout << "START: "<< start<<std::endl;
 	while	(
 				button::back.pressed() &&( 
 				distance == 0 || (
-				ir.value(false) >= (start*0.6) // jetziger wert 10% kleiner als vorgehender
+				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)
 				)){
 				std::cout << ir.value()<< std::endl;
@@ -135,10 +142,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 			}
 	m_right.stop();
 	m_left.stop();
-	x.lower();
-	x.close();
-	x.wait();
-	x.lift();
+	
 
 }
 
@@ -150,6 +154,9 @@ void robot::get_stones(){
 	float throttle;
 	Claw arm;
 	
+	infrared_sensor ir(INPUT_1);
+	ir.set_mode(infrared_sensor::mode_ir_prox);
+
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
@@ -176,12 +183,17 @@ void robot::get_stones(){
 					// turn left 90
 					// go until stone(box)
 				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor);
-				go_straight(200,speed,m_right,m_left);
-			
-			
-			//	grab_stone();
-			
+				
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+				
+				Claw x;
+					x.lower();
+					x.close();
+					x.wait();
+					x.lift();
+				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+				
+				turn(180,m_right, m_left);
 				turn(180,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 				turn(90,m_right, m_left);
@@ -228,7 +240,7 @@ void robot::read_recepie(){
 	std::cout << "CALIBRATION: " << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
 	// while(button::back.pressed()){
 	
-	while(button::back.pressed() || (escape != 0) ){
+	while(button::back.pressed() && (escape != 0) ){
 		color brick = {255,255,255};
 		
 		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
@@ -244,10 +256,9 @@ void robot::read_recepie(){
 			
 			if(is_color_equal(brick,{255,255,255},deviation) && !is_color_equal(temp,{255,255,255},deviation)){
 
-			std::cout << "NOT WIHITE!" << std::endl;
 			rezept.push_back(boost(temp));
 
-			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
+//			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
 			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 		
 		}
@@ -257,15 +268,21 @@ void robot::read_recepie(){
 		 else if(!is_color_right(right_color, cal) && escape == 2){
 				std::cout << "NOSTONE" << std::endl;
   				 escape = 0;
+				   m_left.stop();
+				   m_right.stop();
 		 }
+		 else{
 		steer(line_sensor.value(),m_left,m_right,200);
 		m_right.run_forever();
 		m_left.run_forever();
 		escape = button::back.pressed();
 	}
+	}
 
 	m_right.stop();
 	m_left.stop();
+	m_left.stop_action();
+	m_right.stop_action();
 	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
 	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
 	recipe = rezept;

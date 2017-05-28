@@ -27,7 +27,7 @@
 	class robot
 	{
 		private:
-			recipe_t 		recipe;
+			
 			
 			int		const	deviation = 60;
 			int		const	deviation_ir = 10;
@@ -46,11 +46,11 @@
 			void			save_recipe();	
 
 		public:
-				
+				recipe_t 		recipe;
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 
-				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor);
+				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir);
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();

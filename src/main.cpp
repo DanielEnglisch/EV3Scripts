@@ -12,14 +12,17 @@ int main(){
     // Claw x;
     // x.lower();
 	
-	motor m_right(OUTPUT_A);
-	motor m_left(OUTPUT_D);	
+	// motor m_right(OUTPUT_A);
+	// motor m_left(OUTPUT_D);	
 
-	light_sensor line_sensor (INPUT_2);
-	line_sensor.set_mode(light_sensor::mode_reflect);
+	// light_sensor line_sensor (INPUT_2);
+	// line_sensor.set_mode(light_sensor::mode_reflect);
 
     robot r;
-    r.follow_line_until_stone(200,m_right,m_left,line_sensor);
+
+    r.read_recepie();
+    //r.get_stones();
+    //r.follow_line_until_stone(200,m_right,m_left,line_sensor);
     // // SensorDebug s;
     // s.detect_stone_ir();
 

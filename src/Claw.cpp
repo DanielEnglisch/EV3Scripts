@@ -43,7 +43,7 @@ bool Claw::lower(){
 		std::cout << big.position()<< std::endl;
 	//	if(big.position_sp() == 0) return 0;
 		big.set_speed_sp(100);
-		big.set_position_sp(160);
+		big.set_position_sp(170);
 		big.run_to_abs_pos();
 			int counter(0);
 		while(big.position() < 118) counter++;
