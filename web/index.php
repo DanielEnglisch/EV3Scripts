@@ -32,7 +32,6 @@
 
       <div class="container" id="console">
         <?php
-          
           if(isset($_GET['act'])){
             echo "<h2>Konsole</h2>";
             $num = 1;
@@ -58,6 +57,7 @@
             if(isset($_GET['act'])){
               echo '<script>$("#brick'.($num - 1) .'").remove();</script>';
             }
+             pclose($proc);
           }
 
         ?>
@@ -66,6 +66,5 @@
 
     <script src="js/bootstrap.min.js"></script>
 
-  
   </body>
 </html>
