@@ -135,8 +135,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 //	int start(ir.value());	
 	
 	std::cout << "START: "<< start<<std::endl;
-	while	(
-				button::back.pressed() &&( 
+	while	(	button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)
@@ -172,7 +171,7 @@ void robot::get_stones(){
 	right_color.set_mode(color_sensor::mode_col_color);
 
 	color cal = temp;//read_color_right(right_color, temp);
-
+	Claw x;
 	while(button::back.pressed()){
 	
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
@@ -192,16 +191,21 @@ void robot::get_stones(){
 				
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
 				
-				Claw x;
+				
 					x.lower();
 					x.close();
 					x.wait();
 					x.lift();
+				turn(90, m_right,m_left);
+				turn(90, m_right,m_left);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
-				
-				turn(180,m_right, m_left);
-				turn(180,m_right, m_left);
-				go_straight(200,speed,m_right,m_left);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+					x.half_lower();
+					x.open();
+					x.wait(); x.wait();
+					x.close();x.lift();
+				turn(90,m_right, m_left);
 				turn(90,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 			}
@@ -270,12 +274,11 @@ void robot::read_recepie(){
 			color x = (read_color_right(s,cal));
 			escape = 2;
 		// "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << 
-			if(!is_color_equal(x,{255,255,255},deviation)) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
-			else std::cout << ";;;" << std::endl;
-		if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
-				recipe.push_back(x);
-				
-			}
+			if( abs(x.red-last.red) > 2 || abs(x.green-last.green) > 2 || abs(x.blue-last.blue) > 2) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+		 	else std::cout << ";;;" << std::endl;
+		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
+		// 		recipe.push_back(x);
+		// 	}
 		last=x;	
 			
 		}else if(!is_color_right(s,cal) && escape == 2){
