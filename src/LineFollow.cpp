@@ -69,7 +69,6 @@ void robot::fix(color &in){
 	else if (in.blue <0) in.blue = 0;
 }
 
-
 void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 		int pos_l = m_left.position();
 		int pos_r = m_right.position();
@@ -87,7 +86,6 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 
 void robot::turn(int degrees, motor & m_right, motor & m_left){
 		go_straight(325,500,m_right,m_left);
-
 		//turn left 90
 		int pos_l = m_left.position();
 		int pos_r = m_right.position();
