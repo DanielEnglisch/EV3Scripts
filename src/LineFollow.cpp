@@ -131,16 +131,14 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 
-
-//	int start(ir.value());	
+	int start(ir.value());	
 
 	std::cout << "START: "<< start<<std::endl;
 
-	while	(	button::back.pressed() &&( 
+	while	(button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				)
-				)){
+				))){
 				std::cout << ir.value()<< std::endl;
 				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
