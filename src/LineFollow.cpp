@@ -145,8 +145,6 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 void robot::drop_to_mixer(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
 
 
-
-
 }
 
 void robot::get_stones(){
