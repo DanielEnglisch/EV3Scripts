@@ -19,8 +19,8 @@ int main(){
 	// line_sensor.set_mode(light_sensor::mode_reflect);
 
     robot r;
-
     r.read_recepie();
+    //r.test();
     //r.get_stones();
     //r.follow_line_until_stone(200,m_right,m_left,line_sensor);
     // // SensorDebug s;
