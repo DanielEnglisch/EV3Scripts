@@ -17,7 +17,7 @@ bool robot::is_color_right(color_sensor & right_color, color const &cal) {
 	(std::get<0>(right_color.raw())-cal.red) + 
 	(std::get<1>(right_color.raw())-cal.green) +
 	(std::get<2>(right_color.raw())-cal.blue)
-	) > 9;
+	) > 20;
 }
 
 color robot::boost(color in){
@@ -36,14 +36,19 @@ color robot::boost(color in){
 
 color robot::read_color_right(color_sensor & right_color, color const & cal){
 	color temp;
-	for (int i = 0; i < 11; ++i){
-	temp.red   += std::get<0>(right_color.raw());
-	temp.green += std::get<1>(right_color.raw());
-	temp.blue  += std::get<2>(right_color.raw());
-	}
-	temp.red /=10;
-	temp.green /=10;
-	temp.blue /=10;
+//	for (int i = 0; i < 5; ++i){
+	temp.red   = std::get<0>(right_color.raw());
+	temp.green = std::get<1>(right_color.raw());
+	temp.blue  = std::get<2>(right_color.raw());
+	temp.red -= cal.red;
+	temp.red -= cal.green;
+	temp.blue -= cal.blue;
+
+//	}
+	// temp.red /=5;
+	// temp.green /=5;
+	// temp.blue /=5;
+	fix(temp);
 	return temp;
 }
 
@@ -52,6 +57,8 @@ bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
 }
+
+
 
 void robot::fix(color &in){
 	if (in.red > 255) in.red = 255;
@@ -78,7 +85,7 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 		//
 	}
 
-	void robot::turn(int degrees, motor & m_right, motor & m_left){
+void robot::turn(int degrees, motor & m_right, motor & m_left){
 		go_straight(325,500,m_right,m_left);
 
 		//turn left 90
@@ -104,6 +111,7 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 bool robot::is_in(color const & in){
 	for(color x: recipe){
 		if(is_color_equal(x,in,deviation)){
+			std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			x = {-1,-1,-1};
 			return true;
 		}
@@ -111,28 +119,37 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor){
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
+	Claw x;
 	int distance(0);
-	infrared_sensor ir(INPUT_1);
-	ir.set_mode(infrared_sensor::mode_ir_prox);
-	// int start(0);
-	// for(int i = 1; i < 30;++i) start +=ir.value();
-	// start /=30;
-	int start(ir.value());	
-	while	(
-				button::back.pressed() &&( 
+
+	while(ir.value(false) != 100){
+		x.wait();
+		std::cout << ir.value(false) << std::endl;
+		}
+	int start(0);
+	for(int i = 1; i < 30;++i) start +=ir.value(false);
+	start /=30;
+
+
+//	int start(ir.value());	
+	
+	std::cout << "START: "<< start<<std::endl;
+	while	(	button::back.pressed() &&( 
 				distance == 0 || (
-				ir.value() >= (start*0.6) // jetziger wert 10% kleiner als vorgehender
+				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)
 				)){
 				std::cout << ir.value()<< std::endl;
-				distance = ir.value();
+				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
 				m_right.run_forever();
 				m_left.run_forever();
 			}
 	m_right.stop();
 	m_left.stop();
+	
+
 }
 
 void robot::get_stones(){
@@ -142,7 +159,9 @@ void robot::get_stones(){
 	double val;
 	float throttle;
 	Claw arm;
-	
+	infrared_sensor ir(INPUT_1);
+	ir.set_mode(infrared_sensor::mode_ir_prox);
+
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
@@ -152,7 +171,7 @@ void robot::get_stones(){
 	right_color.set_mode(color_sensor::mode_col_color);
 
 	color cal = temp;//read_color_right(right_color, temp);
-
+	Claw x;
 	while(button::back.pressed()){
 	
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
@@ -169,14 +188,24 @@ void robot::get_stones(){
 					// turn left 90
 					// go until stone(box)
 				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor);
-				go_straight(200,speed,m_right,m_left);
-			
-			
-			//	grab_stone();
-			
-				turn(180,m_right, m_left);
-				go_straight(200,speed,m_right,m_left);
+				
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+				
+				
+					x.lower();
+					x.close();
+					x.wait();
+					x.lift();
+				turn(90, m_right,m_left);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+					x.half_lower();
+					x.open();
+					x.wait(); x.wait();
+					x.close();x.lift();
+				turn(90,m_right, m_left);
 				turn(90,m_right, m_left);
 				go_straight(200,speed,m_right,m_left);
 			}
@@ -191,77 +220,78 @@ void robot::get_stones(){
 void robot::save_recipe(){
 	std::ofstream  out("/var/www/html/in.txt");
 	if(out.good()){
-	out << recipe.size() << std::endl;
-	for(color x:recipe) out << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+		for(color x:recipe){
+		//	boost(x);
+			out << x.red << ';' << x.green << ';' << x.blue << std::endl;
+		}	
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
 	}
 	out.close();
 }
 
+void robot::read_recepie_file(){
+	std::ifstream  in("/var/www/html/in.txt");
+	recipe.clear();
+	 std::string s="";
+        short count(0);
+		int red;
+		int green;
+		int blue;
+		while(getline(in, s, ';'))        {
+			if(count == 0) red = stoi(s);
+			else if(count == 1) green = stoi(s);
+			else if(count == 2) {
+				blue = stoi(s);
+				count =-1;
+				recipe.push_back({red,green,blue});
+			}
+			count++;
+	}
+	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
+		std::cout << "eingelesen"<< std::endl;
+		for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+	in.close();
+}
+
+
 void robot::read_recepie(){
-	int speed(200);
-	color temp;
+	recipe.clear();
 	short escape = 1;
-	double val;
-	float throttle;
-	
+
+	color_sensor s (INPUT_3);
+	s.set_mode(color_sensor::mode_col_color);
+	color cal = {0,0,0};
+	color last ={0,0,0};
+
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
-	color_sensor right_color (INPUT_3);
-	right_color.set_mode(color_sensor::mode_col_color);
-
-	temp.red = 0; temp.green = 0; temp.blue =0;
-	recipe_t rezept;
-	color cal = temp;//read_color_right(right_color, temp);
-
-	std::cout << "CALIBRATION: " << cal.red <<';'<< cal.green <<';'<< cal.blue <<std::endl;
-	// while(button::back.pressed()){
-	
-	while(button::back.pressed() || (escape != 0) ){
-		color brick = {255,255,255};
-		
-		//std::cout << read_color_right(right_color, cal).red << ';' << std::endl;
-		if(
-			is_color_right(right_color, cal) && 
-			!is_color_equal(read_color_right(right_color, {-30,80,0}),temp, 90)  //&& 
-			){ // && (temp.red + temp.green + temp.blue) < 300
-		escape = 2;
-		//if(is_color_right(right_color,cal)){ // temp = white || temp =={0,0,0}
-			brick = temp;
-			temp = read_color_right(right_color, {-30,80,0});
-			fix(temp);
+	while(button::back.pressed() && (escape != 0)){
+		if(is_color_right(s,cal)){
+			color x = (read_color_right(s,cal));
+			escape = 2;
+		// "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << 
+			if( abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+		 	else std::cout << ";;;" << std::endl;
+		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
+		// 		recipe.push_back(x);
+		// 	}
+		last=x;	
 			
-			if(is_color_equal(brick,{255,255,255},deviation) && !is_color_equal(temp,{255,255,255},deviation)){
-
-			std::cout << "NOT WIHITE!" << std::endl;
-			rezept.push_back(boost(temp));
-
-			std::cout << temp.red << ';'<< temp.green << ';'<< temp.blue  << ';'<< std::endl;
-			std::cout << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-		
+		}else if(!is_color_right(s,cal) && escape == 2){
+ 			escape = 0;
+			m_left.stop();
+			m_right.stop();
 		}
-
-			
-		 }
-		 else if(!is_color_right(right_color, cal) && escape == 2){
-				std::cout << "NOSTONE" << std::endl;
-  				 escape = 0;
-		 }
-		steer(line_sensor.value(),m_left,m_right,200);
+		steer(line_sensor.value(),m_left, m_right,200);
 		m_right.run_forever();
 		m_left.run_forever();
-		escape = button::back.pressed();
 	}
-
 	m_right.stop();
 	m_left.stop();
-	std::cout << "CAL-Color:"  << cal.red << ';' << cal.green << ';' << cal.blue << std::endl;
-	for(color x:rezept) std::cout << x.red << ';'<< x.green <<';' << x.blue << std::endl;
-	recipe = rezept;
 	save_recipe();
 }
 
@@ -347,4 +377,20 @@ void robot::forward_motors(float correction){
 		a.stop();
 		d.stop();
 		
+}
+
+
+void robot::test(){
+
+	color_sensor s (INPUT_3);
+	s.set_mode(color_sensor::mode_col_color);
+	color cal = {0,0,0};
+	read_recepie_file();
+	while(button::back.pressed()){
+		if(is_color_right(s,cal)){
+			color x = (read_color_right(s,cal));
+			if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+		}
+	}
+
 }
