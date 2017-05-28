@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-<<<<<<< HEAD
 // typedef SimpleWeb::SocketServer<SimpleWeb::WS> WsServer;
 
 // using namespace std;
@@ -9,7 +8,7 @@ using namespace std;
     // #include "support/SensorDebug.h"
     //     #include "ev3dev.h"
     //     using namespace ev3dev;	
-    #include "Claw.h"
+ //   #include "Claw.h"
 int main(){
     // Claw x;
     // x.lower();
@@ -55,12 +54,12 @@ int main(){
 	// this_thread::sleep_for(chrono::seconds(1));
 
 
+}
 
-=======
-int main(){
+// int main(){
 
-	cout << "Oida es geht i scheiß mi an!" << endl;
->>>>>>> a86741695b2e69c7210913fbd201546d38782f15
+// 	cout << "Oida es geht i scheiß mi an!" << endl;
 
-	return 0;
-}	
+
+// 	return 0;
+// }	

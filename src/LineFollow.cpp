@@ -274,7 +274,7 @@ void robot::read_recepie(){
 			color x = (read_color_right(s,cal));
 			escape = 2;
 		// "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << 
-			if( abs(x.red-last.red) > 2 || abs(x.green-last.green) > 2 || abs(x.blue-last.blue) > 2) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+			if( abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
 		 	else std::cout << ";;;" << std::endl;
 		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
 		// 		recipe.push_back(x);
