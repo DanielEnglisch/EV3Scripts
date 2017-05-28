@@ -21,31 +21,51 @@
 
   </head>
   <body>
-  <div class="container">
-      <h1>Momentanes Rezept</h1>
-
-      <div class="container" id="brick-container">
-        <?php
-        $file = fopen("in.txt", "r");
-        if ($file) {
-          while (($line = fgets($file)) !== false) {
-              $s = explode(";", $line);
-              spawnBrick($s[0],$s[1],$s[2]);
-            }
-          fclose($file);
-        }
-      ?>
-
+  <div class="container" id="content">
+      <h1>Robo Webinterface</h1>
+      <div class="container" id="recipe">
+      <h2>Rezept</h2>
+        <div class="container" id="brick-container">
+          <?php
+          $file = fopen("in.txt", "r");
+          if ($file) {
+            while (($line = fgets($file)) !== false) {
+                $s = explode(";", $line);
+                spawnBrick($s[0],$s[1],$s[2]);
+              }
+            fclose($file);
+          }
+        ?>
+        </div>
       </div>
-      
-
+      <div class="container" id="actions">
+        <h2>Aktionen</h2>
+        <div class="btn-group" role="group" aria-label="...">
+         <button type="button" class="btn btn-default">ReadRecipe</button>
+         <button type="button" class="btn btn-default">Test2</button>
+         <button type="button" class="btn btn-default">Test3</button>
+        </div>
+      </div>
+      <div class="container" id="console">
+        <h2>Konsole</h2>
+        <?php
+          while (@ ob_end_flush());
+          
+          $proc = popen('./testScript', 'r');
+          echo '<pre>';
+          while (!feof($proc))
+          {
+              echo fread($proc, 4096);
+              @ flush();
+          }
+          echo '</pre>';
+        ?>
+      </div>
   </div>
 
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-   
-   </script>
-
+  
   </body>
 </html>

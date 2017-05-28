@@ -1,5 +1,7 @@
-// #include "server_ws.hpp"
+#include <iostream>
+using namespace std;
 
+<<<<<<< HEAD
 // typedef SimpleWeb::SocketServer<SimpleWeb::WS> WsServer;
 
 // using namespace std;
@@ -54,6 +56,11 @@ int main(){
 
 
 
+=======
+int main(){
+
+	cout << "Oida es geht i scheiß mi an!" << endl;
+>>>>>>> a86741695b2e69c7210913fbd201546d38782f15
 
 	return 0;
 }	

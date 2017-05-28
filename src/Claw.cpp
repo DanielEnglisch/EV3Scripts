@@ -50,6 +50,7 @@ bool Claw::lower(){
 		std::cout << big.position();
 	
 		}
+<<<<<<< HEAD
 
 
 bool Claw::half_lower(){
@@ -63,3 +64,5 @@ bool Claw::half_lower(){
 		std::cout << big.position();
 		
 		}
+=======
+>>>>>>> a86741695b2e69c7210913fbd201546d38782f15
