@@ -277,7 +277,7 @@ void robot::read_recepie(){
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
 				(x.red > 15 || x.green >15 || x.blue > 15)
 				){
-				if(!is_color_equal(x,{255,255,255},55) && !is_color_equal(x,last_real,deviation))
+				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation))
 				//<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" 
 				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
 				last_real = x;
