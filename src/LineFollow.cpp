@@ -218,15 +218,15 @@ void robot::get_stones(){
 }
 
 void robot::save_recipe(){
-	std::ofstream  out("/var/www/html/in.txt");
-	if(out.good()){
+//	std::ofstream  out("/var/www/html/in.txt");
+	//sif(out.good()){
 		for(color x:recipe){
 		//	boost(x);
-			out << x.red << ';' << x.green << ';' << x.blue << std::endl;
-		}	
+			std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;
+		//}	
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
 	}
-	out.close();
+	//out.close();
 }
 
 void robot::read_recepie_file(){
@@ -262,7 +262,7 @@ void robot::read_recepie(){
 	s.set_mode(color_sensor::mode_col_color);
 	color cal = {0,0,0};
 	color last ={0,0,0};
-
+	color last_real;
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 
@@ -271,11 +271,19 @@ void robot::read_recepie(){
 
 	while(button::back.pressed() && (escape != 0)){
 		if(is_color_right(s,cal)){
-			color x = (read_color_right(s,cal));
+			color x = (read_color_right(s,{19,6,0}));
 			escape = 2;
-		// "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << 
-			if( abs(x.red-last.red) < 4 && abs(x.green-last.green) < 4 && abs(x.blue-last.blue) < 4) std::cout <<x.red << ';'<< x.green << ';'<< x.blue << std::endl;
-		 	else std::cout << ";;;" << std::endl;
+
+			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
+				(x.red > 15 || x.green >15 || x.blue > 15)
+
+
+				){
+				if(!is_color_equal(x,{255,255,255},55) && !is_color_equal(x,last_real,deviation))
+				//<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" 
+				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+				last_real = x;
+				}
 		// if((x.red + x.green + x.blue )>200 && !is_color_equal(x,last,deviation) && is_color_equal(last,{255,255,255},deviation) && !is_color_equal(x, {255,255,255},deviation)) { // not white
 		// 		recipe.push_back(x);
 		// 	}
@@ -292,7 +300,7 @@ void robot::read_recepie(){
 	}
 	m_right.stop();
 	m_left.stop();
-	save_recipe();
+	//save_recipe();
 }
 
 
