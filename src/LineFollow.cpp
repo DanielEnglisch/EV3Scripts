@@ -220,7 +220,7 @@ void robot::get_stones(){
 void robot::save_recipe(){
 std::ofstream  out("in.txt");
 
-	while(out.good()){
+	if(out.good()){
 		for(color x:recipe){
 		//	boost(x);
 			
@@ -293,6 +293,7 @@ void robot::read_recepie(){
  			escape = 0;
 			m_left.stop();
 			m_right.stop();
+		
 		}
 		steer(line_sensor.value(),m_left, m_right,200);
 		m_right.run_forever();
@@ -301,7 +302,8 @@ void robot::read_recepie(){
 	
 	m_right.stop();
 	m_left.stop();
-	save_recipe();
+		save_recipe();
+
 }
 
 
