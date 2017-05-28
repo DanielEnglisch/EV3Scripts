@@ -148,6 +148,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 void robot::get_stones(){
 	int speed(200);
 	color temp = {0,0,0};
+
 	short escape = 1;
 	color last_col = temp;
 	infrared_sensor ir(INPUT_1);
@@ -171,11 +172,12 @@ void robot::get_stones(){
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-			if(!is_in(temp)){
+			if(!is_in(temp) && !is_color_equal(temp,last_col,deviation)){
 					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 					//std::cout  << "IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-					std::cout << "TURN LEFT" <<std::endl;
+					//std::cout << "TURN LEFT" <<std::endl;
 					
+			 last_col = temp;
 			} 
 		}
 		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
