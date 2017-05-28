@@ -149,7 +149,7 @@ void robot::get_stones(){
 	int speed(200);
 	color temp = {0,0,0};
 	short escape = 1;
-
+	color last_col = temp;
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 
@@ -172,11 +172,12 @@ void robot::get_stones(){
 			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 			if(!is_in(temp)){
-					std::cout  << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-					std::cout << "TURN LEFT" <<std::endl;
 					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+					//std::cout  << "IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+					std::cout << "TURN LEFT" <<std::endl;
+					
 			} 
-		
+		}
 		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
 		// 	else{
 		// 		turn(90, m_right,m_left);
@@ -204,7 +205,7 @@ void robot::get_stones(){
 		// }		
 	
 		
-		}
+		
 		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
@@ -413,9 +414,9 @@ void robot::test(){
 	read_recepie_file();
 	while(button::back.pressed()){
 		if(is_color_right(s,cal)){
-			for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+			for(color x : recipe) std::cout  << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 			color x = (read_color_right(s,cal));
-			if(is_in(x)) std::cout << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+			if(is_in(x)) std::cout << " IS IN: ";
 		}
 	}
 } 

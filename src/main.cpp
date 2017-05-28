@@ -28,8 +28,8 @@ int main(){
 
     //r.follow_line_until_stone(200,mr,l,line_sensor,ir);
     //r.read_recepie();
-  // r.get_stones();
-r.test();
+   r.get_stones();
+//r.test();
    	// // cout << "0;0;0" << endl;
     //   int counter(0);
     //  while(!r.rec_fin) counter++;
