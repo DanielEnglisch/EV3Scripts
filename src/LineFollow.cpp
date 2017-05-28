@@ -53,6 +53,8 @@ color robot::read_color_right(color_sensor & right_color, color const & cal){
 }
 
 bool robot::is_color_equal(color const &in1, color const &in2,int deviation){
+	//std::cout <<abs(in1.red-in2.red) << ';'<<abs(in1.green-in2.green) << ';'<<abs(in1.blue-in2.blue) << std::endl;
+
 	return abs(in1.red-in2.red)<deviation &&
 	abs(in1.green-in2.green)<deviation && 
 	abs(in1.blue-in2.blue)<deviation;
@@ -107,11 +109,11 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 
 
 bool robot::is_in(color const & in){
-	for(color x: recipe){
-		std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if(is_color_equal(x,in,30)){
-			std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
-			x = {-1,-1,-1};
+	for(int i= 0; i < recipe.size(); ++i){
+		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
+		if(is_color_equal(recipe[i],in,50)){
+		//	std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
+			recipe[i] = {-1,-1,-1};
 			return true;
 		}
 	}
@@ -148,11 +150,10 @@ void robot::get_stones(){
 	int speed(200);
 	color temp = {0,0,0};
 	short escape = 1;
-	double val;
-	float throttle;
 
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
+
 	read_recepie_file();
 
 	motor m_right(OUTPUT_A);
@@ -166,40 +167,46 @@ void robot::get_stones(){
 	color cal = temp;//read_color_right(right_color, temp);
 	Claw x;
 
-	while(button::back.pressed()){
-	
+	while(button::back.pressed()  && (escape != 0) ){
+		
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 			temp = read_color_right(right_color, {-30,80,0});
-			fix(temp);	
-			if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
-			else{
+			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+			if(is_in(temp)) std::cout << "TURN LEFT" <<std::endl;
+		
+		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
+		// 	else{
+		// 		turn(90, m_right,m_left);
+		// 		follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+		// 			x.lower();
+		// 			x.close();
+		// 			x.wait();
+		// 			x.lift();
+		// 			escape = 0;
 				
-				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
-					x.lower();
-					x.close();
-					x.wait();
-					x.lift();
-				turn(90, m_right,m_left);
-				turn(90, m_right,m_left);
+		// 		// turn(90, m_right,m_left);
+		// 		// turn(90, m_right,m_left);
 
-				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
-				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
-					x.half_lower();
-					x.open();
-					x.wait(); x.wait();
-					x.close();x.lift();
-				turn(90,m_right, m_left);
-				turn(90,m_right, m_left);
-				go_straight(200,speed,m_right,m_left);
-			}
-		}		
-	 }
+		// 		// follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+		// 		// turn(90, m_right,m_left);
+		// 		// follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
+		// 		// 	x.half_lower();
+		// 		// 	x.open();
+		// 		// 	x.wait(); x.wait();
+		// 		// 	x.close();x.lift();
+		// 		// turn(90,m_right, m_left);
+		// 		// turn(90,m_right, m_left);
+		// 		// go_straight(200,speed,m_right,m_left);
+		// 	}
+		// }		
+	
 		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
-		escape = button::back.pressed();
+		}
+ }
+		m_right.stop();
+		m_left.stop();
 }
 
 void robot::save_recipe(){
@@ -216,32 +223,34 @@ std::ofstream  out("/var/www/html/in.txt");
 }
 
 void robot::read_recepie_file(){
-	std::ifstream  in("/var/www/html/in.txt");
-	recipe.clear();
-	 std::string s="";
-        short count(0);
-		int red(0);
-		int green(0);
-		int blue(0);
+	//std::ifstream  in("/var/www/html/in.txt");
+	 recipe.clear();
+	//  std::string s="";
+    //     short count(0);
+	// 	int red(0);
+	// 	int green(0);
+	// 	int blue(0);
 		
-		while(getline(in, s, ';')){
-			std::string test(s);
-			if(count == 0){red = std::stoi(test);++count;}
-			else if(count == 1){++count;green = std::stoi(test);}
-			else if(count == 2){
-				blue = std::stoi(test);
-				count = 0;
-				recipe.push_back( {red,green,blue});
-				red = 0; green =0; blue = 0;
-			}
+	// 	while(getline(in, s, ';')){
+	// 		std::string test(s);
+	// 		if(count == 0){red = std::stoi(test);++count;}
+	// 		else if(count == 1){++count;green = std::stoi(test);}
+	// 		else if(count == 2){
+	// 			blue = std::stoi(test);
+	// 			count = 0;
+	// 			recipe.push_back( {red,green,blue});
+	// 			red = 0; green =0; blue = 0;
+	// 		}
 			
-		}
+	// 	}
 
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
 		std::cout << "eingelesen"<< std::endl;
+	//in.close();
+
 		recipe = {{185,13,16},{248,134,51},{0,70,25}};
-		for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
-	in.close();
+	//	for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+
 }
 
 bool robot::grey(color const & in){	
