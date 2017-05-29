@@ -298,36 +298,8 @@ void robot::read_recipe_file(){
 
 		recipe.push_back({red,green,blue});
 	}
-
-	//  std::string s="";
-    //     short count(0);
-	// 	int red(0);
-	// 	int green(0);
-	// 	int blue(0);
-		
-	// 	while(getline(in, s, ';')){
-	// 		std::string test(s);
-	// 		if(count == 0){red = std::stoi(test);++count;}
-	// 		else if(count == 1){++count;green = std::stoi(test);}
-	// 		else if(count == 2){
-	// 			blue = std::stoi(test);
-	// 			count = 0;
-	// 			recipe.push_back( {red,green,blue});
-	// 			red = 0; green =0; blue = 0;
-	// 		}
-			
-	// 	}
-
-	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
-	std::cout << "eingelesen"<< std::endl;
-	//in.close();
-
 	in.close();
 	delete[] temp; temp = nullptr;
-
-	//recipe = {{185,13,16},{248,134,51},{0,70,25}};
-	//for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
-
 }
 
 bool robot::grey(color const & in){	
