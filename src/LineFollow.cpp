@@ -137,7 +137,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)) && exit){
 				
-					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0) exit = false;
+					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0 && to_bucket) exit = false;
 				if(to_bucket && is_color_right(right_color,{19,6,0})){
 					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
 					if((m_left.speed() + m_right.speed()) >= 0 )  --corner_stones;
@@ -148,8 +148,21 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				m_right.run_forever();
 				m_left.run_forever();
 			}
+			
 	m_right.stop();
 	m_left.stop();
+	x.lower();
+						x.close();
+						x.wait();
+						x.lift();
+						x.wait();
+						x.wait();
+						x.wait();
+						x.wait();
+						x.wait();
+						x.half_lower();
+						x.open();
+						x.lift();
 }
 
 // void robot::drop_to_mixer(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
@@ -315,8 +328,8 @@ void robot::read_recepie(){
 				(x.red > 20 || x.green >20 || x.blue > 20) && !grey(x)
 				){
 				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation)){
-				recipe.push_back(x); //<< "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m"
-				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+				recipe.push_back(x);
+				std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 				last_real = x;
 				}
 			}
