@@ -47,6 +47,7 @@
 
 		public:
 				recipe_t 		recipe;
+				int				corner_stones;n 
 				// ~robot(){
 				// 	 motor r(OUTPUT_A);
 				// 	 motor l(OUTPUT_D);
@@ -59,7 +60,7 @@
 				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
 				void read_recepie_file();
-				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir);
+				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket = false);
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();
