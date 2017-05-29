@@ -43,11 +43,13 @@
       <div class="container" id="actions">
         <h2>Aktionen</h2>
         <div class="btn-group" role="group" aria-label="...">
-          <a href="?act=getRecipe" class="btn btn-info" role="button">GetRecipe</a>
           <a href="?act=readRecipe" class="btn btn-info" role="button">ReadRecipe</a>
-          <a href="?act=moveTest" class="btn btn-info" role="button">MoveTest</a>
           <a href="?act=getStone" class="btn btn-info" role="button">GetStone</a>
-
+        </div>
+        <div class="btn-group" role="group" aria-label="...">
+          <a href="?act=getRecipe" class="btn btn-info" role="button">GetRecipe</a>
+          <a href="?act=moveTest" class="btn btn-info" role="button">MoveTest</a>
+          <a href="?act=followLine" class="btn btn-info" role="button">FollowLine</a>
         </div>
       </div>
       <script src="js/jquery-3.2.1.min.js"></script>
@@ -81,6 +83,21 @@
               @ flush();
 
               $proc = popen('echo Cisco0| sudo php php/start_getStone.php', 'r');
+              while (!feof($proc))
+              {
+                  echo fread($proc, 4096);
+                  @ flush();
+              }
+              echo "Done!";
+              echo '</pre>';
+            }else if ($_GET['act'] == 'followLine'){
+              echo "<h2>Konsole</h2>";
+              while (@ ob_end_flush());
+              echo '<pre>';
+              echo "Script running followLine...\n";
+              @ flush();
+
+              $proc = popen('echo Cisco0| sudo php php/start_followLine.php', 'r');
               while (!feof($proc))
               {
                   echo fread($proc, 4096);

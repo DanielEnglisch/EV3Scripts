@@ -95,8 +95,8 @@ void robot::turn(int degrees, motor & m_right, motor & m_left, bool stone){
 			pos  = 750;
 		}
 		if(degrees ==45){
-				
-			pos = 180;
+			go_straight(-200,500,m_right,m_left);
+			pos = 200;
 			
 		}
 		else std::cout << "NIX";
@@ -116,7 +116,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left, bool stone){
 		int counter(0);
 		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) ++counter;
 		if(degrees == 45){
-			go_straight(200,500,m_right,m_left);
+			go_straight(220,500,m_right,m_left);
 		}
 
 }
@@ -209,6 +209,7 @@ void robot::get_stones(){
 				turn(45, m_right,m_left,false);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
 				x.half_lower();
+				x.wait();
 				x.open();
 				m_left.stop();
 				m_right.stop();
@@ -485,6 +486,6 @@ void robot::test(){
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
 
-				follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
-				turn(45, m_right,m_left,false);
+	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	turn(45, m_right,m_left,false);
 } 

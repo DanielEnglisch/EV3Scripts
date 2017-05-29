@@ -15,9 +15,10 @@
 						small.set_position(0);		
 				}
 			 ~Claw(){
-				open();
+				std::cout << "destructor!" << std::endl;	
 				lift();
 				open();
+				//open();
 			 }
 			int wait();
 			bool  open();

@@ -15,7 +15,7 @@ bool Claw::open(){
 			small.set_position_sp(0);
 			small.run_to_abs_pos();
 				int counter(0);
-			while(small.position() < -1) counter++;
+			while(small.position() < -5) counter++;
 }
 
 bool Claw::close(){
