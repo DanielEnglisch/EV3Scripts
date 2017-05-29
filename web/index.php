@@ -58,16 +58,8 @@
             }else if ($_GET['act'] == 'readRecipe'){
 
               echo "<h2>Konsole</h2>";
-              while (@ ob_end_flush());
-
-              $proc = popen('./readRecipe', 'r');
-              echo '<pre>';
-              while (!feof($proc))
-              {
-                  echo fread($proc, 4096);
-                  @ flush();
-              }
-              echo '</pre>';
+              $out = shell_exec('ssh robot@localhost su -c "/var/www/html/readRecipe"');
+              echo '<pre>' . $out . '</pre>';
           }
         }
 
