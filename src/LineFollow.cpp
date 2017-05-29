@@ -110,7 +110,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 bool robot::is_in(color const & in){
 	for(int i= 0; i < recipe.size(); ++i){
 		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if((recipe[i].red != -1 && recipe[i].green != -1  && recipe[i].blue != -1 ) && is_color_equal(recipe[i],in,40)){
+		if( (recipe[i].red != -1 && recipe[i].green != -1  && recipe[i].blue != -1 ) && is_color_equal(recipe[i],in,40)){
 		//	std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			recipe[i] = {-1,-1,-1};
 			return true;
@@ -119,19 +119,28 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket){
 	Claw x;
 	int distance(0);
-
+	bool exit = true;
+	
+	color_sensor right_color (INPUT_3);
+	right_color.set_mode(color_sensor::mode_col_color);
+	
 	int start(0);
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 	start= ir.value();	
 	std::cout << "START: "<< start<<std::endl;
-	while	(button::back.pressed() &&( 
+	while (button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				))){
+				)) && exit){
+					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0) exit = false;
+				if(to_bucket && is_color_right(right_color,{19,6,0})){
+					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
+					if((m_left.speed() + m_right.speed()) >= 0 )  --corner_stones;
+				}
 				std::cout << ir.value()<< std::endl;
 				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
@@ -180,8 +189,13 @@ void robot::get_stones(){
 						x.close();
 						x.wait();
 						x.lift();
-						x.open();
-			 last_col = temp;
+				turn(90, m_right,m_left);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
+				x.half_lower();
+			 	last_col = temp;
 			} 
 		}
 		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
