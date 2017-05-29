@@ -38,7 +38,7 @@
       <div class="container" id="actions">
         <h2>Aktionen</h2>
         <div class="btn-group" role="group" aria-label="...">
-          <a href="?act=readRecipe" class="btn btn-info" role="button">ReadRecipe</a>
+          <a href="?act=moveTest" class="btn btn-info" role="button">MoveTest</a>
           <a href="?act=getRecipe" class="btn btn-info" role="button">GetRecipe</a>
         </div>
       </div>
@@ -55,12 +55,12 @@
         </div>
       </div>';
               getRecipe();
-            }else if ($_GET['act'] == 'readRecipe'){
+            }else if ($_GET['act'] == 'moveTest'){
 
               echo "<h2>Konsole</h2>";
               while (@ ob_end_flush());
 
-              $proc = popen('./readRecipe', 'r');
+              $proc = popen('echo Cisco0| sudo php php/start_moveTest.php', 'r');
               echo '<pre>';
               while (!feof($proc))
               {
