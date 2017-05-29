@@ -133,7 +133,7 @@ bool robot::is_in(color const & in){
 }
 
 void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket){
-	Claw x;
+	
 	int distance(0);
 	bool exit = true;
 	
@@ -168,6 +168,12 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 
 // void robot::drop_to_mixer(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
 // }
+void robot::wait(){
+			int counter(0);
+		 	double time_start(time(0));
+		 	while(time_start+0.2 >= time(0))counter++;
+			// return counter;
+}
 
 void robot::get_stones(){
 	int speed(400);
@@ -210,12 +216,13 @@ void robot::get_stones(){
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
 				x.half_lower();
 				x.wait();
-				x.open();
+				
 				m_left.stop();
 				m_right.stop();
 				x.wait();x.wait();
-				speed =-200;
-				
+				speed =0;
+				escape =0;
+			 	x.open();
 			 	last_col = temp;
 			} 
 		}

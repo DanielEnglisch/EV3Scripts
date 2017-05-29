@@ -50,6 +50,7 @@
 		public:
 				recipe_t 		recipe;
 				int				corner_stones = 0;
+				void wait();
 				// ~robot(){
 				// 	 motor r(OUTPUT_A);
 				// 	 motor l(OUTPUT_D);
