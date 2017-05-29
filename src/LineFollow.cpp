@@ -110,7 +110,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 bool robot::is_in(color const & in){
 	for(int i= 0; i < recipe.size(); ++i){
 		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if((recipe[i].red != -1 && recipe[i].green != -1  && recipe[i].blue != -1 ) && is_color_equal(recipe[i],in,40)){
+		if( (recipe[i].red != -1 && recipe[i].green != -1  && recipe[i].blue != -1 ) && is_color_equal(recipe[i],in,40)){
 		//	std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			recipe[i] = {-1,-1,-1};
 			return true;
