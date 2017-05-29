@@ -136,6 +136,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)) && exit){
+				
 					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0) exit = false;
 				if(to_bucket && is_color_right(right_color,{19,6,0})){
 					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
@@ -428,15 +429,21 @@ void robot::forward_motors(float correction){
 void robot::test(){
 // for(int i = 0; i < 10; ++i) std::cout << i << ';' << i << ';'<< i << ';'<< std::endl;
 // rec_fin = true;
-	color_sensor s (INPUT_3);
-	s.set_mode(color_sensor::mode_col_color);
-	color cal = {0,0,0};
-	read_recepie_file();
+	// color_sensor s (INPUT_3);
+	// s.set_mode(color_sensor::mode_col_color);
+	// color cal = {0,0,0};
+	// read_recepie_file();
+	// while(button::back.pressed()){
+	// 	if(is_color_right(s,cal)){
+	// 		for(color x : recipe) std::cout  << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+	// 		color x = (read_color_right(s,cal));
+	// 		if(is_in(x)) std::cout << " IS IN: ";
+	// 	}
+	// }
+
+	infrared_sensor ir(INPUT_1);
+	ir.set_mode(infrared_sensor::mode_ir_prox);
 	while(button::back.pressed()){
-		if(is_color_right(s,cal)){
-			for(color x : recipe) std::cout  << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-			color x = (read_color_right(s,cal));
-			if(is_in(x)) std::cout << " IS IN: ";
-		}
+		std::cout << ir.value()<< std::endl;
 	}
 } 

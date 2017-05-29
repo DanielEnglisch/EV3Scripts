@@ -7,28 +7,33 @@ using namespace std;
 
 int main(){
    	
-	cout << "Clawing" << endl;
-	cout << "Clawing-GG" << endl;
 
-		int pos = 200;
-		int speed = 300;
+    //    for(int r = 0; r<255; ++r){
+    //    for(int g = 0; g<255; ++g){
+    //    for(int b = 0; b<255; ++b){
+    //        cout << r << ';'<< g << ';'<< b << endl;
+    //        }
+    //        }
+    //        }
+       
+    robot r;
 
-		motor m_left(OUTPUT_A);
-		motor m_right(OUTPUT_D);
+     motor mr (OUTPUT_A);
+    motor l (OUTPUT_D);  
 
-		int pos_l = m_left.position();
-		int pos_r = m_right.position();
-		
-		m_left.set_position_sp(-pos);
-		m_right.set_position_sp(-pos);
-		m_left.set_speed_sp(-speed);
-		m_right.set_speed_sp(-speed);
-		m_left.run_to_rel_pos();
-		m_right.run_to_rel_pos();
-		int counter(0);
-		while(m_left.position() >= pos_l-pos && m_right.position() >= pos_r-pos) counter++;
-		
-	cout << "End Clawing" << endl;
+     infrared_sensor ir(INPUT_1);
+	 ir.set_mode(infrared_sensor::mode_ir_prox);
 
+	    light_sensor line_sensor (INPUT_2);
+	    line_sensor.set_mode(light_sensor::mode_reflect);
+
+    r.follow_line_until_stone(200,mr,l,line_sensor,ir);
+    //r.read_recepie();
+        //r.get_stones();
+    //r.test();
+   	// // cout << "0;0;0" << endl;
+    //   int counter(0);
+    //  while(!r.rec_fin) counter++;
+    //  r.test();
     return 0;
 }
