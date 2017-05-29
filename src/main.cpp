@@ -18,8 +18,23 @@ int main(){
     //        }
        
     robot r;
+<<<<<<< HEAD
     r.read_recepie();
         //r.get_stones();
+=======
+    //  motor mr (OUTPUT_A);
+    // motor l (OUTPUT_D);  
+
+    //  infrared_sensor ir(INPUT_1);
+	//  ir.set_mode(infrared_sensor::mode_ir_prox);
+
+	//     light_sensor line_sensor (INPUT_2);
+	//     line_sensor.set_mode(light_sensor::mode_reflect);
+
+   //  r.follow_line_until_stone(200,mr,l,line_sensor,ir);
+   // r.read_recepie();
+       r.get_stones();
+>>>>>>> 7153dfd122577184d1e925115f3b5d60b3811634
     //r.test();
    	// // cout << "0;0;0" << endl;
     //   int counter(0);
