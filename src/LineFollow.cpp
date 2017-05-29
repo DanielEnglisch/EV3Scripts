@@ -268,38 +268,39 @@ std::ofstream  out("/var/www/html/in.txt");
 }
 
 void robot::read_recipe_file(){
-	std::ifstream  in("/var/www/html/in.txt");
-	recipe.clear();
+	// std::ifstream  in("/var/www/html/in.txt");
+	// recipe.clear();
 	
-	std::string s;
-	char* temp = new char[12];
-	char* next_token;
-	char* item;
-	int red;
-	int green;
-	int blue;
+	// std::string s;
+	// char* temp = new char[12];
+	// char* next_token;
+	// char* item;
+	// int red;
+	// int green;
+	// int blue;
 
-	while(std::getline(in,s))
-	{
-		for (int i = 0; i < s.size(); ++i)
-		{
-			temp[i] = s[i];
-		}
+	// while(std::getline(in,s))
+	// {
+	// 	for (int i = 0; i < s.size(); ++i)
+	// 	{
+	// 		temp[i] = s[i];
+	// 	}
 
-		temp[s.size()] = '\0';
+	// 	temp[s.size()] = '\0';
 
-		item = strtok_s(temp,";", & next_token);
-		red = atoi(item);
-		item = strtok_s(nullptr,";", & next_token);
-		green = atoi(item);
-		item = strtok_s(nullptr,"\0",&next_token);
-		blue = atoi(item);
+	// 	item = strtok_s(temp,";", & next_token);
+	// 	red = atoi(item);
+	// 	item = strtok_s(nullptr,";", & next_token);
+	// 	green = atoi(item);
+	// 	item = strtok_s(nullptr,"\0",&next_token);
+	// 	blue = atoi(item);
 
 
-		recipe.push_back({red,green,blue});
-	}
-	in.close();
-	delete[] temp; temp = nullptr;
+	// 	recipe.push_back({red,green,blue});
+	// }
+	// in.close();
+	// delete[] temp; temp = nullptr;
+	recipe = {{185,13,16},{248,134,51},{0,70,25}};
 }
 
 bool robot::grey(color const & in){	
