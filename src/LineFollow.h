@@ -8,6 +8,7 @@
 	#include <cmath>				 //only std::abs used
 	#include <tuple> 
 	#include <string>
+	#include <string.h>
 	#include <fstream>
 	#include "Claw.h"
 	using namespace ev3dev;			//using ev3dev::motor;
@@ -60,7 +61,7 @@
 				void			turn(int degrees, motor & m_right, motor & m_left, bool stone = true);	
 				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
-				void read_recepie_file();
+				void read_recipe_file();
 				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket = false);
 				void get_stones();
 				void read_recepie();

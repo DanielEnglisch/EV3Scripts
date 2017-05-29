@@ -178,7 +178,7 @@ void robot::get_stones(){
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 
-	read_recepie_file();
+	read_recipe_file();
 
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
@@ -267,9 +267,38 @@ std::ofstream  out("/var/www/html/in.txt");
 	out.close();
 }
 
-void robot::read_recepie_file(){
-	//std::ifstream  in("/var/www/html/in.txt");
-	 recipe.clear();
+void robot::read_recipe_file(){
+	std::ifstream  in("/var/www/html/in.txt");
+	recipe.clear();
+	
+	std::string s;
+	char* temp = new char[12];
+	char* next_token;
+	char* item;
+	int red;
+	int green;
+	int blue;
+
+	while(std::getline(in,s))
+	{
+		for (int i = 0; i < s.size(); ++i)
+		{
+			temp[i] = s[i];
+		}
+
+		temp[s.size()] = '\0';
+
+		item = strtok_s(temp,";",&next_token);
+		red = atoi(item);
+		item = strtok_s(nullptr,";",&next_token);
+		green = atoi(item);
+		item = strtok_s(nullptr,"\0",&next_token);
+		blue = atoi(item);
+
+
+		recipe.push_back({red,green,blue});
+	}
+
 	//  std::string s="";
     //     short count(0);
 	// 	int red(0);
@@ -290,11 +319,14 @@ void robot::read_recepie_file(){
 	// 	}
 
 	//	for(int i = 0; i < recipe.size(); ++i) out << recipe[i].red << ';'<< recipe[i].green << ';'<< recipe[i].blue << ';'<< std::endl;
-		std::cout << "eingelesen"<< std::endl;
+	std::cout << "eingelesen"<< std::endl;
 	//in.close();
 
-		recipe = {{185,13,16},{248,134,51},{0,70,25}};
-	//	for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
+	in.close();
+	delete[] temp; temp = nullptr;
+
+	//recipe = {{185,13,16},{248,134,51},{0,70,25}};
+	//for(color x:recipe) std::cout << x.red << ';' << x.green << ';' << x.blue << std::endl;	
 
 }
 
