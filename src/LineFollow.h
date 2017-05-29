@@ -10,6 +10,7 @@
 	#include <string>
 	#include <string.h>
 	#include <fstream>
+	#include <sstream>
 	#include "Claw.h"
 	using namespace ev3dev;			//using ev3dev::motor;
 

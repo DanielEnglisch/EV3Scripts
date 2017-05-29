@@ -46,6 +46,8 @@
           <a href="?act=getRecipe" class="btn btn-info" role="button">GetRecipe</a>
           <a href="?act=readRecipe" class="btn btn-info" role="button">ReadRecipe</a>
           <a href="?act=moveTest" class="btn btn-info" role="button">MoveTest</a>
+          <a href="?act=getStone" class="btn btn-info" role="button">GetStone</a>
+
         </div>
       </div>
       <script src="js/jquery-3.2.1.min.js"></script>
@@ -60,10 +62,25 @@
               echo "<h2>Konsole</h2>";
               while (@ ob_end_flush());
               echo '<pre>';
-              echo "Script running...\n";
+              echo "Script running moveTest...\n";
               @ flush();
 
               $proc = popen('echo Cisco0| sudo php php/start_moveTest.php', 'r');
+              while (!feof($proc))
+              {
+                  echo fread($proc, 4096);
+                  @ flush();
+              }
+              echo "Done!";
+              echo '</pre>';
+            }else if ($_GET['act'] == 'getStone'){
+              echo "<h2>Konsole</h2>";
+              while (@ ob_end_flush());
+              echo '<pre>';
+              echo "Script running getStone...\n";
+              @ flush();
+
+              $proc = popen('echo Cisco0| sudo php php/start_getStone.php', 'r');
               while (!feof($proc))
               {
                   echo fread($proc, 4096);
@@ -82,7 +99,7 @@
               echo "<h2>Konsole</h2>";
               while (@ ob_end_flush());
               echo '<pre>';
-              echo "Script running...\n";
+              echo "Script running readRecipe...\n";
               @ flush();
               $proc = popen('echo Cisco0| sudo php php/start_readRecipe.php', 'r');
 
