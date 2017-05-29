@@ -17,6 +17,7 @@
 			 ~Claw(){
 				open();
 				lift();
+				open();
 			 }
 			int wait();
 			bool  open();

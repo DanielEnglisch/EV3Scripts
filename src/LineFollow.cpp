@@ -89,7 +89,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 		int pos(0);
 		if (degrees == 90){
 			go_straight(450,500,m_right,m_left);
-			pos  = 330;
+			pos  = 320;
 		}
 		if (degrees ==180){
 			pos  = 750;
@@ -196,12 +196,11 @@ void robot::get_stones(){
 						x.close();
 						x.wait();
 						x.lift();
-				 turn(180, m_right,m_left);
-				turn(90, m_right,m_left);
+				turn(180, m_right,m_left);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
 				turn(90, m_right,m_left);
-				// follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
-				// x.half_lower();
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
+				x.half_lower();
 			 	last_col = temp;
 			} 
 		}
