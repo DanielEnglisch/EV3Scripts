@@ -288,9 +288,9 @@ void robot::read_recipe_file(){
 
 		temp[s.size()] = '\0';
 
-		item = strtok_s(temp,";",&next_token);
+		item = strtok_s(temp,";", & next_token);
 		red = atoi(item);
-		item = strtok_s(nullptr,";",&next_token);
+		item = strtok_s(nullptr,";", & next_token);
 		green = atoi(item);
 		item = strtok_s(nullptr,"\0",&next_token);
 		blue = atoi(item);
