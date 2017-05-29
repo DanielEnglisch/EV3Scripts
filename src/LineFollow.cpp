@@ -86,12 +86,13 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 	}
 
 void robot::turn(int degrees, motor & m_right, motor & m_left){
+		int pos(0);
 		if (degrees == 90){
 			go_straight(325,500,m_right,m_left);
-			int pos  = 400;
+			pos  = 400;
 		}
 		if (degrees ==180){
-			int pos  = 800;
+			pos  = 750;
 		}
 		else std::cout << "NIX";
 	
@@ -109,10 +110,8 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 		m_right.run_to_rel_pos();
 		int counter(0);
 		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) ++counter;
-	}
 
-
-
+}
 bool robot::is_in(color const & in){
 	for(int i= 0; i < recipe.size(); ++i){
 		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
@@ -157,18 +156,6 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 			
 	m_right.stop();
 	m_left.stop();
-	x.lower();
-						x.close();
-						x.wait();
-						x.lift();
-						x.wait();
-						x.wait();
-						x.wait();
-						x.wait();
-						x.wait();
-						x.half_lower();
-						x.open();
-						x.lift();
 }
 
 // void robot::drop_to_mixer(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir){
@@ -209,10 +196,10 @@ void robot::get_stones(){
 						x.close();
 						x.wait();
 						x.lift();
-				// turn(90, m_right,m_left);
-				// turn(90, m_right,m_left);
-				// follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
-				// turn(90, m_right,m_left);
+				 turn(180, m_right,m_left);
+				turn(90, m_right,m_left);
+				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+				turn(90, m_right,m_left);
 				// follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
 				// x.half_lower();
 			 	last_col = temp;

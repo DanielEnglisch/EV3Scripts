@@ -36,7 +36,7 @@
 			void 			turn(int degrees);
 			bool			is_in(color const & in);	
 			void			go_straight(int pos, int speed, motor & m_right, motor &m_left);
-			void			turn(int degrees, motor & m_right, motor & m_left);	
+			
 			void			steer(int light_val, motor & m_left, motor & m_right, int throttle);
 			float			floatMap(float vx, float v1, float v2, float n1, float n2);
 			void			forward_motors(float correction);							
@@ -57,6 +57,7 @@
 				// }
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}			
+				void			turn(int degrees, motor & m_right, motor & m_left);	
 				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
 				void read_recepie_file();
