@@ -136,6 +136,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)) && exit){
+				
 					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0) exit = false;
 				if(to_bucket && is_color_right(right_color,{19,6,0})){
 					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
