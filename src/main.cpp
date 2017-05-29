@@ -16,7 +16,7 @@ int main(){
     //        }
     //        }
        
-    //robot r;
+    robot r;
 
     // motor mr (OUTPUT_A);
     // motor l (OUTPUT_D);  
