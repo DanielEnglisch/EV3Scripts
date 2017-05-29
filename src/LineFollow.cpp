@@ -86,12 +86,19 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 	}
 
 void robot::turn(int degrees, motor & m_right, motor & m_left){
-		go_straight(325,500,m_right,m_left);
+		if (degrees == 90){
+			go_straight(325,500,m_right,m_left);
+			int pos  = 400;
+		}
+		if (degrees ==180){
+			int pos  = 800;
+		}
+		else std::cout << "NIX";
+	
 		//turn left 90
 		int pos_l = m_left.position();
 		int pos_r = m_right.position();
-		int pos  = 400;
-
+		
 		m_left.set_position_sp(pos);
 		m_right.set_position_sp(-pos);
 	
@@ -101,8 +108,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 		m_left.run_to_rel_pos();
 		m_right.run_to_rel_pos();
 		int counter(0);
-		std::cout <<"POS-NOW: " << m_left.position() << " pos_target:" <<pos_l-pos << std::endl;
-		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) std::cout <<"POS-NOW: " << m_left.position() << " pos_target:" <<pos_l+pos << std::endl;
+		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) ++counter;
 	}
 
 
@@ -203,12 +209,12 @@ void robot::get_stones(){
 						x.close();
 						x.wait();
 						x.lift();
-				turn(90, m_right,m_left);
-				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
-				turn(90, m_right,m_left);
-				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
-				x.half_lower();
+				// turn(90, m_right,m_left);
+				// turn(90, m_right,m_left);
+				// follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+				// turn(90, m_right,m_left);
+				// follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
+				// x.half_lower();
 			 	last_col = temp;
 			} 
 		}
@@ -329,7 +335,9 @@ void robot::read_recepie(){
 				){
 				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation)){
 				recipe.push_back(x);
-				std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+			
+				//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
 				last_real = x;
 				}
 			}
