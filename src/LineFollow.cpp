@@ -88,8 +88,8 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 void robot::turn(int degrees, motor & m_right, motor & m_left){
 		int pos(0);
 		if (degrees == 90){
-			go_straight(325,500,m_right,m_left);
-			pos  = 400;
+			go_straight(450,500,m_right,m_left);
+			pos  = 330;
 		}
 		if (degrees ==180){
 			pos  = 750;
