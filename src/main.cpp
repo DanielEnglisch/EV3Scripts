@@ -2,6 +2,7 @@
 #include "LineFollow.h"
 #include "ev3dev.h"
 
+#include "Claw.h"
 
 using namespace ev3dev;	
 
@@ -15,7 +16,7 @@ int main(){
     //        }
     //        }
        
-    robot r;
+    //robot r;
 
     // motor mr (OUTPUT_A);
     // motor l (OUTPUT_D);  
@@ -28,8 +29,10 @@ int main(){
 
     //r.follow_line_until_stone(200,mr,l,line_sensor,ir);
     //r.read_recepie();
-  
-  r.get_stones();
+   Claw x;
+   x.half_lower();
+
+  //r.get_stones();
     //r.test();
    	// // cout << "0;0;0" << endl;
     //   int counter(0);

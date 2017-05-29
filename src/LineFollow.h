@@ -47,7 +47,7 @@
 
 		public:
 				recipe_t 		recipe;
-				int				corner_stones;n 
+				int				corner_stones = 0;
 				// ~robot(){
 				// 	 motor r(OUTPUT_A);
 				// 	 motor l(OUTPUT_D);

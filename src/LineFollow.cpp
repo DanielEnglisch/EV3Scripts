@@ -122,6 +122,7 @@ bool robot::is_in(color const & in){
 void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket){
 	Claw x;
 	int distance(0);
+	bool exit = true;
 	if(to_bucket){
 	color_sensor right_color (INPUT_3);
 	right_color.set_mode(color_sensor::mode_col_color);
@@ -131,12 +132,14 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	start /=30;
 	start= ir.value();	
 	std::cout << "START: "<< start<<std::endl;
-	while	(button::back.pressed() &&( 
+	while (button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				))){
-				if(to_bucket){
-					if(is_color_right(right_color,{19,6,0})) 
+				)) && exit){
+					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0) exit = false;
+				if(to_bucket && is_color_right(right_color,{19,6,0})){
+					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
+					if((m_left.speed() + m_right.speed()) >= 0 )  --corner_stones;
 				}
 				std::cout << ir.value()<< std::endl;
 				distance = ir.value(false);
