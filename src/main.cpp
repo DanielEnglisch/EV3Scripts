@@ -31,7 +31,8 @@ int main(){
     //r.read_recepie();
    Claw x;
    x.half_lower();
-
+   x.wait();
+    x.wait();x.wait();x.wait();
   //r.get_stones();
     //r.test();
    	// // cout << "0;0;0" << endl;
