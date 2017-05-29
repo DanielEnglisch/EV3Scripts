@@ -19,10 +19,10 @@ int main(){
        
     robot r;
 
-     motor mr (OUTPUT_A);
-    motor l (OUTPUT_D);  
+    //  motor mr (OUTPUT_A);
+    // motor l (OUTPUT_D);  
 
-    r.read_recepie();
+    // r.read_recepie();
         //r.get_stones();
 
     //  motor mr (OUTPUT_A);
@@ -44,7 +44,7 @@ int main(){
     r.test();
 
    // r.read_recepie();
-       r.get_stones();
+    //   r.get_stones();
 
    	// // cout << "0;0;0" << endl;
     //   int counter(0);
