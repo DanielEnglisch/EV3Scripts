@@ -110,7 +110,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 bool robot::is_in(color const & in){
 	for(int i= 0; i < recipe.size(); ++i){
 		//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\x1b[0m" << "\x1b[38;2;"<< in.red << ';'<< in.green << ';'<< in.blue <<  "m█████\x1b[0m"<< std::endl;
-		if(is_color_equal(recipe[i],in,40)){
+		if((recipe[i].red != -1 && recipe[i].green != -1  && recipe[i].blue != -1 ) && is_color_equal(recipe[i],in,40)){
 		//	std::cout << "ISIN! :" << x.red << ';' << x.green << ';'<< x.blue  << ';'<< std::endl;
 			recipe[i] = {-1,-1,-1};
 			return true;
@@ -172,11 +172,15 @@ void robot::get_stones(){
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-			if(!is_in(temp) && !is_color_equal(temp,last_col,deviation)){
+			if(is_in(temp) && !is_color_equal(temp,last_col,deviation)){
 					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-					//std::cout  << "IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-					//std::cout << "TURN LEFT" <<std::endl;
-					
+					turn(90, m_right,m_left);
+					follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+						x.lower();
+						x.close();
+						x.wait();
+						x.lift();
+						x.open();
 			 last_col = temp;
 			} 
 		}
@@ -273,7 +277,7 @@ bool robot::grey(color const & in){
 	
 }
 void robot::read_recepie(){
-	std::cout << "BEGINNING"<< std::endl;
+	//std::cout << "BEGINNING"<< std::endl;
 	recipe.clear();
 	short escape = 1;
 	color_sensor s (INPUT_3);
@@ -286,12 +290,12 @@ void robot::read_recepie(){
 
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
-std::cout << "middle_half"<< std::endl;
+//std::cout << "middle_half"<< std::endl;
 	while(button::back.pressed() && (escape != 0)){
 		if(is_color_right(s,cal)){
 			color x = (read_color_right(s,{19,6,0}));
 			escape = 2;
-			std::cout << "MIDLLE-WHILE"<< std::endl;
+			//std::cout << "MIDLLE-WHILE"<< std::endl;
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
 				(x.red > 20 || x.green >20 || x.blue > 20) && !grey(x)
 				){
@@ -315,7 +319,7 @@ std::cout << "middle_half"<< std::endl;
 		m_right.run_forever();
 		m_left.run_forever();
 	}
-		std::cout << "END-WHILE"<< std::endl;
+	//	std::cout << "END-WHILE"<< std::endl;
 	m_right.stop();
 	m_left.stop();
 save_recipe();
