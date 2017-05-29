@@ -95,7 +95,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left, bool stone){
 			pos  = 750;
 		}
 		if(degrees ==45){
-				go_straight(-100,500,m_right,m_left);
+				
 			pos = 180;
 			
 		}
@@ -116,7 +116,7 @@ void robot::turn(int degrees, motor & m_right, motor & m_left, bool stone){
 		int counter(0);
 		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) ++counter;
 		if(degrees == 45){
-			go_straight(80,500,m_right,m_left);
+			go_straight(200,500,m_right,m_left);
 		}
 
 }
