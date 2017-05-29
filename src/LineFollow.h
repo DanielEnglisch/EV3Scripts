@@ -33,7 +33,7 @@
 			int		const	deviation_ir = 10;
 			void 			fix(color &in);
 			color		 	boost(color in); 
-			void 			turn(int degrees);
+			//void 			turn(int degrees);
 			bool			is_in(color const & in);	
 			void			go_straight(int pos, int speed, motor & m_right, motor &m_left);
 			
@@ -57,7 +57,7 @@
 				// }
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}			
-				void			turn(int degrees, motor & m_right, motor & m_left);	
+				void			turn(int degrees, motor & m_right, motor & m_left, bool stone = true);	
 				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
 				void read_recepie_file();

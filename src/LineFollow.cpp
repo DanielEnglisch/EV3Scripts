@@ -85,14 +85,19 @@ void robot::go_straight(int pos, int speed, motor & m_right, motor &m_left){
 		//
 	}
 
-void robot::turn(int degrees, motor & m_right, motor & m_left){
+void robot::turn(int degrees, motor & m_right, motor & m_left, bool stone){
 		int pos(0);
 		if (degrees == 90){
-			go_straight(450,500,m_right,m_left);
+			if (stone)go_straight(450,500,m_right,m_left);
 			pos  = 320;
 		}
 		if (degrees ==180){
 			pos  = 750;
+		}
+		if(degrees ==45){
+				go_straight(-100,500,m_right,m_left);
+			pos = 180;
+			
 		}
 		else std::cout << "NIX";
 	
@@ -110,6 +115,9 @@ void robot::turn(int degrees, motor & m_right, motor & m_left){
 		m_right.run_to_rel_pos();
 		int counter(0);
 		while(m_left.position() <= pos_l+pos && m_right.position() >= pos_r-pos) ++counter;
+		if(degrees == 45){
+			go_straight(80,500,m_right,m_left);
+		}
 
 }
 bool robot::is_in(color const & in){
@@ -162,7 +170,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 // }
 
 void robot::get_stones(){
-	int speed(200);
+	int speed(400);
 	color temp = {0,0,0};
 
 	short escape = 1;
@@ -198,9 +206,15 @@ void robot::get_stones(){
 						x.lift();
 				turn(180, m_right,m_left);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
-				turn(90, m_right,m_left);
+				turn(45, m_right,m_left,false);
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
 				x.half_lower();
+				x.open();
+				m_left.stop();
+				m_right.stop();
+				x.wait();x.wait();
+				speed =-200;
+				
 			 	last_col = temp;
 			} 
 		}
@@ -448,9 +462,22 @@ void robot::test(){
 	// 	}
 	// }
 
+	// infrared_sensor ir(INPUT_1);
+	// ir.set_mode(infrared_sensor::mode_ir_prox);
+	// while(button::back.pressed()){
+	// 	std::cout << ir.value()<< std::endl;
+	// }
+
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
-	while(button::back.pressed()){
-		std::cout << ir.value()<< std::endl;
-	}
+
+	motor m_right(OUTPUT_A);
+	motor m_left(OUTPUT_D);
+
+	light_sensor line_sensor (INPUT_2);
+	line_sensor.set_mode(light_sensor::mode_reflect);
+
+
+				follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+				turn(45, m_right,m_left,false);
 } 

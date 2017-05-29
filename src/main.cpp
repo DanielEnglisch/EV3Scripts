@@ -31,8 +31,8 @@ int main(){
   //  r.read_recepie();
    
     //r.turn(90, mr, l);
-     r.get_stones();
-    //r.test();
+    // r.get_stones();
+    r.test();
    	// // cout << "0;0;0" << endl;
     //   int counter(0);
     //  while(!r.rec_fin) counter++;
