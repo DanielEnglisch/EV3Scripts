@@ -123,10 +123,10 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	Claw x;
 	int distance(0);
 	bool exit = true;
-	if(to_bucket){
+	
 	color_sensor right_color (INPUT_3);
 	right_color.set_mode(color_sensor::mode_col_color);
-	}
+	
 	int start(0);
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
