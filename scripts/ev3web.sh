@@ -1,8 +1,8 @@
 
 #!/bin/bash
-echo "=== EV3 Web-upload Script v.1.2 by Xer0, peerfunk ==="
+echo "=== EV3 Web-upload Script v.1.5 by Xer0, peerfunk ==="
 
-#Bundeling files
+echo "=== Compressing... ==="
 cd ../web
 tar -czvf upload_web.tar  *
 
@@ -12,15 +12,12 @@ echo "=== Compress done ==="
 #uploading files
 echo "Copying files..."
 	
-sshpass -p 'Cisco0' scp ../web/upload_web.tar robot@$1:/home/robot/
+	#sshpass -p 'Cisco0' scp ../web/upload_web.tar root@$1:/var/www/html/
+	nc $1 2222 < ./upload_web.tar
+
 	if [ $? -eq 1 ]
 	then
 		echo "!!! -> Upload failed!"
 		exit
 	fi
-	echo "=== Uploading Done ==="
 	
-	echo "Configuring_webspace"
-	sshpass -p 'Cisco0' ssh robot@$1 /var/www/configure.sh
-
-	echo "=== Script Done ==="

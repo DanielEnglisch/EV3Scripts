@@ -1,6 +1,6 @@
 
 #!/bin/bash
-echo "=== EV3 Build Script v.1.2 by Xer0, peerfunk ==="
+echo "=== EV3 Build Script v.2.0 by Xer0, peerfunk ==="
 #BUILDING CURRENT DIRECTORY
 FILES=`find . -type f -name "*.cpp" | tr -d ' '`
 #FILES="$FILES `find . -type f -name "*.h" | tr -d ' '`"
@@ -9,12 +9,18 @@ printf "Linking and Compiling files:\n"
 echo $FILES
 #sleep 3
 arm-linux-gnueabi-g++ -o EV3Scripts $FILES -lev3dev -L./ -std=c++14 -static -fpermissive
-	echo "=== Building Done ==="
+if [ $? -eq 1 ]
+	then
+		echo "!!! -> Build failed!"
+		exit
+	fi
+echo "=== Building Done (size: $(($(stat -c%s 'EV3Scripts')/1024)) kB) ==="
 if [ $# -eq 1 ]
 then
 	#UPLOADING
 	echo "Copying binary..."
-	sshpass -p 'Cisco0' scp ./EV3Scripts robot@192.168.1.101:/home/robot/EV3Scripts
+	#sshpass -p 'Cisco0' scp ./EV3Scripts root@$1:/home/robot/Gruppe1/Latest
+	nc $1 1222 < ./EV3Scripts
 	if [ $? -eq 1 ]
 	then
 		echo "!!! -> Upload failed!"
@@ -23,6 +29,6 @@ then
 	echo "=== Uploading Done ==="
 	echo "Executing binary..."
 	# $1
-	sshpass -p 'Cisco0' ssh robot@192.168.1.101 ./EV3Scripts
+	sshpass -p 'Cisco0' ssh root@$1 /home/robot/Gruppe1/Latest
 	echo "=== Script Done ==="
 fi
