@@ -19,8 +19,8 @@ if [ $# -eq 1 ]
 then
 	#UPLOADING
 	echo "Copying binary..."
-	#sshpass -p 'Cisco0' scp ./EV3Scripts root@$1:/home/robot/Gruppe1/Latest
-	nc $1 1222 < ./EV3Scripts
+	sshpass -p 'Cisco0' scp ./EV3Scripts root@$1:/home/robot/Gruppe1/Latest
+	#nc $1 1222 < ./EV3Scripts
 	if [ $? -eq 1 ]
 	then
 		echo "!!! -> Upload failed!"
