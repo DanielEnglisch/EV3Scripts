@@ -6,8 +6,10 @@
 using namespace ev3dev;
 int main(){
 // cout << "beeping:" << endl;
+motor rm(OUTPUT_A);
+motor lm(OUTPUT_D);
 robot r;
-r.follow_line_d();
+r.test();
 
 // sound::beep();
 // std::cout << "beeped!" << std::endl;

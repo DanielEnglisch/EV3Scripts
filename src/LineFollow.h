@@ -26,7 +26,7 @@
 	struct position{
 		color 	id;
 		int	 	pos;
-	}
+	};
 
 	typedef						std::vector<color>		recipe_t;
 	typedef						std::vector<position> 	position_stock;
@@ -35,8 +35,8 @@
 	{
 		private:
 			position_stock	positions;
-			int 			return_position;
-			int				speed(200);
+			int 			return_position = 200;
+			int				speed_all=200;
 			bool 			grey(color const & in);
 			int		const	deviation = 60;
 			int		const	deviation_ir = 10;
@@ -70,9 +70,12 @@
 				// }
 				//robot	();
 				// bool stone_front(infrared_sensor &input){return false;}			
+
 				void			turn(int degrees, motor & m_right, motor & m_left, bool stone = true);	
 				bool rec_fin = false;								//TODO: is stone in front of arms
 				void test();
+				void go_back(int speed, motor & m_right, motor & m_left, int distance);
+				void return_to_position(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor);
 				void read_recipe_file();
 				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket = false);
 				void get_stones();

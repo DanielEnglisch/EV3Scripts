@@ -175,6 +175,35 @@ void robot::wait(){
 			// return counter;
 }
 
+void robot::go_back(int speed, motor & m_right, motor & m_left, int distance){
+	m_right.set_position_sp(distance);
+	m_left.set_position_sp(distance);
+	
+	int pos_right = m_right.position();
+	int pos_left = m_left.position();
+	
+	m_right.set_speed_sp(speed);
+	m_left.set_speed_sp(speed);
+	
+	m_left.run_to_rel_pos();
+	m_right.run_to_rel_pos();
+
+	int counter(0);
+		while(m_left.position() <= pos_right+distance && m_right.position() >= pos_left+distance) ++counter;
+}
+
+void robot::return_to_position(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor){
+
+	while (button::back.pressed() &&	(m_left.position() + m_right.position())/ 2 < return_position){
+			steer(line_sensor.value(),m_left, m_right,speed);
+				m_right.run_forever();
+				m_left.run_forever();
+	}
+	m_right.stop();
+	m_left.stop();
+}
+
+
 void robot::get_stones(){
 	int speed(400);
 	color temp = {0,0,0};
@@ -209,7 +238,7 @@ void robot::get_stones(){
 						x.wait();
 						x.lift();
 				turn(180, m_right,m_left);
-				return_position  =(m_right+m_left)/2;
+				return_position  =(m_right.position()+m_left.position())/2;
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
 				turn(45, m_right,m_left,false);
 				
@@ -228,38 +257,10 @@ void robot::get_stones(){
 				x.wait();
 				//go back few cms
 				turn(180, m_right,m_left);
-				return_to_pos(speed, m_right, m_left, line_sensor);
+				return_to_position(speed, m_right, m_left, line_sensor);
 
 			} 
 		}
-		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
-		// 	else{
-		// 		turn(90, m_right,m_left);
-		// 		follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
-		// 			x.lower();
-		// 			x.close();
-		// 			x.wait();
-		// 			x.lift();
-		// 			escape = 0;
-				
-		// 		// turn(90, m_right,m_left);
-		// 		// turn(90, m_right,m_left);
-
-		// 		// follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
-		// 		// turn(90, m_right,m_left);
-		// 		// follow_line_until_stone(speed,m_right,m_left,line_sensor,ir);
-		// 		// 	x.half_lower();
-		// 		// 	x.open();
-		// 		// 	x.wait(); x.wait();
-		// 		// 	x.close();x.lift();
-		// 		// turn(90,m_right, m_left);
-		// 		// turn(90,m_right, m_left);
-		// 		// go_straight(200,speed,m_right,m_left);
-		// 	}
-		// }		
-	
-		
-		
 		steer(line_sensor.value(),m_left,m_right,speed);
 		m_right.run_forever();
 		m_left.run_forever();
@@ -319,6 +320,7 @@ void robot::read_recipe_file(){
 	//recipe = {{185,13,16},{248,134,51},{0,70,25}};
 }
 
+
 bool robot::grey(color const & in){	
 	int devi(15);
 	int avg = (in.red + in.green + in.blue)/3;
@@ -331,6 +333,8 @@ bool robot::grey(color const & in){
 	);	
 	
 }
+
+
 void robot::read_recepie(){
 	//std::cout << "BEGINNING"<< std::endl;
 	recipe.clear();
@@ -527,6 +531,8 @@ void robot::test(){
 	// 	std::cout << ir.value()<< std::endl;
 	// }
 
+	Claw x;
+
 	infrared_sensor ir(INPUT_1);
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 
@@ -537,8 +543,18 @@ void robot::test(){
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
 
-	int pos_from = follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
-//	turn(45, m_right,m_left,false);
+	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	x.half_lower();
+	x.open();
+	x.wait();
+	x.close();
+	x.lift();
+	x.wait();
+	go_back(200, m_right,m_left,500);
+	//turn(45, m_right,m_left,false);
 	turn(180,m_right, m_left, false);
-
+	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	m_left.stop();
+	m_right.stop();
+	
 } 
