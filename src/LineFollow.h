@@ -36,6 +36,7 @@
 		private:
 			position_stock	positions;
 			int 			return_position;
+			int				speed(200);
 			bool 			grey(color const & in);
 			int		const	deviation = 60;
 			int		const	deviation_ir = 10;
