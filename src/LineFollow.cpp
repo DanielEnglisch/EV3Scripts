@@ -144,7 +144,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 	start= ir.value();	
-	std::cout << "START: "<< start<<std::endl;
+	//std::cout << "START: "<< start<<std::endl;
 	while (button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
@@ -542,7 +542,7 @@ void robot::test(){
 	light_sensor line_sensor (INPUT_2);
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
-
+	x.close();
 	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
 	x.half_lower();
 	x.open();
@@ -552,7 +552,7 @@ void robot::test(){
 	x.wait();
 	go_back(200, m_right,m_left,500);
 	//turn(45, m_right,m_left,false);
-	turn(180,m_right, m_left, false);
+	turn(180,m_left,m_right, true);
 	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
 	m_left.stop();
 	m_right.stop();

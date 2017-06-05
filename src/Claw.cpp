@@ -8,9 +8,9 @@ int Claw::wait(){
 }
 
 bool Claw::open(){
-
 			motor small (OUTPUT_C);
 			//if(small.position_sp() == -1300) return 0;
+			std::cout << "CLAW OPEN POS:" << small.position() << std::endl;
 			small.set_speed_sp(1000);
 			small.set_position_sp(0);
 			small.run_to_abs_pos();
@@ -21,6 +21,7 @@ bool Claw::open(){
 bool Claw::close(){
 			motor small (OUTPUT_C);
 			//if(small.position_sp() == 0) return 0;
+			std::cout << "CLAW CLOSE POS:" << small.position() << std::endl;
 			small.set_speed_sp(1000);
 			small.set_position_sp(-950);
 			small.run_to_abs_pos();
@@ -30,6 +31,7 @@ bool Claw::close(){
 
 bool Claw::lift(){
 		motor big	(OUTPUT_B);	
+		std::cout << "CLAW LIFT POS:" << big.position() << std::endl;
 		//if(big.position_sp() == -120) return 0;
 		big.set_speed_sp(100);
 		big.set_position_sp(0);
@@ -40,26 +42,25 @@ bool Claw::lift(){
 
 bool Claw::lower(){
 		motor big (OUTPUT_B);
+		std::cout << "CLAW LOWER POS:" << big.position() << std::endl;
 		std::cout << big.position()<< std::endl;
 	//	if(big.position_sp() == 0) return 0;
 		big.set_speed_sp(100);
 		big.set_position_sp(170);
 		big.run_to_abs_pos();
 			int counter(0);
-		while(big.position() < 118) counter++;
-		std::cout << big.position();
-	
+		while(big.position() < 168) counter++;
 		}
 
 
 bool Claw::half_lower(){
 		motor big (OUTPUT_B);
-		std::cout << big.position()<< std::endl;
+		std::cout << "CLAW HALFLOWER POS:" << big.position() << std::endl;
+
 	//	if(big.position_sp() == 0) return 0;
 		big.set_speed_sp(100);
 		big.set_position_sp(100);
 		big.run_to_abs_pos();
-		wait();
-		std::cout << big.position();
-		
+		int counter(0);
+		while(big.position() < 98) counter++;
 		}

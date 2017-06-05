@@ -11,8 +11,9 @@
 				Claw(){
 						motor small (OUTPUT_B);
 						motor middle(OUTPUT_C);
-						middle.set_position(0);
-						small.set_position(0);		
+						std::cout << "POS-SMALL MOTOR(open/close) =" << small.position();
+						std::cout << "POS-big MOTOR(lift) =" << middle.position();
+						
 				}
 			 ~Claw(){
 				
