@@ -1,14 +1,16 @@
 
 #include "ev3dev.h"
 #include <iostream>
-using namespace std;
+#include "LineFollow.h"
+#include "Claw.h"
 using namespace ev3dev;
 int main(){
-cout << "beeping:" << endl;
+// cout << "beeping:" << endl;
+robot r;
+r.follow_line_d();
 
-
-sound::beep();
-cout << "beeped!" << endl;
+// sound::beep();
+// std::cout << "beeped!" << std::endl;
     return 0;
 }
 

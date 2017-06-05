@@ -185,7 +185,6 @@ void robot::get_stones(){
 	ir.set_mode(infrared_sensor::mode_ir_prox);
 
 	read_recipe_file();
-
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
@@ -198,11 +197,10 @@ void robot::get_stones(){
 	Claw x;
 
 	while(button::back.pressed()  && (escape != 0) ){
-		
 		if(is_color_right(right_color, cal)){ // && (temp.red + temp.green + temp.blue) < 300
 			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-			if(is_in(temp) && !is_color_equal(temp,last_col,deviation)){
+			if(is_in(temp) /*&& !is_color_equal(temp,last_col,deviation)*/ ){
 					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 					turn(90, m_right,m_left);
 					follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
@@ -211,11 +209,13 @@ void robot::get_stones(){
 						x.wait();
 						x.lift();
 				turn(180, m_right,m_left);
+				return_position  =(m_right+m_left)/2;
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
 				turn(45, m_right,m_left,false);
+				
 				follow_line_until_stone(speed,m_right,m_left,line_sensor, ir,true);
 				x.half_lower();
-				x.wait();
+				x.wait(); 
 				
 				m_left.stop();
 				m_right.stop();
@@ -224,6 +224,12 @@ void robot::get_stones(){
 				escape =0;
 			 	x.open();
 			 	last_col = temp;
+				x.wait();
+				x.wait();
+				//go back few cms
+				turn(180, m_right,m_left);
+				return_to_pos(speed, m_right, m_left, line_sensor);
+
 			} 
 		}
 		// 	if (!is_in(temp)) go_straight(200,speed,m_right,m_left);
@@ -385,18 +391,56 @@ void robot::follow_line_d(){
 	motor m_right(OUTPUT_A);
 	motor m_left(OUTPUT_D);
 	light_sensor line_sensor (INPUT_2);
-	
+	int pos_start_l = m_left.position();
+	int pos_start_r = m_right.position();
+
 	while(button::back.pressed()){
-		steer(line_sensor.value(),m_left, m_right,1000);
+		steer(line_sensor.value(),m_left, m_right,200);
 		m_right.run_forever();
 		m_left.run_forever();
 	}
 	m_right.stop();
 	m_left.stop();
+	
+	std::cout <<  pos_start_l << ';' << pos_start_r  << ';' << m_left.position()  << ';' << m_right.position() << std::endl; 
+	
+	
+	}
+
+void robot::steer(int light_val, motor & m_left, motor & m_right, int throttle){
+	if(throttle > 0) steer_forward(light_val,m_left, m_right,throttle);
+	if(throttle < 0) steer_back(light_val,m_left, m_right,throttle);
 }
 
 
-void robot::steer(int light_val, motor & m_left, motor & m_right, int throttle) {
+
+void robot::steer_back(int light_val, motor & m_left, motor & m_right, int throttle) {
+	float smoothing_factor=0.15;
+	float steering = floatMap(light_val,350,600,0,1);
+	float speed_right = 1-steering;
+	float speed_left = steering;
+	speed_right = floatMap(speed_right, 0,1,0,100 );
+	speed_left = floatMap(speed_left, 0,1,0,100 );
+	if(speed_right >100) speed_right =100;
+	if(speed_right < 0) speed_right =0;
+	if(speed_left < 0) speed_left =0;
+	if(speed_left >100) speed_left =100;
+	//std::cout << speed_left << ';' << speed_right;
+	speed_left *=smoothing_factor;
+	speed_right *=smoothing_factor;
+	//std::cout << speed_left << ';' << speed_right << std::endl;
+	speed_left = throttle - (throttle * speed_left/100);
+	speed_right = throttle - (throttle * speed_right/100);
+	std::cout << speed_left << ';' << speed_right << std::endl;
+		
+		m_right.set_speed_sp(-speed_right);
+		m_left.set_speed_sp(-speed_left);
+	//switch motor
+
+	
+}
+
+void robot::steer_forward(int light_val, motor & m_left, motor & m_right, int throttle) {
 	float smoothing_factor=0.5;
 	float steering = floatMap(light_val,350,600,0,1);
 	float speed_right = 1-steering;
@@ -412,7 +456,7 @@ void robot::steer(int light_val, motor & m_left, motor & m_right, int throttle) 
 	if(speed_left < 0) speed_left =0;
 	if( speed_left >100) speed_left =100;
 	
-	speed_right = throttle * (speed_right/100); // abbild von den 
+	speed_right =  throttle * (speed_right/100); // abbild von den 
 	speed_left = throttle * (speed_left/100);
 	//std::cout<< speed_left << ';' << speed_right << std::endl;
 	m_right.set_speed_sp(-speed_right);
@@ -493,6 +537,8 @@ void robot::test(){
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
 
-	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
-	turn(45, m_right,m_left,false);
+	int pos_from = follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+//	turn(45, m_right,m_left,false);
+	turn(180,m_right, m_left, false);
+
 } 

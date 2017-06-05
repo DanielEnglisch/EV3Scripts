@@ -23,16 +23,23 @@
 		int green;
 		int blue;
 	};
+	struct position{
+		color 	id;
+		int	 	pos;
+	}
 
-	typedef						std::vector<color>  recipe_t;
+	typedef						std::vector<color>		recipe_t;
+	typedef						std::vector<position> 	position_stock;
 
 	class robot
 	{
 		private:
-			
+			position_stock	positions;
+			int 			return_position;
 			bool 			grey(color const & in);
 			int		const	deviation = 60;
 			int		const	deviation_ir = 10;
+			
 			void 			fix(color &in);
 			color		 	boost(color in); 
 			//void 			turn(int degrees);
@@ -46,7 +53,9 @@
 			color			read_color_right(color_sensor & right_color, color const & cal);										//blue color level of right sensor
 			bool			is_color_equal(color const &in1, color const &in2,int deviation);	
 			void			save_recipe();	
-
+			void			steer_forward(int light_val, motor & m_left, motor & m_right, int throttle);
+			void			steer_back(int light_val, motor & m_left, motor & m_right, int throttle);
+			
 		public:
 				recipe_t 		recipe;
 				int				corner_stones = 0;
