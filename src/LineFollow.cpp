@@ -150,11 +150,10 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
 				)) && exit){
 				
-					if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0 && to_bucket) exit = false;
-				if(to_bucket && is_color_right(right_color,{19,6,0})){
-					if((m_left.speed() + m_right.speed()) < 0 )  ++corner_stones;
-					if((m_left.speed() + m_right.speed()) >= 0 )  --corner_stones;
-				}
+				//if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0 && to_bucket) exit = false;
+				// if(to_bucket && is_color_right(right_color,{19,6,0})){
+				// 	if((m_left.speed() + m_right.speed()) < 0 ) positions.push_back({read_color_right(right_color,{19,6,0}),(m_left.position()+m_right.position())/2});
+				// }
 				std::cout << ir.value()<< std::endl;
 				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
@@ -176,6 +175,7 @@ void robot::wait(){
 }
 
 void robot::go_back(int speed, motor & m_right, motor & m_left, int distance){
+	std::cout << "GO BACK!" << std::endl;
 	m_right.set_position_sp(distance);
 	m_left.set_position_sp(distance);
 	
@@ -187,14 +187,15 @@ void robot::go_back(int speed, motor & m_right, motor & m_left, int distance){
 	
 	m_left.run_to_rel_pos();
 	m_right.run_to_rel_pos();
-
+	
+	std::cout << pos_right + distance << m_right.position();
 	int counter(0);
-		while(m_left.position() <= pos_right+distance && m_right.position() >= pos_left+distance) ++counter;
+		while(m_left.position() <= pos_right+distance && m_right.position() >= pos_left+distance){++counter; std::cout << m_right.position()<< std::endl;;} 
 }
 
 void robot::return_to_position(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor){
 
-	while (button::back.pressed() &&	(m_left.position() + m_right.position())/ 2 < return_position){
+	while (button::back.pressed() && (m_left.position() + m_right.position())/ 2 > return_position){
 			steer(line_sensor.value(),m_left, m_right,speed);
 				m_right.run_forever();
 				m_left.run_forever();
@@ -543,17 +544,24 @@ void robot::test(){
 	line_sensor.set_mode(light_sensor::mode_reflect);
 
 	x.close();
-	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	return_position = (m_left.position()+m_right.position())/2;
+	std::cout <<"CURRENT POSITION:"<< return_position << std::endl;
+	follow_line_until_stone(200,m_right,m_left,line_sensor, ir,true);
 	x.half_lower();
 	x.open();
 	x.wait();
 	x.close();
 	x.lift();
 	x.wait();
+
+	//for(position x:positions) std::cout << x.id.red;
+
 	go_back(200, m_right,m_left,500);
 	//turn(45, m_right,m_left,false);
-	turn(180,m_left,m_right, true);
-	follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	turn(180,m_left,m_right, false);
+	return_to_position(200, m_right,m_left,line_sensor);
+	//follow_line_until_stone(200,m_right,m_left,line_sensor, ir);
+	std::cout << "END POSITION:" << (m_left.position()+m_right.position())/2 << std::endl;
 	m_left.stop();
 	m_right.stop();
 	

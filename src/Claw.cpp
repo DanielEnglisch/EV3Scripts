@@ -26,7 +26,7 @@ bool Claw::close(){
 			small.set_position_sp(-950);
 			small.run_to_abs_pos();
 				int counter(0);
-			while(small.position() > -948) counter++;
+			while(small.position() > -940) counter++;
 }
 
 bool Claw::lift(){

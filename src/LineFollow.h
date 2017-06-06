@@ -34,8 +34,9 @@
 	class robot
 	{
 		private:
+
 			position_stock	positions;
-			int 			return_position = 200;
+			int 			return_position = 0;
 			int				speed_all=200;
 			bool 			grey(color const & in);
 			int		const	deviation = 60;
