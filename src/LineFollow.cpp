@@ -188,7 +188,7 @@ void robot::go_back(int speed, motor & m_right, motor & m_left, int distance){
 	m_left.run_to_rel_pos();
 	m_right.run_to_rel_pos();
 	
-	std::cout << pos_right + distance << m_right.position();
+	std::cout << pos_right + distance << m_right.position(); 
 	int counter(0);
 		while(m_left.position() <= pos_right+distance && m_right.position() >= pos_left+distance){++counter; std::cout << m_right.position()<< std::endl;;} 
 }
@@ -233,7 +233,7 @@ void robot::get_stones(){
 			if(is_in(temp) /*&& !is_color_equal(temp,last_col,deviation)*/ ){
 					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 					turn(90, m_right,m_left);
-					follow_line_until_stone(speed,m_right,m_left,line_sensor, ir);
+					follow_line_until_stone(speed,m_right,m_left,line_sensor, ir, false,true);
 						x.lower();
 						x.close();
 						x.wait();
