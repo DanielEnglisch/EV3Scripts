@@ -154,7 +154,7 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 				// if(to_bucket && is_color_right(right_color,{19,6,0})){
 				// 	if((m_left.speed() + m_right.speed()) < 0 ) positions.push_back({read_color_right(right_color,{19,6,0}),(m_left.position()+m_right.position())/2});
 				// }
-				std::cout << ir.value()<< std::endl;
+				
 				distance = ir.value(false);
 				steer(line_sensor.value(),m_left, m_right,500);
 				m_right.run_forever();
