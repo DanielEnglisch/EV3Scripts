@@ -231,7 +231,7 @@ void robot::get_stones(){
 			temp = read_color_right(right_color, {19,6,0});
 			//std::cout << " IS IN: " << "\x1b[38;2;"<< temp.red << ';'<< temp.green << ';'<< temp.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 			if(is_in(temp) /*&& !is_color_equal(temp,last_col,deviation)*/ ){
-					for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
+					//for(color x : recipe) std::cout  << " IS IN: " << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
 					turn(90, m_right,m_left);
 					follow_line_until_stone(speed,m_right,m_left,line_sensor, ir, false,true);
 						x.lower();
@@ -358,7 +358,7 @@ void robot::read_recepie(){
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
 				(x.red > 20 || x.green >20 || x.blue > 20) && !grey(x)
 				){
-				if(!is_color_equal(x,{255,255,255},deviation) && !is_color_equal(x,last_real,deviation)){
+				if(!is_color_equal(x,{0,53,16},deviation) && !is_color_equal(x,last_real,deviation)){ // lego green is actually (0,130,43)
 				recipe.push_back(x);
 			
 				//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
