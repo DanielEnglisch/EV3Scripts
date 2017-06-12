@@ -1,8 +1,5 @@
 #include "LineFollow.h"
 
-
-
-
 // bool robot::stone_front(infrared_sensor &input){return false;}											//TODO: is stone in front of arms
 // void robot::turn_180(tank_functions &input){};												//TODO: turns the robot around
 // void robot::turn_right(tank_functions &input){};												//TODO: turns the robot right by 90deg
