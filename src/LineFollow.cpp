@@ -329,7 +329,6 @@ bool robot::grey(color const & in){
 		((in.red+devi) >= avg && (in.red -devi) <avg) &&
 		((in.green+devi )>= avg && (in.green -devi) <avg) &&
 		((in.blue+devi) >= avg && (in.green -devi) <avg)
-		
 	);	
 	
 }
@@ -353,16 +352,16 @@ void robot::read_recepie(){
 	while(button::back.pressed() && (escape != 0)){
 		if(is_color_right(s,cal)){
 			color x = (read_color_right(s,{19,6,0}));
-			escape = 2;
+			escape = 2;s
 			//std::cout << "MIDLLE-WHILE"<< std::endl;
 			if((abs(x.red-last.red) < 3 && abs(x.green-last.green) < 3 && abs(x.blue-last.blue) < 3 ) &&
-				(x.red > 20 || x.green >20 || x.blue > 20) && !grey(x)
+				(x.red > 20 || x.green >20 || x.blue > 20) /*&& !grey(x)*/
 				){
 				if(!is_color_equal(x,{0,53,16},deviation) && !is_color_equal(x,last_real,deviation)){ // lego green is actually (0,130,43)
 				recipe.push_back(x);
 			
 				//std::cout << "\x1b[38;2;"<< x.red << ';'<< x.green << ';'<< x.blue <<  "m█████\n█████\n█████\x1b[0m" << std::endl;
-				std::cout << x.red << ';'<< x.green << ';'<< x.blue << std::endl;
+				std::cout << 'R:' << x.red << ';'<<  'G:'<<x.green << ';'<< 'B: ' << x.blue << std::endl;
 				last_real = x;
 				}
 			}
