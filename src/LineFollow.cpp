@@ -132,7 +132,7 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket){
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket, bool in_stone_line, bool get_stones){
 	
 	int distance(0);
 	bool exit = true;
@@ -144,11 +144,14 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	for(int i = 1; i < 30;++i) start +=ir.value(false);
 	start /=30;
 	start= ir.value();	
-	//std::cout << "START: "<< start<<std::endl;
+
+	start_pos = (m_left.position() + m_right.position())/2;
+
+
 	while (button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				)) && exit){
+				)) && exit (in_stone_line  && (m_left.position() + m_right.position())/2) > start_pos-4000)){
 				
 				//if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0 && to_bucket) exit = false;
 				// if(to_bucket && is_color_right(right_color,{19,6,0})){
@@ -259,7 +262,6 @@ void robot::get_stones(){
 				//go back few cms
 				turn(180, m_right,m_left);
 				return_to_position(speed, m_right, m_left, line_sensor);
-
 			} 
 		}
 		steer(line_sensor.value(),m_left,m_right,speed);
