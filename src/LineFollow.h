@@ -82,5 +82,6 @@
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();
+				
 	};
 #endif // LINEFOLLOW_H
