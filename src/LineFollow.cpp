@@ -132,7 +132,7 @@ bool robot::is_in(color const & in){
 	return false;
 }
 
-void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket, bool in_stone_line, bool get_stones){
+void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket, bool in_stone_line){
 	
 	int distance(0);
 	bool exit = true;
@@ -145,14 +145,14 @@ void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,l
 	start /=30;
 	start= ir.value();	
 
-	start_pos = (m_left.position() + m_right.position())/2;
+	int start_pos = (m_left.position() + m_right.position())/2;
 
 
 	while (button::back.pressed() &&( 
 				distance == 0 || (
 				ir.value(false) >= (start*0.2) // jetziger wert 10% kleiner als vorgehender
-				)) && exit (in_stone_line  && (m_left.position() + m_right.position())/2) > start_pos-4000)){
-				
+				)) && exit && (in_stone_line  && ((m_left.position() + m_right.position())/2) > start_pos-4000)){
+					
 				//if((m_left.speed() + m_right.speed()) >= 0 && corner_stones == 0 && to_bucket) exit = false;
 				// if(to_bucket && is_color_right(right_color,{19,6,0})){
 				// 	if((m_left.speed() + m_right.speed()) < 0 ) positions.push_back({read_color_right(right_color,{19,6,0}),(m_left.position()+m_right.position())/2});

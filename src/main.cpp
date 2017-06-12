@@ -9,7 +9,7 @@ int main(){
 // motor rm(OUTPUT_A);
 // motor lm(OUTPUT_D);
 robot r;
-r.read_recipe();
+r.read_recepie();
 r.wait();
 r.wait();
 r.wait();

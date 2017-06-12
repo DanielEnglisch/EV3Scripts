@@ -78,10 +78,9 @@
 				void go_back(int speed, motor & m_right, motor & m_left, int distance);
 				void return_to_position(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor);
 				void read_recipe_file();
-				void robot::follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket=false, bool in_stone_line=false, bool get_stones=false);
+				void follow_line_until_stone(int speed, motor & m_right, motor & m_left,light_sensor & line_sensor,infrared_sensor & ir, bool to_bucket = false, bool in_stone_line = false);
 				void get_stones();
 				void read_recepie();
 				void follow_line_d();
-				
 	};
 #endif // LINEFOLLOW_H
